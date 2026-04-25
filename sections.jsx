@@ -133,10 +133,11 @@ function Hero({ videoUrl }) {
         <div style={{ textAlign: 'center', marginBottom: 12, animation: 'fadeUp 1s ease-out 0.1s forwards', opacity: 0 }}>
           <AlphaBtn href="#investimento">Quero meu acesso agora</AlphaBtn>
           <p style={{
-            marginTop: 14, fontSize: 14, color: 'var(--ink-soft)',
-            fontStyle: 'italic', letterSpacing: '.01em'
+            marginTop: 18, fontSize: 16, color: 'var(--ink)',
+            fontStyle: 'italic', fontWeight: 500, letterSpacing: '.01em',
+            lineHeight: 1.5, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto'
           }}>
-            Você está a um clique de nunca mais ficar invisível no Instagram
+            Você está a um clique de nunca mais ficar <strong style={{ color: 'var(--accent)', fontStyle: 'normal', fontWeight: 800 }}>invisível no Instagram</strong>
           </p>
         </div>
 
@@ -200,10 +201,19 @@ function Hero({ videoUrl }) {
 /* ===== Por que você não cresce ===== */
 function WhyNotGrowing() {
   return (
-    <section className="sec" id="pq-nao-cresce" style={{ background: '#f9fafb' }}>
+    <section className="sec" id="pq-nao-cresce">
       <div className="container">
         <div className="sec-head">
-          <Eyebrow icon="alert-circle">Diagnóstico</Eyebrow>
+          <div className="glass-diag-pill">
+            <span className="glass-diag-sheen" />
+            <svg className="glass-diag-ecg" viewBox="0 0 120 20" preserveAspectRatio="none">
+              <path d="M 0 10 L 22 10 L 28 3 L 34 17 L 40 10 L 62 10 L 68 6 L 74 14 L 80 10 L 120 10"
+                fill="none" stroke="rgba(255,45,122,0.28)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path className="glass-diag-ecg-pulse" d="M 0 10 L 22 10 L 28 3 L 34 17 L 40 10 L 62 10 L 68 6 L 74 14 L 80 10 L 120 10"
+                fill="none" stroke="#FF2D7A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="glass-diag-label">Diagnóstico</span>
+          </div>
           <h2>PORQUE VOCÊ NÃO CRESCE</h2>
           <p>Seu perfil pode estar preso em um desses dois modos agora mesmo.</p>
         </div>
@@ -248,8 +258,20 @@ function WhyNotGrowing() {
         }}>
 
           {/* CARD MODO INVISÍVEL */}
-          <div className="ba-card before" style={{ position: 'relative', borderRadius: 32, padding: '40px 32px', display: 'flex', flexDirection: 'column', border: '4px solid #1a1a1a', boxShadow: '10px 10px 0 #1a1a1a', background: '#f3f4f6' }}>
-            <div style={{ position: 'absolute', top: -20, left: 28, background: '#fff', border: '3px solid #1a1a1a', borderRadius: 999, padding: '6px 18px', fontWeight: 700, fontSize: 13, boxShadow: '4px 4px 0 #1a1a1a', zIndex: 10 }}>MODO · INVISÍVEL</div>
+          <div className="ba-card before glass-mega" style={{
+            position: 'relative',
+            borderRadius: 32,
+            padding: '40px 32px',
+            display: 'flex',
+            flexDirection: 'column',
+            border: '1.5px solid rgba(255, 255, 255, 0.85)',
+            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(222, 226, 232, 0.35) 55%, rgba(238, 241, 246, 0.55) 100%)',
+            backdropFilter: 'blur(42px) saturate(220%) brightness(1.05)',
+            WebkitBackdropFilter: 'blur(42px) saturate(220%) brightness(1.05)',
+            boxShadow: '0 30px 70px -15px rgba(26, 26, 26, 0.22), 0 12px 28px -6px rgba(26, 26, 26, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.4), inset 0 2px 0 rgba(255, 255, 255, 1), inset 0 48px 60px -40px rgba(255, 255, 255, 1), inset 0 20px 30px -25px rgba(255, 255, 255, 0.9), inset 0 -15px 30px -20px rgba(26, 26, 26, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.5)',
+            isolation: 'isolate'
+          }}>
+            <div style={{ position: 'absolute', top: -14, left: 28, background: 'linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 45%, rgba(255,255,255,0.45) 100%)', color: '#1a1a1a', border: '1.5px solid rgba(255,255,255,0.7)', borderRadius: 999, padding: '8px 20px', fontWeight: 800, fontSize: 13, letterSpacing: 0.3, backdropFilter: 'blur(40px) saturate(220%) brightness(1.08)', WebkitBackdropFilter: 'blur(40px) saturate(220%) brightness(1.08)', boxShadow: '0 20px 40px -10px rgba(26,26,26,0.22), 0 8px 20px -4px rgba(26,26,26,0.12), 0 0 0 1px rgba(255,255,255,0.35), inset 0 2px 2px rgba(255,255,255,1), inset 0 -1px 1px rgba(0,0,0,0.08), inset 0 8px 14px -8px rgba(255,255,255,0.95), inset 0 -8px 14px -8px rgba(26,26,26,0.06)', zIndex: 10 }}>MODO · INVISÍVEL</div>
             <div style={{ width: '100%', height: 176, display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 16 }}>
               <svg viewBox="0 0 240 180" style={{ width: '100%', maxWidth: 280, height: '100%', overflow: 'visible' }}>
                 <g className="anim-person-idle">
@@ -283,8 +305,20 @@ function WhyNotGrowing() {
           </div>
 
           {/* CARD MODO VIRAL */}
-          <div className="ba-card after" style={{ position: 'relative', borderRadius: 32, padding: '40px 32px', display: 'flex', flexDirection: 'column', border: '4px solid #1a1a1a', boxShadow: '12px 12px 0 #1a1a1a', background: '#cfff04' }}>
-            <div style={{ position: 'absolute', top: -20, left: 28, background: '#FF2D7A', color: '#fff', border: '3px solid #1a1a1a', borderRadius: 999, padding: '6px 18px', fontWeight: 700, fontSize: 13, boxShadow: '4px 4px 0 #1a1a1a', zIndex: 10 }}>MODO · VIRAL 🚀</div>
+          <div className="ba-card after glass-mega" style={{
+            position: 'relative',
+            borderRadius: 32,
+            padding: '40px 32px',
+            display: 'flex',
+            flexDirection: 'column',
+            border: '1.5px solid rgba(255, 255, 255, 0.75)',
+            background: 'linear-gradient(135deg, rgba(215, 250, 40, 0.95) 0%, rgba(180, 225, 0, 0.88) 55%, rgba(200, 240, 0, 0.95) 100%)',
+            backdropFilter: 'blur(42px) saturate(280%) brightness(1.05)',
+            WebkitBackdropFilter: 'blur(42px) saturate(280%) brightness(1.05)',
+            boxShadow: '0 30px 70px -12px rgba(160, 200, 0, 0.65), 0 12px 28px -5px rgba(130, 170, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.8), inset 0 40px 50px -40px rgba(255, 255, 255, 0.45), inset 0 16px 24px -20px rgba(255, 255, 255, 0.3), inset 0 -15px 30px -20px rgba(80, 120, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+            isolation: 'isolate'
+          }}>
+            <div style={{ position: 'absolute', top: -14, left: 28, background: 'linear-gradient(135deg, rgba(175, 215, 0, 1) 0%, rgba(140, 180, 0, 0.95) 55%, rgba(160, 200, 0, 1) 100%)', color: '#1a1a1a', border: '1.5px solid rgba(255,255,255,0.65)', borderRadius: 999, padding: '8px 20px', fontWeight: 800, fontSize: 13, letterSpacing: 0.3, backdropFilter: 'blur(40px) saturate(260%)', WebkitBackdropFilter: 'blur(40px) saturate(260%)', boxShadow: '0 20px 40px -8px rgba(110, 150, 0, 0.55), 0 8px 20px -4px rgba(90, 130, 0, 0.38), 0 0 0 1px rgba(255,255,255,0.3), inset 0 2px 2px rgba(255,255,255,0.85), inset 0 -1px 1px rgba(0,0,0,0.16), inset 0 8px 14px -8px rgba(255,255,255,0.75), inset 0 -8px 14px -8px rgba(70,110,0,0.25)', zIndex: 10 }}>MODO · VIRAL</div>
             <div style={{ width: '100%', height: 176, display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 16 }}>
               <svg viewBox="0 0 240 180" style={{ width: '100%', maxWidth: 280, height: '100%', overflow: 'visible' }}>
                 <path className="path-line-viral" d="M 110 60 C 80 40, 50 10, 20 20" />
@@ -402,16 +436,23 @@ function HowItWorks() {
     let samplesLeft = null, samplesRight = null, samplesMain = null;
     let rafId = null;
     let isVisible = false;
-    let lastP = -1;
+
+    let targetP = 0;
+    let currentP = 0;
+    let isRunning = false;
+
     let cachedRows = null;
     let cachedSplitRow = null;
     let allActivated = false;
 
-    const SAMPLES = 80;
+    const SAMPLES = 300;
 
-    const yOf = (el, wrapRect) => {
+    const getOffset = (el, wrapRect) => {
       const r = el.getBoundingClientRect();
-      return r.top + r.height / 2 - wrapRect.top;
+      return {
+        x: r.left + r.width / 2 - wrapRect.left,
+        y: r.top + r.height / 2 - wrapRect.top
+      };
     };
 
     const samplePath = (path, length) => {
@@ -452,149 +493,184 @@ function HowItWorks() {
       const w = wrapRect.width;
       const h = wrap.offsetHeight;
       if (w === 0 || h === 0) return;
-      const centerX = w / 2;
-      const branchOff = Math.min(w * 0.28, 240);
+
       const mainOff = Math.min(w * 0.22, 180);
 
-      svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
 
       const leftCard = wrap.querySelector('[data-branch="left"]');
       const rightCard = wrap.querySelector('[data-branch="right"]');
       const mergedNodes = Array.from(wrap.querySelectorAll('.tl-row .tl-node'));
       if (!leftCard || !rightCard || mergedNodes.length === 0) return;
 
-      const yLeft = yOf(leftCard, wrapRect);
-      const yRight = yOf(rightCard, wrapRect);
-      const yMerge = yOf(mergedNodes[0], wrapRect);
-      const xL = centerX - branchOff;
-      const xR = centerX + branchOff;
+      const pLeft = getOffset(leftCard, wrapRect);
+      const pRight = getOffset(rightCard, wrapRect);
+      const pMerge = getOffset(mergedNodes[0], wrapRect);
 
-      const midY1L = yLeft / 2;
-      const midY2L = (yLeft + yMerge) / 2;
+      const startX = w / 2;
+
+      const midY1L = pLeft.y / 2;
+      const midY2L = (pLeft.y + pMerge.y) / 2;
       const dLeftPath =
-        'M ' + centerX.toFixed(1) + ' 0' +
-        ' C ' + centerX.toFixed(1) + ' ' + midY1L.toFixed(1) +
-        ', ' + xL.toFixed(1) + ' ' + midY1L.toFixed(1) +
-        ', ' + xL.toFixed(1) + ' ' + yLeft.toFixed(1) +
-        ' C ' + xL.toFixed(1) + ' ' + midY2L.toFixed(1) +
-        ', ' + centerX.toFixed(1) + ' ' + midY2L.toFixed(1) +
-        ', ' + centerX.toFixed(1) + ' ' + yMerge.toFixed(1);
+        `M ${startX.toFixed(1)} 0` +
+        ` C ${startX.toFixed(1)} ${midY1L.toFixed(1)}, ${pLeft.x.toFixed(1)} ${midY1L.toFixed(1)}, ${pLeft.x.toFixed(1)} ${pLeft.y.toFixed(1)}` +
+        ` C ${pLeft.x.toFixed(1)} ${midY2L.toFixed(1)}, ${pMerge.x.toFixed(1)} ${midY2L.toFixed(1)}, ${pMerge.x.toFixed(1)} ${pMerge.y.toFixed(1)}`;
 
-      const midY1R = yRight / 2;
-      const midY2R = (yRight + yMerge) / 2;
+      const midY1R = pRight.y / 2;
+      const midY2R = (pRight.y + pMerge.y) / 2;
       const dRightPath =
-        'M ' + centerX.toFixed(1) + ' 0' +
-        ' C ' + centerX.toFixed(1) + ' ' + midY1R.toFixed(1) +
-        ', ' + xR.toFixed(1) + ' ' + midY1R.toFixed(1) +
-        ', ' + xR.toFixed(1) + ' ' + yRight.toFixed(1) +
-        ' C ' + xR.toFixed(1) + ' ' + midY2R.toFixed(1) +
-        ', ' + centerX.toFixed(1) + ' ' + midY2R.toFixed(1) +
-        ', ' + centerX.toFixed(1) + ' ' + yMerge.toFixed(1);
+        `M ${startX.toFixed(1)} 0` +
+        ` C ${startX.toFixed(1)} ${midY1R.toFixed(1)}, ${pRight.x.toFixed(1)} ${midY1R.toFixed(1)}, ${pRight.x.toFixed(1)} ${pRight.y.toFixed(1)}` +
+        ` C ${pRight.x.toFixed(1)} ${midY2R.toFixed(1)}, ${pMerge.x.toFixed(1)} ${midY2R.toFixed(1)}, ${pMerge.x.toFixed(1)} ${pMerge.y.toFixed(1)}`;
 
       lenLeft = assignPath(pLeftBg, pLeftFg, dLeftPath);
       lenRight = assignPath(pRightBg, pRightFg, dRightPath);
-      samplesLeft = samplePath(pLeftFg, lenLeft);
-      samplesRight = samplePath(pRightFg, lenRight);
+      samplesLeft = samplePath(pLeftBg, lenLeft);
+      samplesRight = samplePath(pRightBg, lenRight);
 
-      const mainPts = [{ x: centerX, y: yMerge }];
+      const mainPts = [{ x: pMerge.x, y: pMerge.y }];
+
       for (let i = 1; i < mergedNodes.length; i++) {
         const node = mergedNodes[i];
-        const row = node.closest('.tl-row');
-        const ny = yOf(node, wrapRect);
-        const side = row && row.classList.contains('left') ? -1 : 1;
-        mainPts.push({ x: centerX + side * mainOff, y: ny });
-      }
-      mainPts.push({ x: centerX, y: h });
-      lenMain = assignPath(pMainBg, pMainFg, buildSnake(mainPts));
-      samplesMain = samplePath(pMainFg, lenMain);
+        const pNode = getOffset(node, wrapRect);
 
-      lastP = -1;
+        const row = node.closest('.tl-row');
+        const side = row && row.classList.contains('left') ? -1 : 1;
+        mainPts.push({ x: pNode.x + side * mainOff, y: pNode.y });
+      }
+
+      const lastNode = mergedNodes[mergedNodes.length - 1];
+      const pLast = getOffset(lastNode, wrapRect);
+      mainPts.push({ x: pLast.x, y: h });
+
+      lenMain = assignPath(pMainBg, pMainFg, buildSnake(mainPts));
+      samplesMain = samplePath(pMainBg, lenMain);
     };
 
     const setDot = (dot, samples, t, visible) => {
-      const idx = Math.max(0, Math.min(SAMPLES, Math.round(t * SAMPLES)));
-      const x = samples[idx * 2];
-      const y = samples[idx * 2 + 1];
-      dot.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) translate(-50%,-50%)';
+      const exactIdx = Math.max(0, Math.min(SAMPLES, t * SAMPLES));
+      const i0 = Math.floor(exactIdx);
+      const i1 = Math.min(SAMPLES, Math.ceil(exactIdx));
+      const frac = exactIdx - i0;
+
+      const x0 = samples[i0 * 2];
+      const y0 = samples[i0 * 2 + 1];
+
+      let x = x0;
+      let y = y0;
+
+      if (i1 <= SAMPLES) {
+        const x1 = samples[i1 * 2];
+        const y1 = samples[i1 * 2 + 1];
+        x = x0 + (x1 - x0) * frac;
+        y = y0 + (y1 - y0) * frac;
+      }
+
+      dot.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) translate(-50%, -50%)`;
       dot.style.opacity = visible ? '1' : '0';
     };
 
-    const update = () => {
-      rafId = null;
-      if (!isVisible) return;
-
+    const calculateTargetProgress = () => {
       const rect = wrap.getBoundingClientRect();
       const vh = window.innerHeight;
       const start = vh * 0.85;
       const end = -rect.height + vh * 0.5;
       const range = Math.max(1, start - end);
-      const p = Math.max(0, Math.min(1, (start - rect.top) / range));
+      return Math.max(0, Math.min(1, (start - rect.top) / range));
+    };
 
-      if (Math.abs(p - lastP) > 0.0015) {
-        lastP = p;
-        const pBranch = p < 0.55 ? p / 0.55 : 1;
-        const pMain = p > 0.45 ? Math.min(1, (p - 0.45) / 0.55) : 0;
+    const renderLoop = () => {
+      currentP += (targetP - currentP) * 0.12;
 
-        if (samplesLeft) {
-          pLeftFg.style.strokeDashoffset = String(lenLeft * (1 - pBranch));
-          setDot(dLeft, samplesLeft, pBranch, pBranch > 0.005 && pBranch < 0.995);
-        }
-        if (samplesRight) {
-          pRightFg.style.strokeDashoffset = String(lenRight * (1 - pBranch));
-          setDot(dRight, samplesRight, pBranch, pBranch > 0.005 && pBranch < 0.995);
-        }
-        if (samplesMain) {
-          pMainFg.style.strokeDashoffset = String(lenMain * (1 - pMain));
-          setDot(dMain, samplesMain, pMain, pMain > 0.005 && pMain < 0.995);
-        }
+      const pBranch = currentP < 0.55 ? currentP / 0.55 : 1;
+      const pMain = currentP > 0.45 ? Math.min(1, (currentP - 0.45) / 0.55) : 0;
+
+      if (samplesLeft) {
+        pLeftFg.style.strokeDashoffset = String(lenLeft * (1 - pBranch));
+        setDot(dLeft, samplesLeft, pBranch, pBranch > 0.005 && pBranch < 0.995);
+      }
+      if (samplesRight) {
+        pRightFg.style.strokeDashoffset = String(lenRight * (1 - pBranch));
+        setDot(dRight, samplesRight, pBranch, pBranch > 0.005 && pBranch < 0.995);
+      }
+      if (samplesMain) {
+        pMainFg.style.strokeDashoffset = String(lenMain * (1 - pMain));
+        setDot(dMain, samplesMain, pMain, pMain > 0.005 && pMain < 0.995);
       }
 
-      if (allActivated) return;
-      if (cachedSplitRow === null) cachedSplitRow = wrap.querySelector('.tl-split-row');
-      if (cachedRows === null) {
-        cachedRows = Array.from(wrap.querySelectorAll('.tl-row'))
-          .map((r) => ({ row: r, node: r.querySelector('.tl-node') }))
-          .filter((x) => x.node);
+      if (!allActivated) {
+        if (cachedSplitRow === null) cachedSplitRow = wrap.querySelector('.tl-split-row');
+        if (cachedRows === null) {
+          cachedRows = Array.from(wrap.querySelectorAll('.tl-row'))
+            .map((r) => ({ row: r, node: r.querySelector('.tl-node') }))
+            .filter((x) => x.node);
+        }
+        const threshold = window.innerHeight * 0.88;
+        let remaining = 0;
+        if (cachedSplitRow && !cachedSplitRow.classList.contains('is-active')) {
+          if (cachedSplitRow.getBoundingClientRect().top < threshold) {
+            cachedSplitRow.classList.add('is-active');
+          } else remaining++;
+        }
+        for (let i = 0; i < cachedRows.length; i++) {
+          const { row, node } = cachedRows[i];
+          if (row.classList.contains('is-active')) continue;
+          if (node.getBoundingClientRect().top < threshold) {
+            row.classList.add('is-active');
+          } else remaining++;
+        }
+        if (remaining === 0) allActivated = true;
       }
-      const threshold = vh * 0.88;
-      let remaining = 0;
-      if (cachedSplitRow && !cachedSplitRow.classList.contains('is-active')) {
-        if (cachedSplitRow.getBoundingClientRect().top < threshold) {
-          cachedSplitRow.classList.add('is-active');
-        } else remaining++;
+
+      if (Math.abs(targetP - currentP) > 0.0001) {
+        rafId = requestAnimationFrame(renderLoop);
+      } else {
+        isRunning = false;
+        currentP = targetP;
       }
-      for (let i = 0; i < cachedRows.length; i++) {
-        const { row, node } = cachedRows[i];
-        if (row.classList.contains('is-active')) continue;
-        if (node.getBoundingClientRect().top < threshold) {
-          row.classList.add('is-active');
-        } else remaining++;
-      }
-      if (remaining === 0) allActivated = true;
     };
 
     const onScroll = () => {
-      if (rafId == null && isVisible) rafId = requestAnimationFrame(update);
+      if (!isVisible) return;
+      targetP = calculateTargetProgress();
+      if (!isRunning) {
+        isRunning = true;
+        rafId = requestAnimationFrame(renderLoop);
+      }
     };
 
     const onResize = () => {
       buildPaths();
-      lastP = -1;
-      if (rafId == null) rafId = requestAnimationFrame(update);
+      targetP = calculateTargetProgress();
+      currentP = targetP;
+      if (!isRunning) {
+        isRunning = true;
+        rafId = requestAnimationFrame(renderLoop);
+      }
     };
 
     const visObs = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
-        if (isVisible && rafId == null) rafId = requestAnimationFrame(update);
+        if (isVisible) {
+          targetP = calculateTargetProgress();
+          if (!isRunning) {
+            isRunning = true;
+            rafId = requestAnimationFrame(renderLoop);
+          }
+        }
       },
-      { rootMargin: '300px 0px' }
+      { rootMargin: '400px 0px' }
     );
     visObs.observe(wrap);
 
-    buildPaths();
-    isVisible = true;
-    update();
+    const initTimer = setTimeout(() => {
+      buildPaths();
+      targetP = calculateTargetProgress();
+      currentP = targetP;
+      isRunning = true;
+      renderLoop();
+    }, 50);
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize);
@@ -602,6 +678,7 @@ function HowItWorks() {
     ro.observe(wrap);
 
     return () => {
+      clearTimeout(initTimer);
       if (rafId != null) cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
@@ -612,27 +689,32 @@ function HowItWorks() {
 
   const dotStyle = {
     position: 'absolute', top: 0, left: 0,
-    width: 22, height: 22, borderRadius: '50%',
+    width: 'clamp(14px, 3vw, 22px)', height: 'clamp(14px, 3vw, 22px)', borderRadius: '50%',
     background: '#FF2D7A',
-    border: '3px solid #fff',
-    boxShadow: '0 0 0 3px rgba(255,45,122,0.35), 0 8px 28px rgba(255,45,122,0.6)',
-    pointerEvents: 'none', zIndex: 4,
+    border: 'clamp(1.5px, 0.4vw, 3px) solid #fff',
+    boxShadow: '0 0 0 clamp(1.5px, 0.4vw, 3px) rgba(255,45,122,0.35), 0 8px 28px rgba(255,45,122,0.6)',
+    pointerEvents: 'none',
+    zIndex: 1,
     opacity: 0,
-    transition: 'opacity .2s ease',
+    transition: 'opacity .3s ease',
     willChange: 'transform'
   };
-  const pathTransition = { transition: 'stroke-dashoffset 0.15s linear' };
 
   return (
-    <section className="sec" id="como-funciona" style={{ background: 'var(--primary)', borderTop: '2.5px solid var(--ink)', borderBottom: '2.5px solid var(--ink)' }}>
+    <section className="sec" id="como-funciona" style={{
+      backgroundImage: 'radial-gradient(circle, rgba(26,26,26,0.14) 1.2px, transparent 1.2px)',
+      backgroundSize: '26px 26px',
+      backgroundPosition: '0 0',
+      position: 'relative'
+    }}>
       <div className="container">
-        <div className="sec-head" style={{ marginBottom: 20 }}>
-          <Eyebrow icon="target">Como funciona</Eyebrow>
+        <div className="sec-head">
+          <span className="eyebrow">Como funciona</span>
           <h2>Duas rotas. <span className="highlight-pink">Um destino: viral.</span></h2>
           <p>Pegue o link de um reel ou o roteiro do dia. Escolha quando gravar. O resto é deixar ir.</p>
         </div>
 
-        <div className="timeline" ref={wrapRef} style={{ position: 'relative' }}>
+        <div className="timeline" ref={wrapRef}>
           <svg ref={svgRef} preserveAspectRatio="none" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0, overflow: 'visible' }}>
             <defs>
               <linearGradient id="tlPathGrad" x1="0" y1="0" x2="0" y2="1">
@@ -640,17 +722,13 @@ function HowItWorks() {
                 <stop offset="50%" stopColor="#ff4d8c" />
                 <stop offset="100%" stopColor="#ff6aa3" />
               </linearGradient>
-              <filter id="tlPathGlow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-              </filter>
             </defs>
-            <path ref={pathLeftBgRef} fill="none" stroke="rgba(26,26,26,0.12)" strokeWidth="4" strokeLinecap="round" strokeDasharray="3 10" />
-            <path ref={pathRightBgRef} fill="none" stroke="rgba(26,26,26,0.12)" strokeWidth="4" strokeLinecap="round" strokeDasharray="3 10" />
-            <path ref={pathMainBgRef} fill="none" stroke="rgba(26,26,26,0.12)" strokeWidth="4" strokeLinecap="round" strokeDasharray="3 10" />
-            <path ref={pathLeftFgRef} fill="none" stroke="url(#tlPathGrad)" strokeWidth="5" strokeLinecap="round" filter="url(#tlPathGlow)" style={pathTransition} />
-            <path ref={pathRightFgRef} fill="none" stroke="url(#tlPathGrad)" strokeWidth="5" strokeLinecap="round" filter="url(#tlPathGlow)" style={pathTransition} />
-            <path ref={pathMainFgRef} fill="none" stroke="url(#tlPathGrad)" strokeWidth="5" strokeLinecap="round" filter="url(#tlPathGlow)" style={pathTransition} />
+            <path ref={pathLeftBgRef} fill="none" stroke="rgba(26,26,26,0.12)" strokeWidth="clamp(2px, 0.6vw, 4px)" strokeLinecap="round" strokeDasharray="3 10" />
+            <path ref={pathRightBgRef} fill="none" stroke="rgba(26,26,26,0.12)" strokeWidth="clamp(2px, 0.6vw, 4px)" strokeLinecap="round" strokeDasharray="3 10" />
+            <path ref={pathMainBgRef} fill="none" stroke="rgba(26,26,26,0.12)" strokeWidth="clamp(2px, 0.6vw, 4px)" strokeLinecap="round" strokeDasharray="3 10" />
+            <path ref={pathLeftFgRef} fill="none" stroke="url(#tlPathGrad)" strokeWidth="clamp(2.5px, 0.8vw, 5px)" strokeLinecap="round" />
+            <path ref={pathRightFgRef} fill="none" stroke="url(#tlPathGrad)" strokeWidth="clamp(2.5px, 0.8vw, 5px)" strokeLinecap="round" />
+            <path ref={pathMainFgRef} fill="none" stroke="url(#tlPathGrad)" strokeWidth="clamp(2.5px, 0.8vw, 5px)" strokeLinecap="round" />
           </svg>
 
           <div ref={dotLeftRef} style={dotStyle} />
@@ -660,44 +738,42 @@ function HowItWorks() {
           <div className="tl-split-row" style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
-            gap: 'clamp(10px, 3vw, 80px)',
-            marginBottom: 'clamp(40px, 6vw, 60px)',
-            paddingTop: 'clamp(40px, 10vw, 120px)',
+            gap: 'clamp(8px, 2vw, 80px)',
+            marginBottom: 'clamp(20px, 6vw, 60px)',
+            paddingTop: 'clamp(20px, 8vw, 120px)',
             position: 'relative',
             zIndex: 2
           }}>
             <div className="tl-card" data-branch="left">
               <span className="tl-eyebrow">Rota 1 · Link de reel</span>
               <h3>Copie o link, IA vira roteiro</h3>
-              <p>Viu algum reel que te interessou? Cole o link e nossa IA transforma em um roteiro pronto pra você gravar.</p>
+              <p>Viu algum reel? Cole o link e a IA transforma em roteiro.</p>
               <div className="app-mock">
                 <div className="head">
-                  <span style={{ fontWeight: 800, fontSize: 14 }}>Link colado</span>
-                  <span className="pill" style={{ background: 'var(--accent)', color: '#fff' }}>IA ON</span>
+                  <span style={{ fontWeight: 800, fontSize: 'clamp(9px, 2vw, 14px)' }}>Link colado</span>
+                  <span className="pill" style={{ background: 'var(--accent)', color: '#fff', border: 'none' }}>IA ON</span>
                 </div>
-                <div style={{ padding: '8px 10px', background: 'rgba(0,0,0,0.04)', borderRadius: 8, fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'var(--ink-soft)', wordBreak: 'break-all', marginTop: 6, border: '1px dashed rgba(0,0,0,0.15)' }}>
-                  instagram.com/reel/C9x4_...
+                <div style={{ padding: 'clamp(4px, 1vw, 8px) clamp(6px, 1.5vw, 10px)', background: 'rgba(0,0,0,0.04)', borderRadius: 8, fontFamily: 'JetBrains Mono, monospace', fontSize: 'clamp(7px, 1.5vw, 11px)', color: 'var(--ink-soft)', marginTop: 'clamp(4px, 1vw, 6px)', border: '1px dashed rgba(0,0,0,0.15)' }}>
+                  instagram.com/reel/C9...
                 </div>
-                <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: 'var(--ink)' }}>
-                  <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 8px var(--accent)' }} />
+                <div style={{ marginTop: 'clamp(6px, 1.5vw, 10px)', display: 'flex', alignItems: 'center', gap: 'clamp(4px, 1vw, 8px)', fontSize: 'clamp(8px, 1.8vw, 12px)', color: 'var(--ink)' }}>
+                  <span style={{ display: 'inline-block', width: 'clamp(4px, 1vw, 8px)', height: 'clamp(4px, 1vw, 8px)', borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 8px var(--accent)', flexShrink: 0 }} />
                   <span>Gerando roteiro...</span>
                 </div>
               </div>
-              <span className="tl-card-big">01</span>
             </div>
 
             <div className="tl-card" data-branch="right">
               <span className="tl-eyebrow">Rota 2 · Manhã · 6h</span>
               <h3>Ou abre o app</h3>
-              <p>Todo dia um roteiro viral novo esperando por você. Já estruturado no formato que o algoritmo prioriza.</p>
+              <p>Todo dia um roteiro viral novo pronto pro formato.</p>
               <div className="app-mock">
                 <div className="head">
-                  <span style={{ fontWeight: 800, fontSize: 14 }}>Roteiro de hoje</span>
+                  <span style={{ fontWeight: 800, fontSize: 'clamp(9px, 2vw, 14px)' }}>Roteiro de hoje</span>
                   <span className="pill">#DIA 23</span>
                 </div>
                 <div className="line md" /><div className="line sh" /><div className="line md" />
               </div>
-              <span className="tl-card-big">01</span>
             </div>
           </div>
 
@@ -705,26 +781,25 @@ function HowItWorks() {
             <div className="tl-card">
               <span className="tl-eyebrow">Agenda · WhatsApp</span>
               <h3>Escolha o dia de gravação</h3>
-              <p>Agende quando você quer gravar. No dia, nossa IA envia o roteiro prontinho direto no seu WhatsApp.</p>
+              <p>Agende e a IA envia o roteiro direto no seu WhatsApp.</p>
               <div className="app-mock">
                 <div className="head">
-                  <span style={{ fontWeight: 800, fontSize: 14 }}>Quinta · 18/04</span>
-                  <span className="pill" style={{ background: 'var(--accent)', color: '#fff' }}>WHATSAPP</span>
+                  <span style={{ fontWeight: 800, fontSize: 'clamp(9px, 2vw, 14px)' }}>Quinta · 18/04</span>
+                  <span className="pill" style={{ background: 'var(--accent)', color: '#fff', border: 'none' }}>WHATSAPP</span>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 4, marginTop: 10 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 'clamp(1px, 0.5vw, 4px)', marginTop: 'clamp(6px, 1.5vw, 10px)' }}>
                   {Array.from({ length: 14 }).map((_, i) => (
                     <div key={i} style={{
-                      aspectRatio: '1', borderRadius: 6,
+                      aspectRatio: '1', borderRadius: 'clamp(3px, 1vw, 6px)',
                       border: '1.5px solid var(--ink)',
                       background: i === 3 ? 'var(--accent)' : (i < 3 ? 'rgba(0,0,0,0.06)' : '#fff'),
                       display: 'grid', placeItems: 'center',
-                      fontSize: 10, fontWeight: 700, color: i === 3 ? '#fff' : 'var(--ink)',
+                      fontSize: 'clamp(6px, 1.2vw, 10px)', fontWeight: 700, color: i === 3 ? '#fff' : 'var(--ink)',
                       fontFamily: 'JetBrains Mono, monospace'
                     }}>{i < 3 ? '✓' : (i === 3 ? '◉' : (i + 1))}</div>
                   ))}
                 </div>
               </div>
-              <span className="tl-card-big">02</span>
             </div>
             <div className="tl-node">02</div>
             <div></div>
@@ -736,68 +811,120 @@ function HowItWorks() {
             <div className="tl-card">
               <span className="tl-eyebrow">1 minuto · Celular</span>
               <h3>Grava em 1 minuto</h3>
-              <p>Sem câmera cara, sem cenário. Seu celular basta. O formato já está pronto para viralizar.</p>
+              <p>Sem cenário. Seu celular basta. Já no formato viral.</p>
               <div className="app-mock" style={{ background: 'var(--ink)', color: '#fff' }}>
                 <div className="head" style={{ borderColor: 'rgba(255,255,255,.15)' }}>
-                  <span style={{ fontWeight: 800, fontSize: 14, color: 'var(--secondary)' }}>● REC 00:47</span>
-                  <span className="pill" style={{ background: 'var(--accent)', color: '#fff', borderColor: '#fff' }}>1 MIN</span>
+                  <span style={{ fontWeight: 800, fontSize: 'clamp(9px, 2vw, 14px)', color: 'var(--secondary)' }}>● REC 00:47</span>
+                  <span className="pill" style={{ background: 'var(--accent)', color: '#fff', border: 'none' }}>1 MIN</span>
                 </div>
                 <div style={{
-                  height: 70, borderRadius: 10, background: 'linear-gradient(135deg, var(--accent), #8a2abf)',
-                  opacity: .85, display: 'grid', placeItems: 'center', color: '#fff', fontSize: 12, fontFamily: 'JetBrains Mono, monospace'
+                  height: 'clamp(40px, 8vw, 70px)', borderRadius: 'clamp(6px, 1.5vw, 10px)', background: 'linear-gradient(135deg, var(--accent), #8a2abf)',
+                  opacity: .85, display: 'grid', placeItems: 'center', color: '#fff', fontSize: 'clamp(8px, 1.5vw, 12px)', fontFamily: 'JetBrains Mono, monospace'
                 }}>// GRAVANDO</div>
               </div>
-              <span className="tl-card-big">03</span>
             </div>
           </div>
 
           <div className="tl-row left">
             <div className="tl-card">
-              <span className="tl-eyebrow">Alcance · Modo recomendação</span>
+              <span className="tl-eyebrow">Alcance · Recomendação</span>
               <h3>Posta e viraliza</h3>
-              <p>Modo Recomendação ativado. Seu vídeo chega em desconhecidos. Autoridade construída.</p>
+              <p>Modo Recomendação ativado. Autoridade construída.</p>
               <div className="app-mock">
                 <div className="head">
-                  <span style={{ fontWeight: 800, fontSize: 14 }}>Alcance</span>
-                  <span className="pill" style={{ background: 'var(--accent)', color: '#fff' }}>+847%</span>
+                  <span style={{ fontWeight: 800, fontSize: 'clamp(9px, 2vw, 14px)' }}>Alcance</span>
+                  <span className="pill" style={{ background: 'var(--accent)', color: '#fff', border: 'none' }}>+847%</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 54, marginTop: 6 }}>
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: 'clamp(2px, 0.8vw, 6px)', height: 'clamp(30px, 6vw, 54px)', marginTop: 'clamp(4px, 1vw, 6px)' }}>
                   {[20, 32, 28, 45, 60, 82, 100].map((h, i) =>
                     <div key={i} style={{
                       flex: 1, height: `${h}%`,
                       background: i > 4 ? 'var(--accent)' : 'var(--secondary)',
-                      border: '1.5px solid var(--ink)', borderRadius: 4
+                      border: '1.5px solid var(--ink)', borderRadius: 'clamp(2px, 0.5vw, 4px)'
                     }} />
                   )}
                 </div>
               </div>
-              <span className="tl-card-big">04</span>
             </div>
             <div className="tl-node">04</div>
             <div></div>
           </div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
 
 /* ===== Big proof number ===== */
+const PROOF_AVATARS = [
+  { bg: '#FFB4C9', initials: 'MC' },
+  { bg: '#FDE68A', initials: 'JR' },
+  { bg: '#BFDBFE', initials: 'AS' },
+  { bg: '#C7F9CC', initials: 'LP' },
+  { bg: '#FECACA', initials: 'RS' },
+  { bg: '#DDD6FE', initials: 'BK' },
+  { bg: '#FED7AA', initials: 'TN' },
+  { bg: '#FBCFE8', initials: 'CV' },
+];
+
 function BigProof() {
+  const [count, setCount] = React.useState(0);
+  const [started, setStarted] = React.useState(false);
+  const sectionRef = React.useRef(null);
+  const target = 44000;
+
+  React.useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setStarted(true); });
+    }, { threshold: 0.35 });
+    obs.observe(node);
+    return () => obs.disconnect();
+  }, []);
+
+  React.useEffect(() => {
+    if (!started) return;
+    const duration = 2200;
+    const start = performance.now();
+    let raf;
+    const tick = (now) => {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setCount(Math.round(target * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [started]);
+
+  const formatted = count.toLocaleString('pt-BR');
+
   return (
-    <section className="sec" style={{ background: 'var(--primary)', borderTop: '2.5px solid var(--ink)', borderBottom: '2.5px solid var(--ink)' }}>
+    <section className="sec" ref={sectionRef}>
       <div className="container">
         <div style={{ textAlign: 'center' }}>
-          <Eyebrow icon="sparkles">+44.000 profissionais</Eyebrow>
-          <div style={{
-            fontFamily: 'var(--font-head)', fontWeight: 900,
-            fontSize: 'clamp(80px, 14vw, 200px)', lineHeight: .9,
-            color: 'var(--accent)',
-            WebkitTextStroke: '3px var(--ink)',
-            textShadow: '10px 10px 0 var(--ink)',
-            margin: '20px 0',
-            letterSpacing: '-0.04em'
-          }}>+44.000</div>
+          {/* Live activity badge */}
+          <div className={`live-proof-badge ${started ? 'on' : ''}`}>
+            <span className="live-pulse" />
+            <div className="live-avatars">
+              {PROOF_AVATARS.slice(0, 4).map((a, i) => (
+                <span key={i} className="live-avatar" style={{ background: a.bg, zIndex: 4 - i }}>{a.initials}</span>
+              ))}
+            </div>
+            <span className="live-label">PROFISSIONAIS ATIVANDO AGORA</span>
+          </div>
+
+          {/* Big number with avatars behind */}
+          <div className={`proof-number-wrap ${started ? 'on' : ''}`}>
+            <div className="proof-avatars-bg" aria-hidden>
+              {PROOF_AVATARS.map((a, i) => (
+                <span key={i} className={`proof-avatar pa-${i}`} style={{ background: a.bg }}>{a.initials}</span>
+              ))}
+            </div>
+            <div className="proof-number">+{formatted}</div>
+          </div>
+
           <p style={{ fontSize: 22, fontWeight: 600, maxWidth: 640, margin: '0 auto', textWrap: 'pretty' }}>
             profissionais da beleza já ativaram o <strong>Método Viral</strong>. Em todos os nichos.
             Do zero. Sem equipe. Sem anúncio.
@@ -813,7 +940,7 @@ function BigProof() {
 /* ===== Features (o que você recebe) ===== */
 function Features() {
   return (
-    <section className="sec" id="o-que-recebe" style={{ background: 'var(--primary)', borderTop: '2.5px solid var(--ink)', borderBottom: '2.5px solid var(--ink)' }}>
+    <section className="sec" id="o-que-recebe">
       <div className="container">
         <div className="sec-head">
           <Eyebrow icon="grid">O que você recebe</Eyebrow>
@@ -904,51 +1031,77 @@ function Features() {
           </div>
         </div>
 
+        {/* Carrossel dos 12 módulos do curso */}
+        <ModulosCarousel />
+
         {/* Desafio + Atualizações */}
         <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 22, marginTop: 22 }} className="extras">
-          <div style={{
-            background: 'var(--accent)', color: '#fff',
-            border: '2.5px solid var(--ink)', borderRadius: 24, padding: 36,
-            boxShadow: '6px 6px 0 var(--ink)', display: 'flex', alignItems: 'center', gap: 36,
+          <div className="glass-liquid-card" style={{
+            padding: 'clamp(24px, 4vw, 36px)',
+            display: 'flex', alignItems: 'center', gap: 'clamp(20px, 3vw, 32px)',
             flexWrap: 'wrap'
           }}>
             <div style={{
-              width: 130, height: 130, flexShrink: 0,
-              background: 'var(--secondary)', border: '3px solid #fff',
-              boxShadow: '0 0 0 3px var(--ink)', borderRadius: 24,
-              display: 'grid', placeItems: 'center', color: 'var(--ink)',
+              width: 'clamp(100px, 14vw, 130px)', height: 'clamp(100px, 14vw, 130px)', flexShrink: 0,
+              background: 'linear-gradient(135deg, rgba(207,255,4,0.85) 0%, rgba(207,255,4,0.5) 100%)',
+              backdropFilter: 'blur(24px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+              border: '1.5px solid rgba(255,255,255,0.8)',
+              borderRadius: 24,
+              display: 'grid', placeItems: 'center',
+              color: 'var(--ink)',
               fontFamily: 'var(--font-head)', fontWeight: 900,
-              transform: 'rotate(calc(-6deg * var(--playful)))'
+              boxShadow: '0 10px 30px -5px rgba(207,255,4,0.55), inset 0 4px 10px -2px rgba(255,255,255,0.7)'
             }}>
               <div style={{ textAlign: 'center', lineHeight: .9 }}>
-                <div style={{ fontSize: 34 }}>0→10K</div>
+                <div style={{ fontSize: 'clamp(26px, 3.5vw, 32px)' }}>0→10K</div>
                 <div style={{ fontSize: 11, letterSpacing: '.1em', marginTop: 6 }}>30 DIAS</div>
               </div>
             </div>
             <div style={{ flex: 1, minWidth: 240 }}>
-              <div className="tag" style={{ background: 'rgba(255,255,255,.18)', borderColor: '#fff', color: '#fff', display: 'inline-block' }}>Desafio gamificado</div>
-              <h3 style={{ marginTop: 12, fontSize: 28 }}>Desafio do 0 aos 10K em 30 dias</h3>
-              <p style={{ marginTop: 10, color: '#ffe6ef' }}>Todas as coordenadas para postagens. Em 30 dias você bate 10 mil seguidores. Com gamificação você vê o progresso em tempo real.</p>
+              <div className="tag" style={{
+                display: 'inline-block',
+                background: 'rgba(255,255,255,0.5)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: '1px solid rgba(255,255,255,0.6)',
+                color: 'var(--accent)'
+              }}>Desafio gamificado</div>
+              <h3 style={{ marginTop: 12, fontSize: 'clamp(22px, 3vw, 28px)', color: 'var(--ink)' }}>Desafio do 0 aos 10K em 30 dias</h3>
+              <p style={{ marginTop: 10, color: 'var(--ink-soft)' }}>Todas as coordenadas para postagens. Em 30 dias você bate 10 mil seguidores. Com gamificação você vê o progresso em tempo real.</p>
             </div>
           </div>
-          <div style={{
-            background: '#fff', border: '2.5px solid var(--ink)', borderRadius: 24,
-            padding: 30, boxShadow: '6px 6px 0 var(--ink)',
-            display: 'flex', flexDirection: 'column', justifyContent: 'space-between'
+
+          <div className="glass-liquid-card" style={{
+            padding: 'clamp(20px, 3vw, 30px)',
+            display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 16
           }}>
             <div>
-              <div className="tag">Sempre atual</div>
+              <div className="tag" style={{
+                display: 'inline-block',
+                background: 'rgba(255,255,255,0.5)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: '1px solid rgba(255,255,255,0.6)',
+                color: 'var(--accent)'
+              }}>Sempre atual</div>
               <h3 style={{ marginTop: 10 }}>Atualizações constantes</h3>
               <p style={{ marginTop: 10, color: 'var(--ink-soft)' }}>O conteúdo é atualizado conforme o algoritmo evolui. Você nunca fica desatualizada.</p>
             </div>
-            <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {['v2.1', 'v2.2', 'v2.3', 'v2.4'].map((v, i) =>
                 <span key={i} style={{
                   fontFamily: 'JetBrains Mono, monospace', fontSize: 11,
-                  padding: '4px 10px', borderRadius: 20,
-                  border: '1.5px dashed var(--ink)',
-                  background: i === 3 ? 'var(--secondary)' : 'transparent',
-                  fontWeight: 700
+                  padding: '5px 11px', borderRadius: 20,
+                  border: i === 3 ? '1.5px solid rgba(255,45,122,0.3)' : '1px solid rgba(255,255,255,0.6)',
+                  background: i === 3
+                    ? 'linear-gradient(135deg, rgba(255,45,122,0.15) 0%, rgba(255,45,122,0.08) 100%)'
+                    : 'rgba(255,255,255,0.4)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  color: i === 3 ? 'var(--accent)' : 'var(--ink-soft)',
+                  fontWeight: 700,
+                  boxShadow: i === 3 ? '0 4px 12px -2px rgba(255,45,122,0.25)' : 'inset 0 1px 0 rgba(255,255,255,0.6)'
                 }}>{v}{i === 3 && ' ←'}</span>
               )}
             </div>
@@ -960,6 +1113,124 @@ function Features() {
         </div>
       </div>
     </section>);
+
+}
+
+/* ===== Módulos do curso (bloco embutido em Features) ===== */
+function ModulosCarousel() {
+  const modulos = [
+    { n: '01', slug: 'comece-por-aqui', file: 'comece-por-aqui.webp', tag: 'Módulo', name: 'Comece por aqui', sub: 'Boas-vindas', desc: 'Precisão extrema para viralizar. O mapa completo do método antes de qualquer gravação.', accent: 'pink' },
+    { n: '02', slug: 'do-zero-aos-10k', file: 'desafio-10k.webp', tag: 'Módulo', name: 'Do Zero aos 10K', sub: '30 dias', desc: 'Passo a passo gamificado para sair do zero e bater 10 mil seguidores em 30 dias.', accent: 'lime' },
+    { n: '03', slug: 'tutorial-sem-edicao', file: 'tutorial-sem-edicao.webp', tag: 'Módulo', name: 'Tutorial sem Edição', sub: 'Método 1 min', desc: 'Como criar vídeos que prendem atenção sem depender de edição nem equipamento.', accent: 'pink' },
+    { n: '04', slug: 'problema-solucao', file: 'problema solucao.webp', tag: 'Formato', name: 'Problema Solução', sub: 'Estrutura viral', desc: 'Formato que entrega valor e ativa o algoritmo de recomendação do Instagram.', accent: 'pink' },
+    { n: '05', slug: 'formato-ranking', file: 'formato ranking.webp', tag: 'Formato', name: 'Ranking', sub: 'Top 3 · Top 5', desc: 'O formato mais compartilhado em 2026. Retém até o final e gera salvamentos.', accent: 'lime' },
+    { n: '06', slug: 'formato-bastidores', file: 'formato bastidores.webp', tag: 'Formato', name: 'Bastidores', sub: 'Conexão real', desc: 'Transforma rotina em conteúdo que conecta. O formato que mais humaniza o perfil.', accent: 'pink' },
+    { n: '07', slug: 'formato-palestrinha', file: 'formato-palestrinha.webp', tag: 'Formato', name: 'Palestrinha', sub: 'Autoridade', desc: 'Para quem quer virar referência falando direto para a câmera. Script + enquadramento.', accent: 'lime' },
+    { n: '08', slug: 'formato-carrossel', file: 'formato-carrossel.webp', tag: 'Formato', name: 'Carrossel', sub: 'Alcance orgânico', desc: 'O formato com maior tempo de tela do Instagram. Ideal para nichos de educação.', accent: 'pink' },
+    { n: '09', slug: 'formato-narrado', file: 'formato narrado.webp', tag: 'Formato', name: 'Narrado', sub: 'Sem aparecer', desc: 'Viraliza sem mostrar o rosto. Voz + corte seco + legenda que puxa o dedo.', accent: 'pink' },
+    { n: '10', slug: 'formato-tela-dividida', file: 'tela-dividida-2.webp', tag: 'Formato', name: 'Tela Dividida', sub: 'Alto retention', desc: 'Duas camadas que seguram o olhar até o final. O preferido da Geração Z.', accent: 'lime' },
+    { n: '11', slug: 'formato-mito-ou-verdades', file: 'mito.webp', tag: 'Formato', name: 'Mito ou Verdades', sub: 'Engajamento', desc: 'Gatilho de curiosidade + comentários automáticos. Ranqueia em explorar.', accent: 'pink' },
+    { n: '12', slug: 'formato-usar-x-nao-usar', file: 'oque usar e oque nao usar.webp', tag: 'Formato', name: 'Usar x Não Usar', sub: 'Guia rápido', desc: 'Estratégias de 1 minuto que transformam ideias em alcance real. Rosto opcional.', accent: 'lime' }
+  ];
+
+  const handleImgError = (e) => {
+    e.currentTarget.style.display = 'none';
+    e.currentTarget.parentElement.classList.add('mod-no-img');
+  };
+
+  const trackRef = React.useRef(null);
+  const pausedRef = React.useRef(false);
+
+  React.useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    let rafId;
+    let lastTs = 0;
+    const SPEED = 40;
+
+    const tick = (ts) => {
+      if (!lastTs) lastTs = ts;
+      const dt = ts - lastTs;
+      lastTs = ts;
+
+      if (!pausedRef.current) {
+        el.scrollLeft += (SPEED * dt) / 1000;
+        const half = el.scrollWidth / 2;
+        if (el.scrollLeft >= half) {
+          el.scrollLeft -= half;
+        }
+      } else {
+        lastTs = ts;
+      }
+
+      rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+
+    const pause = () => { pausedRef.current = true; };
+    const resume = () => { pausedRef.current = false; };
+
+    el.addEventListener('pointerenter', pause);
+    el.addEventListener('pointerleave', resume);
+    el.addEventListener('pointerdown', pause);
+    el.addEventListener('touchstart', pause, { passive: true });
+    el.addEventListener('touchend', resume);
+    el.addEventListener('focusin', pause);
+    el.addEventListener('focusout', resume);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      el.removeEventListener('pointerenter', pause);
+      el.removeEventListener('pointerleave', resume);
+      el.removeEventListener('pointerdown', pause);
+      el.removeEventListener('touchstart', pause);
+      el.removeEventListener('touchend', resume);
+      el.removeEventListener('focusin', pause);
+      el.removeEventListener('focusout', resume);
+    };
+  }, []);
+
+  const loopList = [...modulos, ...modulos];
+
+  return (
+    <div className="modulos-block" id="modulos">
+      <div className="container">
+        <div className="modulos-head">
+          <div className="tag" style={{ display: 'inline-block', background: 'var(--secondary)', color: 'var(--ink)' }}>12 módulos do curso</div>
+          <h3 style={{ marginTop: 14, fontSize: 'clamp(22px, 2.6vw, 30px)', color: 'var(--ink)' }}>
+            Cada formato que <span className="highlight-pink">viraliza</span>, num módulo separado.
+          </h3>
+        </div>
+      </div>
+
+      <div className="modulos-carousel">
+        <div className="modulos-track" ref={trackRef}>
+          {loopList.map((m, i) => (
+            <article
+              key={`${m.slug}-${i}`}
+              className={`mod-card mod-${m.accent}${m.file ? '' : ' mod-no-img'}`}
+              data-mod={m.n}
+              aria-hidden={i >= modulos.length ? 'true' : undefined}
+            >
+              {m.file && (
+                <img
+                  src={`uploads/modulos/${m.file}`}
+                  alt={`Módulo ${m.name}`}
+                  loading="lazy"
+                  onError={handleImgError}
+                />
+              )}
+              <div className="mod-fallback" aria-hidden="true">
+                <span className="mod-fb-bolt"><Icon name="bolt" size={40} color="#fff" /></span>
+                <span className="mod-fb-title">{m.name}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>);
 
 }
 
@@ -1041,7 +1312,7 @@ function Comparison() {
   };
 
   return (
-    <section className="sec" style={{ background: 'var(--primary)', borderTop: '2.5px solid var(--ink)', borderBottom: '2.5px solid var(--ink)' }}>
+    <section className="sec">
       <div className="container">
         <div className="sec-head">
           <Eyebrow icon="target">Comparativo</Eyebrow>
@@ -1101,7 +1372,7 @@ function Pricing() {
         </div>
 
         <div className="pricing-grid">
-          <div className="plan">
+                      <div className="plan">
             <span className="tier">Starter · Mensal</span>
             <div className="price">
               <span className="cur">R$</span>
@@ -1117,7 +1388,6 @@ function Pricing() {
               <li><span className="ck">✓</span><span>Desafio 0→10K em 30 dias</span></li>
               <li><span className="ck">✓</span><span>Cancela quando quiser</span></li>
             </ul>
-            <Btn variant="ghost" size="lg" icon="arrow">Começar mensal</Btn>
           </div>
 
           <div className="plan popular">
@@ -1151,7 +1421,7 @@ function Guarantee() {
     <section className="sec" style={{ paddingTop: 40 }}>
       <div className="container">
         <div className="guarantee">
-          <div className="seal">
+          <div className="seal" style={{ border: '1px solid var(--glass-border)', boxShadow: '0 12px 32px rgba(200, 240, 0, 0.4)' }}>
             <div>
               <div className="big">30</div>
               <div className="sm">DIAS DE GARANTIA</div>
@@ -1215,7 +1485,16 @@ function FinalCTA() {
           <span className="spark s2"><Icon name="star" size={28} color="#fff" /></span>
           <span className="spark s3"><Icon name="bolt" size={32} color="var(--secondary)" /></span>
           <Eyebrow icon="bolt">A decisão é simples</Eyebrow>
-          <h2 style={{ marginTop: 18, color: '#fff' }}>Continuar invisível<br />ou <span style={{ background: 'var(--secondary)', color: 'var(--ink)', padding: '0 .2em', borderRadius: 12, border: '3px solid var(--ink)', display: 'inline-block', transform: 'rotate(calc(-1.5deg * var(--playful)))' }}>ativar o Modo Viralização?</span></h2>
+          <h2 style={{ marginTop: 18, color: '#fff' }}>Continuar invisível<br />ou <span style={{ 
+            background: 'var(--secondary)', 
+            color: 'var(--ink)', 
+            padding: '0 .3em', 
+            borderRadius: 16, 
+            border: '1px solid rgba(255,255,255,0.4)', 
+            display: 'inline-block', 
+            boxShadow: '0 8px 24px rgba(200, 240, 0, 0.3)',
+            transform: 'rotate(calc(-1.5deg * var(--playful)))' 
+          }}>ativar o Modo Viralização?</span></h2>
           <p>Você pode continuar tentando adivinhar o que funciona. Ou usar um sistema pronto.
             A diferença entre essas duas decisões cabe em um clique.</p>
           <div className="btns">

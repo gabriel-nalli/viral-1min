@@ -1517,7 +1517,7 @@ function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="foot-logo">
-            <img src="assets/logo-viral.webp" alt="Viral em 1 minuto" />
+            <img src="assets/logo-viral.webp?v=2" alt="Viral em 1 minuto" width="240" height="240" loading="lazy" decoding="async" />
             <p>O sistema mais completo para viralizar no Instagram na área da beleza. Curso + app + mentoria, tudo em um acesso.</p>
           </div>
           <div>

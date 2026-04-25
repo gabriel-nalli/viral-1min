@@ -41,7 +41,14 @@ function Btn({ variant = "primary", size, icon, children, href = "#", onClick })
 function Logo() {
   return (
     <div className="nav-logo">
-      <img src="assets/logo-viral.webp" alt="Viral em 1 minuto" />
+      <img
+        src="assets/logo-viral.webp?v=2"
+        alt="Viral em 1 minuto"
+        width="240"
+        height="240"
+        decoding="async"
+        fetchpriority="high"
+      />
     </div>
   );
 }

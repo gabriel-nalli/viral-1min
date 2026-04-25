@@ -4,18 +4,55 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Viral em 1 Minuto — Viralize sem edição, sem dancinha, sem anúncio</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://unpkg.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=15">
+
+<style>
+:root{--primary:#FFF4E6;--secondary:#C8F000;--accent:#FF2D7A;--bg:#fff;--ink:#1A1A1A;--ink-soft:#4d4d4d;--line:rgba(26,26,26,.08);--radius-btn:50px;--radius-card:32px;--font-head:'Poppins',system-ui,sans-serif;--font-body:'Poppins',system-ui,sans-serif;--container:1240px;--playful:.5;--glass-bg:rgba(255,255,255,.45);--glass-border:rgba(255,255,255,.6);--blur:blur(16px)}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--font-body);background:radial-gradient(ellipse 80% 60% at 90% 0%,rgba(255,45,122,.08),transparent 60%),radial-gradient(ellipse 70% 60% at 10% 100%,rgba(207,255,4,.08),transparent 60%),linear-gradient(180deg,#fff4e6 0%,#fff6eb 20%,#fff1e8 40%,#fff8ef 60%,#fff3ea 80%,#fff4e6 100%);background-attachment:fixed;color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+img{max-width:100%;display:block}
+.container{max-width:var(--container);margin:0 auto;padding:0 30px}
+h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:.98;letter-spacing:-.02em;margin:0}
+h1{font-size:clamp(42px,6vw,88px)}
+h2{font-size:clamp(34px,4.5vw,64px)}
+h3{font-size:clamp(22px,2vw,30px)}
+p{line-height:1.5;margin:0}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:11px;padding:8px 18px;border:1px solid rgba(255,255,255,.6);border-radius:50px;background:rgba(255,255,255,.35);color:var(--ink)}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.highlight-pink{color:var(--accent)}
+.highlight-lime{background:var(--secondary);padding:0 .15em;display:inline-block;border-radius:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-head);font-weight:700;font-size:17px;padding:16px 28px;border-radius:var(--radius-btn);border:1px solid rgba(26,26,26,.08);cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,#FF5B94,var(--accent));color:#fff;box-shadow:0 12px 24px rgba(255,45,122,.3)}
+.btn-lg{font-size:19px;padding:20px 34px}
+.nav{position:sticky;top:14px;z-index:40;margin:14px auto 0;max-width:calc(var(--container) + 20px);padding:0 20px}
+.nav-inner{background:rgba(255,255,255,.65);border:1px solid rgba(26,26,26,.08);border-radius:60px;display:flex;align-items:center;justify-content:space-between;padding:10px 14px 10px 20px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:800}
+.nav-logo img{height:38px;width:auto}
+.nav-links{display:flex;gap:26px;font-weight:600;font-size:15px}
+.nav-links a{color:var(--ink)}
+@media (max-width:820px){.nav-links{display:none}}
+.hero{position:relative;padding:70px 0 60px;overflow:hidden}
+</style>
+
+<link rel="preload" as="image" href="assets/logo-viral.webp" fetchpriority="high">
+
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600&display=swap"></noscript>
+
+<link rel="preload" href="dist/styles.css?v=16" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="dist/styles.css?v=16"></noscript>
 
 <script defer src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
 <script defer src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
-<script defer src="dist/tweaks-panel.js?v=14"></script>
-<script defer src="dist/components.js?v=14"></script>
-<script defer src="dist/sections.js?v=14"></script>
-<script defer src="dist/app.js?v=14"></script>
+<script defer src="dist/tweaks-panel.js?v=15"></script>
+<script defer src="dist/components.js?v=15"></script>
+<script defer src="dist/sections.js?v=15"></script>
+<script defer src="dist/app.js?v=15"></script>
 </head>
 <body>
 

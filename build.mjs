@@ -1,14 +1,14 @@
 import { build } from 'esbuild';
 import { mkdir, rm } from 'node:fs/promises';
 
-const ENTRIES = ['tweaks-panel.jsx', 'components.jsx', 'sections.jsx', 'app.jsx'];
+const JS_ENTRIES = ['tweaks-panel.jsx', 'components.jsx', 'sections.jsx', 'app.jsx'];
 const OUT_DIR = 'dist';
 
 await rm(OUT_DIR, { recursive: true, force: true });
 await mkdir(OUT_DIR, { recursive: true });
 
-await Promise.all(
-  ENTRIES.map((entry) =>
+await Promise.all([
+  ...JS_ENTRIES.map((entry) =>
     build({
       entryPoints: [entry],
       outfile: `${OUT_DIR}/${entry.replace(/\.jsx$/, '.js')}`,
@@ -20,7 +20,13 @@ await Promise.all(
       target: ['es2019'],
       legalComments: 'none'
     })
-  )
-);
+  ),
+  build({
+    entryPoints: ['styles.css'],
+    outfile: `${OUT_DIR}/styles.css`,
+    minify: true,
+    loader: { '.css': 'css' }
+  })
+]);
 
 console.log('build ok →', OUT_DIR);

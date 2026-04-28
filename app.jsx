@@ -34,6 +34,7 @@ function App() {
       <Marquee />
       <Results />
       <BigProof />
+      <MasonryApp />
       <HowItWorks />
       <WhyNotGrowing />
       <Features />

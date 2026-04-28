@@ -525,6 +525,30 @@ function Results() {
         </div>
       </ResultsCarousel>
 
+      {/* Carrossel 4: Carolina */}
+      <ResultsCarousel delay={4500}>
+        <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 20px 40px rgba(0,0,0,0.05)', position: 'relative', border: '1px solid rgba(0,0,0,0.05)' }}>
+          <div style={{ position: 'absolute', top: -16, left: 24, background: '#1a1a1a', color: '#fff', padding: '6px 16px', borderRadius: 999, fontWeight: 800, fontSize: 13, letterSpacing: 1 }}>ANTES</div>
+          <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.05)', backgroundColor: '#f0f0f0' }}>
+            <img src="assets/carolina-antes.PNG" alt="Perfil Antes Carolina" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
+          </div>
+          <div style={{ marginTop: 24, textAlign: 'center' }}>
+            <h4 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--ink)' }}>2.340 Seguidores</h4>
+            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Carolina</p>
+          </div>
+        </div>
+        <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 32px 64px rgba(255,45,122,0.15)', position: 'relative', border: '2px solid var(--accent)' }}>
+          <div style={{ position: 'absolute', top: -16, left: 24, background: 'var(--accent)', color: '#fff', padding: '6px 16px', borderRadius: 999, fontWeight: 800, fontSize: 13, letterSpacing: 1, boxShadow: '0 8px 16px rgba(255,45,122,0.3)' }}>DEPOIS (COM O MÉTODO)</div>
+          <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.05)', backgroundColor: '#f0f0f0' }}>
+            <img src="assets/carolina-depois.PNG" alt="Perfil Depois Carolina" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
+          </div>
+          <div style={{ marginTop: 24, textAlign: 'center' }}>
+            <h4 style={{ margin: 0, fontSize: 26, fontWeight: 900, color: 'var(--accent)' }}>21,5 mil Seguidores</h4>
+            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Carolina</p>
+          </div>
+        </div>
+      </ResultsCarousel>
+
     </section>
   );
 }
@@ -838,8 +862,8 @@ function HowItWorks() {
       <div className="container">
         <div className="sec-head">
           <span className="eyebrow">Como funciona</span>
-          <h2>Duas rotas. <span className="highlight-pink">Um destino: viral.</span></h2>
-          <p>Pegue o link de um reel ou o roteiro do dia. Escolha quando gravar. O resto é deixar ir.</p>
+          <h2>Duas rotas. Um destino: <span className="highlight-pink">Viralizar</span></h2>
+          <p>Pegue o link de um reel ou o roteiro do dia. Escolha quando gravar. O resto é com a gente</p>
         </div>
 
         <div className="timeline" ref={wrapRef}>
@@ -874,7 +898,7 @@ function HowItWorks() {
           }}>
             <div className="tl-card" data-branch="left">
               <span className="tl-eyebrow">Rota 1 · Link de reel</span>
-              <h3>Copie o link, IA vira roteiro</h3>
+              <h3>Transforme qualquer link em roteiro</h3>
               <p>Viu algum reel? Cole o link e a IA transforma em roteiro.</p>
               <div className="app-mock">
                 <div className="head">
@@ -996,11 +1020,46 @@ const PROOF_AVATARS = [
   { bg: '#FBCFE8', initials: 'CV' },
 ];
 
+const FloatingPlays = ({ started }) => {
+  const particles = React.useMemo(() => {
+    return Array.from({ length: 30 }).map((_, i) => ({
+      id: i,
+      left: Math.random() * 90 + 5, // 5% to 95%
+      delay: Math.random() * 1.5, // 0 to 1.5s
+      duration: 1.5 + Math.random() * 1.5, // 1.5s to 3.0s
+      scale: 0.6 + Math.random() * 0.8,
+      rotate: Math.random() * 80 - 40, // -40 to 40
+      color: ['#FF2D7A', '#C8F000', '#00e5ff', '#a78bfa', '#fb923c', '#fff'][Math.floor(Math.random() * 6)]
+    }));
+  }, []);
+
+  if (!started) return null;
+
+  return (
+    <div className="floating-plays-container">
+      {particles.map(p => (
+        <div key={p.id} className="floating-play" style={{
+          left: `${p.left}%`,
+          animation: `floatUp ${p.duration}s ease-out ${p.delay}s forwards`,
+          '--p-scale': p.scale,
+          '--p-rotate': `${p.rotate}deg`
+        }}>
+          <div className="play-card" style={{ background: p.color }}>
+            <svg viewBox="0 0 24 24" fill="#111" width="16" height="16" style={{marginLeft: 2}}>
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 function BigProof() {
-  const [count, setCount] = React.useState(0);
+  const [viewsCount, setViewsCount] = React.useState(0);
   const [started, setStarted] = React.useState(false);
   const sectionRef = React.useRef(null);
-  const target = 44000;
+  const viewsTarget = 3000000000;
 
   React.useEffect(() => {
     const node = sectionRef.current;
@@ -1014,56 +1073,446 @@ function BigProof() {
 
   React.useEffect(() => {
     if (!started) return;
-    const duration = 2200;
+    const duration = 2600;
     const start = performance.now();
     let raf;
     const tick = (now) => {
       const t = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - t, 3);
-      setCount(Math.round(target * eased));
+      setViewsCount(Math.round(viewsTarget * eased));
       if (t < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [started]);
 
-  const formatted = count.toLocaleString('pt-BR');
+  const formatted = viewsCount.toLocaleString('pt-BR');
+
+  // Cores dos "vídeos" no feed de Reels
+  const reelColors = [
+    { bg: 'linear-gradient(160deg,#FF2D7A,#ff6ba8)', views: '2.3M', user: '@beleza.pro' },
+    { bg: 'linear-gradient(160deg,#C8F000,#8fad00)', views: '1.8M', user: '@studio.mk' },
+    { bg: 'linear-gradient(160deg,#a78bfa,#7c3aed)', views: '4.1M', user: '@viral.tips' },
+    { bg: 'linear-gradient(160deg,#fb923c,#ea580c)', views: '987K', user: '@cabelo.day' },
+    { bg: 'linear-gradient(160deg,#34d399,#059669)', views: '3.2M', user: '@estet.ica' },
+    { bg: 'linear-gradient(160deg,#60a5fa,#2563eb)', views: '1.5M', user: '@nails.br' },
+    { bg: 'linear-gradient(160deg,#FF2D7A,#C8F000)', views: '5.7M', user: '@viral1min' },
+  ];
 
   return (
     <section className="sec" ref={sectionRef}>
       <div className="container">
         <div style={{ textAlign: 'center' }}>
-          {/* Live activity badge */}
-          <div className={`live-proof-badge ${started ? 'on' : ''}`}>
-            <span className="live-pulse" />
-            <div className="live-avatars">
-              {PROOF_AVATARS.slice(0, 4).map((a, i) => (
-                <span key={i} className="live-avatar" style={{ background: a.bg, zIndex: 4 - i }}>{a.initials}</span>
-              ))}
+
+          {/* Importação da fonte JetBrains Mono solicitada no CSS */}
+          <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@800&display=swap" rel="stylesheet" />
+
+          {/* Estilos CSS combinados */}
+          <style>{`
+            /* ===== BADGE ORIGINAL ===== */
+            .glitch-badge {
+              position: relative;
+              display: inline-flex;
+              align-items: center;
+              gap: 12px; /* Ajustado para o novo tamanho do celular */
+              padding: 12px 26px 12px 16px;
+              border-radius: 999px;
+              margin-bottom: 24px;
+              overflow: hidden;
+              cursor: default;
+
+              /* Liquid glass base */
+              background: rgba(255, 255, 255, 0.18);
+              border: 1.5px solid rgba(255, 255, 255, 0.55);
+              backdrop-filter: blur(20px) saturate(1.8);
+              -webkit-backdrop-filter: blur(20px) saturate(1.8);
+              box-shadow:
+                0 8px 32px rgba(255, 45, 122, 0.18),
+                0 2px 8px rgba(255,255,255,0.25) inset,
+                0 -1px 4px rgba(0,0,0,0.08) inset;
+
+              animation: glitchContainer 3s infinite;
+            }
+
+            /* Brilho líquido interno */
+            .glitch-badge__glass {
+              position: absolute;
+              inset: 0;
+              border-radius: inherit;
+              background: linear-gradient(
+                135deg,
+                rgba(255,255,255,0.45) 0%,
+                rgba(255,255,255,0.05) 40%,
+                rgba(255, 45, 122, 0.08) 70%,
+                rgba(255,255,255,0.12) 100%
+              );
+              pointer-events: none;
+              animation: liquidSheen 3s ease-in-out infinite;
+            }
+
+            @keyframes liquidSheen {
+              0%, 100% { opacity: 1; }
+              50%        { opacity: 0.7; }
+            }
+
+            /* Scanline / ruído */
+            .glitch-badge__scanline {
+              position: absolute;
+              inset: 0;
+              border-radius: inherit;
+              background: repeating-linear-gradient(
+                0deg,
+                transparent, transparent 2px,
+                rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+              );
+              pointer-events: none;
+              animation: scanMove 0.8s linear infinite;
+              opacity: 0;
+            }
+
+            @keyframes scanMove {
+              0%   { background-position: 0 0; }
+              100% { background-position: 0 40px; }
+            }
+
+            /* Texto com efeito glitch */
+            .glitch-badge__text {
+              position: relative;
+              font-family: 'JetBrains Mono', monospace;
+              font-weight: 800;
+              font-size: clamp(9.5px, 2.5vw, 13px); /* Responsivo */
+              letter-spacing: .08em;
+              color: #1a1a1a;
+              z-index: 2;
+              animation: glitchText 3s infinite;
+              white-space: nowrap; /* <-- GARANTE QUE FIQUE TUDO EM UMA LINHA SÓ */
+              line-height: 1.4;
+            }
+
+            @media (max-width: 600px) {
+              .glitch-badge {
+                padding: 10px 16px 10px 10px;
+                gap: 8px;
+                margin-left: auto;
+                margin-right: auto;
+              }
+              .glitch-badge__text {
+                letter-spacing: .05em;
+              }
+            }
+
+            /* Camadas de cor do glitch */
+            .glitch-badge__text::before,
+            .glitch-badge__text::after {
+              content: attr(data-text);
+              position: absolute;
+              top: 0; left: 0;
+              width: 100%;
+              overflow: hidden;
+              opacity: 0;
+            }
+
+            .glitch-badge__text::before {
+              color: #FF2D7A;
+              clip-path: polygon(0 30%, 100% 30%, 100% 55%, 0 55%);
+              animation: glitchSliceTop 3s infinite;
+            }
+
+            .glitch-badge__text::after {
+              color: #00e5ff;
+              clip-path: polygon(0 65%, 100% 65%, 100% 80%, 0 80%);
+              animation: glitchSliceBot 3s infinite;
+            }
+
+            /* ===== KEYFRAMES DO GLITCH ===== */
+            @keyframes glitchContainer {
+              0%, 80%, 100% { transform: translate(0); }
+              81% { transform: translate(-5px, 2px); box-shadow: -4px 0 8px rgba(255,45,122,0.6), 4px 0 8px rgba(0,229,255,0.5); }
+              83% { transform: translate(5px, -2px); box-shadow: 4px 0 8px rgba(255,45,122,0.6), -4px 0 8px rgba(0,229,255,0.5); }
+              85% { transform: translate(-3px, 3px) scaleX(1.03); opacity: 0.8; }
+              87% { transform: translate(3px, 0); opacity: 1; }
+              89% { transform: translate(0) scaleX(0.98); }
+            }
+
+            @keyframes glitchText {
+              0%, 80%, 100% { transform: translate(0); opacity: 1; }
+              81% { transform: translate(-3px); opacity: 0.8; }
+              83% { transform: translate(3px); opacity: 0.9; }
+              85% { transform: translate(-2px); opacity: 0.5; }
+              87% { transform: translate(2px); opacity: 1; }
+            }
+
+            @keyframes glitchSliceTop {
+              0%, 80%, 100% { opacity: 0; transform: translate(0); }
+              81% { opacity: 1; transform: translate(-6px); }
+              83% { opacity: 1; transform: translate(6px); }
+              85% { opacity: 0.5; transform: translate(-3px); }
+              87% { opacity: 1; transform: translate(3px); }
+              89% { opacity: 0; }
+            }
+
+            @keyframes glitchSliceBot {
+              0%, 80%, 100% { opacity: 0; transform: translate(0); }
+              81% { opacity: 1; transform: translate(6px); }
+              83% { opacity: 1; transform: translate(-6px); }
+              85% { opacity: 0.5; transform: translate(3px); }
+              87% { opacity: 1; transform: translate(-3px); }
+              89% { opacity: 0; }
+            }
+
+            /* Ativa scanline durante glitch */
+            .glitch-badge:hover .glitch-badge__scanline,
+            .glitch-badge.glitching .glitch-badge__scanline {
+              opacity: 1;
+            }
+
+            /* ===== FRAME DO IPHONE ===== */
+            .reels-phone {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+              z-index: 3;
+              position: relative;
+            }
+
+            .iphone-frame {
+              width: 32px;
+              height: 66px;
+              background: #444; /* Cor da borda metálica (Titânio/Grafite) */
+              border-radius: 9px;
+              padding: 1.5px; /* Espessura da borda */
+              box-shadow: 
+                inset 0 0 0 0.5px #666,
+                0 2px 8px rgba(0,0,0,0.4),
+                0 0 15px rgba(255,45,122,0.15);
+              position: relative;
+              display: flex;
+            }
+
+            /* Botões laterais do iPhone */
+            .iphone-btn-mute { position: absolute; left: -1px; top: 10px; width: 1.5px; height: 3px; background: #666; border-radius: 1px 0 0 1px; }
+            .iphone-btn-vol-up { position: absolute; left: -1px; top: 16px; width: 1.5px; height: 6px; background: #777; border-radius: 1px 0 0 1px; }
+            .iphone-btn-vol-down { position: absolute; left: -1px; top: 24px; width: 1.5px; height: 6px; background: #777; border-radius: 1px 0 0 1px; }
+            .iphone-btn-power { position: absolute; right: -1px; top: 18px; width: 1.5px; height: 8px; background: #777; border-radius: 0 1px 1px 0; }
+
+            .iphone-screen {
+              flex: 1;
+              background: #050505;
+              border-radius: 7.5px;
+              overflow: hidden;
+              position: relative;
+            }
+
+            /* Dynamic Island */
+            .iphone-dynamic-island {
+              position: absolute;
+              top: 2.5px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 10px;
+              height: 3.5px;
+              background: #000;
+              border-radius: 4px;
+              z-index: 10;
+              box-shadow: 0 0 1px rgba(255,255,255,0.1);
+            }
+
+            /* Barra Home do iOS */
+            .iphone-home-indicator {
+              position: absolute;
+              bottom: 2px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 12px;
+              height: 1.5px;
+              background: rgba(255, 255, 255, 0.8);
+              border-radius: 2px;
+              z-index: 10;
+            }
+
+            /* ===== FEED SCROLLANDO ===== */
+            .reels-feed {
+              display: flex;
+              flex-direction: column;
+              animation: reels-scroll 10s linear infinite;
+              will-change: transform;
+            }
+
+            @keyframes reels-scroll {
+              0%   { transform: translateY(0); }
+              100% { transform: translateY(-50%); }
+            }
+
+            /* ===== CADA CARD DE VÍDEO ===== */
+            .reels-card {
+              width: 100%;
+              height: 63px; /* Preenche a altura exata da tela (66px frame - 3px padding) */
+              position: relative;
+              flex-shrink: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            .reels-play {
+              width: 10px;
+              height: 10px;
+              opacity: 0.85;
+              filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+            }
+
+            .reels-info {
+              position: absolute;
+              bottom: 4px;
+              left: 2px;
+              display: flex;
+              flex-direction: column;
+              gap: 0.5px;
+              transform: scale(0.55);
+              transform-origin: bottom left;
+              z-index: 5;
+            }
+
+            .reels-user {
+              font-size: 6px;
+              font-weight: 800;
+              color: #fff;
+              text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            }
+
+            .reels-views {
+              font-size: 5px;
+              font-weight: 700;
+              color: rgba(255,255,255,0.9);
+            }
+
+            .reels-actions {
+              position: absolute;
+              bottom: 5px;
+              right: 2px;
+              display: flex;
+              flex-direction: column;
+              gap: 2px;
+              font-size: 6px;
+              transform: scale(0.6);
+              transform-origin: bottom right;
+              z-index: 5;
+              filter: drop-shadow(0 1px 1px rgba(0,0,0,0.8));
+            }
+
+            /* ===== ANIMACAO PLAY FLOATING ===== */
+            .floating-plays-container {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              pointer-events: none;
+              z-index: 0;
+              overflow: visible;
+            }
+
+            .floating-play {
+              position: absolute;
+              bottom: -20px;
+              opacity: 0;
+              will-change: transform, opacity;
+            }
+
+            .play-card {
+              width: 28px;
+              height: 36px;
+              border-radius: 6px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+              border: 1px solid rgba(255,255,255,0.4);
+            }
+
+            @keyframes floatUp {
+              0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.5) rotate(0deg);
+              }
+              15% {
+                opacity: 1;
+              }
+              70% {
+                opacity: 1;
+              }
+              100% {
+                opacity: 0;
+                transform: translateY(-160px) scale(var(--p-scale)) rotate(var(--p-rotate));
+              }
+            }
+          `}</style>
+
+          {/* Estrutura HTML/JSX do componente */}
+          <div className="glitch-badge">
+            <div className="glitch-badge__glass" />
+            <div className="glitch-badge__scanline" />
+            
+            {/* === ANIMAÇÃO DO IPHONE === */}
+            <div className="reels-phone" aria-hidden="true">
+              <div className="iphone-frame">
+                {/* Botões Físicos */}
+                <div className="iphone-btn-mute" />
+                <div className="iphone-btn-vol-up" />
+                <div className="iphone-btn-vol-down" />
+                <div className="iphone-btn-power" />
+
+                <div className="iphone-screen">
+                  <div className="iphone-dynamic-island" />
+                  <div className="reels-feed">
+                    {[...reelColors, ...reelColors].map((r, i) => (
+                      <div key={i} className="reels-card" style={{ background: r.bg }}>
+                        <svg className="reels-play" viewBox="0 0 24 24" fill="white">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        <div className="reels-info">
+                          <span className="reels-user">{r.user}</span>
+                          <span className="reels-views">👁 {r.views}</span>
+                        </div>
+                        <div className="reels-actions">
+                          <span>❤️</span>
+                          <span>💬</span>
+                          <span>➤</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="iphone-home-indicator" />
+                </div>
+              </div>
             </div>
-            <span className="live-label">PROFISSIONAIS ATIVANDO AGORA</span>
+
+            {/* === TEXTO ORIGINAL === */}
+            <span className="glitch-badge__text" data-text="VISUALIZAÇÕES GERADAS COM ESSE MÉTODO">
+              VISUALIZAÇÕES GERADAS COM ESSE MÉTODO
+            </span>
           </div>
 
-          {/* Big number with avatars behind */}
-          <div className={`proof-number-wrap ${started ? 'on' : ''}`}>
-            <div className="proof-avatars-bg" aria-hidden>
-              {PROOF_AVATARS.map((a, i) => (
-                <span key={i} className={`proof-avatar pa-${i}`} style={{ background: a.bg }}>{a.initials}</span>
-              ))}
+          {/* Número grande abaixo do card */}
+          <div className={`proof-number-wrap ${started ? 'on' : ''}`} style={{ position: 'relative' }}>
+            <FloatingPlays started={started} />
+            <div className="proof-number" style={{ fontSize: 'clamp(28px, 10vw, 130px)', lineHeight: 1, position: 'relative', zIndex: 2, display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '12px' }}>
+              <span>+{formatted}</span>
+              <span style={{ fontSize: 'clamp(18px, 4vw, 48px)', fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.03em', alignSelf: 'flex-end', paddingBottom: '0.15em' }}>Bilhões</span>
             </div>
-            <div className="proof-number">+{formatted}</div>
           </div>
 
           <p style={{ fontSize: 22, fontWeight: 600, maxWidth: 640, margin: '0 auto', textWrap: 'pretty' }}>
-            profissionais da beleza já ativaram o <strong>Método Viral</strong>. Em todos os nichos.
+            de visualizações geradas com o <strong>Método Viral</strong>. Em nichos da beleza.
             Do zero. Sem equipe. Sem anúncio.
           </p>
         </div>
+
       </div>
     </section>);
 
 }
-
 
 
 /* ===== Features (o que você recebe) ===== */
@@ -1365,6 +1814,63 @@ function ModulosCarousel() {
 
 /* ===== Quem criou ===== */
 function Creator() {
+  const expertsTrackRef = React.useRef(null);
+  const expertsPausedRef = React.useRef(false);
+
+  const experts = [
+    { name: 'Ana Paula', role: 'Especialista em Reels', img: null },
+    { name: 'Camila Torres', role: 'Growth & Viral Strategy', img: null },
+    { name: 'Fernanda Lima', role: 'Copywriting & Roteiros', img: null },
+    { name: 'Júlia Moraes', role: 'Branding Visual', img: null },
+    { name: 'Beatriz Alves', role: 'Edição & Produção', img: null },
+    { name: 'Larissa Costa', role: 'IA & Automação', img: null },
+    { name: 'Patrícia Nunes', role: 'Nicho Beleza', img: null },
+    { name: 'Renata Souza', role: 'Nicho Fitness', img: null },
+    { name: 'Mariana Gomes', role: 'Nicho Saúde', img: null },
+    { name: 'Isabela Rocha', role: 'Nicho Moda', img: null },
+    { name: 'Viviane Santos', role: 'Nicho Gastronomia', img: null },
+    { name: 'Daniela Pires', role: 'Nicho Educação', img: null },
+  ];
+
+  const loopExperts = [...experts, ...experts];
+
+  React.useEffect(() => {
+    const el = expertsTrackRef.current;
+    if (!el) return;
+    let rafId;
+    let lastTs = 0;
+    const SPEED = 35;
+    const tick = (ts) => {
+      if (!lastTs) lastTs = ts;
+      const dt = ts - lastTs;
+      lastTs = ts;
+      if (!expertsPausedRef.current) {
+        el.scrollLeft += (SPEED * dt) / 1000;
+        const half = el.scrollWidth / 2;
+        if (el.scrollLeft >= half) el.scrollLeft -= half;
+      } else {
+        lastTs = ts;
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+    const pause = () => { expertsPausedRef.current = true; };
+    const resume = () => { expertsPausedRef.current = false; };
+    el.addEventListener('pointerenter', pause);
+    el.addEventListener('pointerleave', resume);
+    el.addEventListener('pointerdown', pause);
+    el.addEventListener('touchstart', pause, { passive: true });
+    el.addEventListener('touchend', resume);
+    return () => {
+      cancelAnimationFrame(rafId);
+      el.removeEventListener('pointerenter', pause);
+      el.removeEventListener('pointerleave', resume);
+      el.removeEventListener('pointerdown', pause);
+      el.removeEventListener('touchstart', pause);
+      el.removeEventListener('touchend', resume);
+    };
+  }, []);
+
   return (
     <section className="sec">
       <div className="container">
@@ -1373,7 +1879,8 @@ function Creator() {
           <h2>A mente por trás do <span className="highlight-pink">Viral em 1 Minuto</span></h2>
         </div>
 
-        <div className="creator">
+        {/* Criador 1 — Thaylor Jobs */}
+        <div className="creator" style={{ marginBottom: 56 }}>
           <div className="creator-photo">
             <span className="ph-text">// foto do criador</span>
             <div className="tag">Thaylor Jobs · Criador</div>
@@ -1399,6 +1906,62 @@ function Creator() {
               <div className="creator-stat"><div className="n">+2.4B</div><div className="l">views gerados</div></div>
               <div className="creator-stat"><div className="n">8 anos</div><div className="l">de método</div></div>
             </div>
+          </div>
+        </div>
+
+        {/* Criador 2 */}
+        <div className="creator creator-reverse">
+          <div className="creator-photo">
+            <span className="ph-text">// foto do criador 2</span>
+            <div className="tag">Criador</div>
+          </div>
+          <div>
+            <h2 style={{ fontSize: 'clamp(32px, 4vw, 52px)' }}>Gabriel Nalli</h2>
+            <p style={{ marginTop: 16, fontSize: 19, color: 'var(--ink-soft)', textWrap: 'pretty' }}>
+              Breve descrição do segundo criador — seu papel, experiência e o que ele traz de diferencial para o ecossistema do <strong>Viral em 1 Minuto</strong>.
+            </p>
+            <div style={{
+              marginTop: 22, padding: '20px 24px',
+              background: 'var(--primary)', border: '2.5px solid var(--ink)',
+              borderRadius: 20, boxShadow: '4px 4px 0 var(--ink)',
+              fontFamily: 'var(--font-head)', fontWeight: 700, fontSize: 20,
+              fontStyle: 'italic', position: 'relative'
+            }}>
+              <span style={{ fontSize: 60, lineHeight: 0, position: 'absolute', top: 28, left: 12, color: 'var(--accent)', opacity: .5 }}>"</span>
+              <span style={{ display: 'block', paddingLeft: 24 }}>Frase de impacto do segundo criador.</span>
+            </div>
+            <div className="creator-stats">
+              <div className="creator-stat"><div className="n">+10K</div><div className="l">seguidores</div></div>
+              <div className="creator-stat"><div className="n">+500M</div><div className="l">views</div></div>
+              <div className="creator-stat"><div className="n">5 anos</div><div className="l">de expertise</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Carrossel das 12 Experts */}
+      <div className="modulos-block" style={{ marginTop: 80 }}>
+        <div className="container">
+          <div className="modulos-head">
+            <div className="tag" style={{ display: 'inline-block', background: 'var(--secondary)', color: 'var(--ink)' }}>12 experts do ecossistema</div>
+            <h3 style={{ marginTop: 14, fontSize: 'clamp(22px, 2.6vw, 30px)', color: 'var(--ink)' }}>
+              Especialistas reais, resultados <span className="highlight-pink">comprovados</span>.
+            </h3>
+          </div>
+        </div>
+        <div className="modulos-carousel">
+          <div className="modulos-track experts-track" ref={expertsTrackRef}>
+            {loopExperts.map((expert, i) => (
+              <article key={i} className="mod-card mod-no-img expert-card" aria-hidden={i >= experts.length ? 'true' : undefined}>
+                <div className="mod-fallback" style={{ display: 'flex' }}>
+                  <div className="expert-avatar">
+                    <Icon name="user" size={36} color="#fff" />
+                  </div>
+                  <span className="mod-fb-title" style={{ fontSize: 'clamp(16px, 1.8vw, 20px)' }}>{expert.name}</span>
+                  <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: 500, marginTop: -8, textAlign: 'center', lineHeight: 1.3 }}>{expert.role}</span>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </div>
@@ -2111,7 +2674,7 @@ function Journey() {
       <div className="container" style={{ position: 'relative', zIndex: 10, paddingTop: '60px', paddingBottom: '20px', textAlign: 'center' }}>
         <div className="sec-head" style={{ marginBottom: 0 }}>
           <Eyebrow icon="zap">O PASSO A PASSO</Eyebrow>
-          <h2 style={{ color: 'var(--dark)' }}>Veja o diferencial do nosso ecossistema</h2>
+          <h2 style={{ color: 'var(--dark)' }}>Veja o diferencial do nosso <span className="chameleon-neon">ecossistema</span></h2>
           <p style={{ color: 'var(--text-sec)' }}>Alguns passos para alcançar a viralização</p>
         </div>
       </div>
@@ -2335,8 +2898,272 @@ function Journey() {
 }
 
 
+const MasonryStyles = () => (
+  <style>{`
+    /* Estilos globais isolados removidos para não quebrar o layout */
+    .list {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 800px;
+    }
+
+    .item-wrapper {
+      position: absolute;
+      will-change: transform, width, height, opacity;
+      padding: 10px;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      box-sizing: border-box;
+    }
+
+    .item-wrapper > .item-img {
+      position: relative;
+      background-size: cover;
+      background-position: center center;
+      background-color: #2a2a2a; /* Cor de fundo de segurança caso a imagem não carregue */
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.8);
+    }
+    
+    .masonry-app-container {
+      width: 100%;
+      min-height: 100vh;
+      background-color: transparent;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+  `}</style>
+);
+
+/**
+ * HOOKS ORIGINAIS
+ */
+const useMedia = (queries, values, defaultValue) => {
+  const get = () => {
+    if (typeof window === 'undefined') return defaultValue;
+    const index = queries.findIndex(q => window.matchMedia(q).matches);
+    return index !== -1 ? values[index] : defaultValue;
+  };
+
+  const [value, setValue] = React.useState(get);
+
+  React.useEffect(() => {
+    const handler = () => setValue(get);
+    const mediaQueryLists = queries.map(q => window.matchMedia(q));
+    
+    mediaQueryLists.forEach(mql => {
+      if (mql.addListener) mql.addListener(handler); // Suporte legado
+      else mql.addEventListener('change', handler);
+    });
+
+    return () => {
+      mediaQueryLists.forEach(mql => {
+        if (mql.removeListener) mql.removeListener(handler); // Suporte legado
+        else mql.removeEventListener('change', handler);
+      });
+    };
+  }, [queries, values, defaultValue]);
+
+  return value;
+};
+
+const useMeasure = () => {
+  const ref = React.useRef(null);
+  const [size, setSize] = React.useState({ width: 0, height: 0 });
+
+  React.useLayoutEffect(() => {
+    if (!ref.current) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setSize({ width, height });
+    });
+    ro.observe(ref.current);
+    return () => ro.disconnect();
+  }, []);
+
+  return [ref, size];
+};
+
+const preloadImages = async urls => {
+  await Promise.all(
+    urls.map(
+      src =>
+        new Promise(resolve => {
+          const img = new Image();
+          img.src = src;
+          img.onload = img.onerror = () => resolve();
+        })
+    )
+  );
+};
+
+/**
+ * COMPONENTE MASONRY
+ */
+const Masonry = ({
+  items,
+  ease = 'power3.out',
+  duration = 0.6,
+  stagger = 0.05,
+  animateFrom = 'bottom',
+  scaleOnHover = true,
+  hoverScale = 1.04,
+  blurToFocus = true
+}) => {
+  const columns = useMedia(
+    ['(min-width:1500px)', '(min-width:1000px)', '(min-width:600px)'],
+    [5, 4, 3],
+    2 // Alterado para padrão de 2 colunas no mobile para manter o estilo Masonry
+  );
+
+  const [containerRef, { width }] = useMeasure();
+  const [imagesReady, setImagesReady] = React.useState(false);
+  const [gsapReady, setGsapReady] = React.useState(false);
+
+  React.useEffect(() => {
+    if (window.gsap) {
+      setGsapReady(true);
+    } else {
+      let script = document.querySelector('script[src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"]');
+      if (!script) {
+        script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+        script.async = true;
+        document.head.appendChild(script);
+      }
+      
+      script.addEventListener('load', () => setGsapReady(true));
+    }
+  }, []);
+
+  const getInitialPosition = (item) => {
+    let direction = animateFrom;
+    switch (direction) {
+      case 'top': return { x: item.x, y: -200 };
+      case 'bottom': return { x: item.x, y: window.innerHeight + 200 };
+      default: return { x: item.x, y: item.y + 100 };
+    }
+  };
+
+  React.useEffect(() => {
+    preloadImages(items.map(i => i.img)).then(() => setImagesReady(true));
+  }, [items]);
+
+  const { gridItems, containerHeight } = React.useMemo(() => {
+    if (!width) return { gridItems: [], containerHeight: 0 };
+    const colHeights = new Array(columns).fill(0);
+    const columnWidth = width / columns;
+    const baseWidth = 600; // Largura base das imagens do Unsplash no seu array
+
+    const itemsPositioned = items.map(child => {
+      const col = colHeights.indexOf(Math.min(...colHeights));
+      const x = columnWidth * col;
+      // Calcula a altura proporcionalmente à largura da coluna para manter a proporção
+      const height = (columnWidth / baseWidth) * child.height; 
+      const y = colHeights[col];
+      colHeights[col] += height;
+      return { ...child, x, y, w: columnWidth, h: height };
+    });
+
+    return { 
+      gridItems: itemsPositioned, 
+      containerHeight: Math.max(...colHeights) // Pega a altura da maior coluna
+    };
+  }, [columns, items, width]);
+
+  const hasMounted = React.useRef(false);
+
+  React.useLayoutEffect(() => {
+    if (!imagesReady || !gsapReady || !window.gsap) return;
+    const { gsap } = window;
+
+    gridItems.forEach((item, index) => {
+      const selector = `[data-key="${item.id}"]`;
+      if (!hasMounted.current) {
+        const initialPos = getInitialPosition(item);
+        gsap.fromTo(selector, 
+          { opacity: 0, x: initialPos.x, y: initialPos.y, filter: blurToFocus ? 'blur(10px)' : 'none' },
+          { opacity: 1, x: item.x, y: item.y, width: item.w, height: item.h, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out', delay: index * stagger }
+        );
+      } else {
+        gsap.to(selector, { x: item.x, y: item.y, width: item.w, height: item.h, duration: duration, ease: ease, overwrite: 'auto' });
+      }
+    });
+    if (gridItems.length > 0) hasMounted.current = true;
+  }, [gridItems, imagesReady, gsapReady, stagger, animateFrom, blurToFocus, duration, ease]);
+
+  const handleMouseEnter = (e, item) => {
+    if (!window.gsap || !scaleOnHover) return;
+    window.gsap.to(`[data-key="${item.id}"]`, { scale: hoverScale, duration: 0.4, ease: 'power2.out' });
+  };
+
+  const handleMouseLeave = (e, item) => {
+    if (!window.gsap) return;
+    window.gsap.to(`[data-key="${item.id}"]`, { scale: 1, duration: 0.4, ease: 'power2.out' });
+  };
+
+  return (
+    <div ref={containerRef} className="list" style={{ height: containerHeight }}>
+      {gridItems.map(item => (
+        <div
+          key={item.id}
+          data-key={item.id}
+          className="item-wrapper"
+          onMouseEnter={e => handleMouseEnter(e, item)}
+          onMouseLeave={e => handleMouseLeave(e, item)}
+          onClick={() => window.open(item.url, '_blank')}
+        >
+          {/* Adicionadas aspas ao redor da URL para suportar nomes de ficheiro com espaços */}
+          <div className="item-img" style={{ backgroundImage: `url("${item.img}")` }} />
+        </div>
+      ))}
+    </div>
+  );
+};
+
+/**
+ * APP PRINCIPAL
+ */
+function MasonryApp() {
+  const items = [
+    { id: "1", img: "assets/prova-social-1.jpeg", url: "#", height: 900 },
+    { id: "2", img: "assets/prova-social-2.jpeg", url: "#", height: 750 },
+    { id: "3", img: "assets/prova-social-3.jpeg", url: "#", height: 800 },
+    { id: "4", img: "assets/prova-social-4.jpeg", url: "#", height: 600 },
+    { id: "5", img: "assets/prova-social-5.jpeg", url: "#", height: 1000 },
+    { id: "6", img: "assets/prova-social-6.jpeg", url: "#", height: 700 },
+    { id: "7", img: "assets/prova-social-7.jpeg", url: "#", height: 900 },
+    { id: "8", img: "assets/prova-social-8.jpeg", url: "#", height: 560 },
+    { id: "9", img: "assets/prova-social-9.jpeg", url: "#", height: 1100 },
+    { id: "10", img: "assets/prova-social-10.jpeg", url: "#", height: 800 },
+    { id: "11", img: "assets/prova-social-11.jpeg", url: "#", height: 640 },
+    { id: "12", img: "assets/prova-social-12.jpeg", url: "#", height: 960 },
+  ];
+
+  return (
+    <div className="masonry-app-container">
+      <MasonryStyles />
+      <Masonry
+        items={items}
+        ease="power3.out"
+        duration={0.6}
+        stagger={0.06}
+        animateFrom="bottom"
+        scaleOnHover={true}
+        hoverScale={1.03}
+        blurToFocus={true}
+      />
+    </div>
+  );
+}
+
 Object.assign(window, {
   Journey,
   Nav, UrgencyBar, Hero, Results, BigProof, HowItWorks, WhyNotGrowing,
-  Features, Creator, Testimonials, Comparison, Pricing, Guarantee, FAQ, FinalCTA, Footer
+  Features, Creator, Testimonials, Comparison, Pricing, Guarantee, FAQ, FinalCTA, Footer,
+  MasonryApp
 });

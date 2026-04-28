@@ -166,5 +166,75 @@ function AlphaBtn({href="#", children}) {
     </a>
   );
 }
+/* ===== Pixel Penguin ===== */
+function PixelPenguin({ size = 56 }) {
+  const layout = [
+    "....................",
+    "........BBBB........",
+    "......BBBBBBBB......",
+    ".....BBBBBBBBBB.....",
+    "....BBBBBBBBBBBB....",
+    "....BBCCCCCCCCBB....",
+    "...BCCEECCCCEECCB...",
+    "...BCCCCCCCCCCCCB...",
+    "...BCCCCOOOOCCCCB...",
+    "....BBCCCCCCCCBB....",
+    "...BBBBBBBBBBBBBB...",
+    "..BBCCCCCCCCCCCCBB..",
+    "..BBCCCCCCCCCCCCBB..",
+    "..BBCCCCCCCCCCCCBB..",
+    "...BBCCCCCCCCCCBB...",
+    "....BBCCCCCCCCBB....",
+    ".....BBBBBBBBBB.....",
+    "....OOOO....OOOO....",
+    "....................",
+    "...................."
+  ];
 
-Object.assign(window, { Icon, Btn, AlphaBtn, Logo, Marquee, TestiMarquee, Eyebrow });
+  const colors = {
+    B: '#2B2B35',
+    C: '#FFFFFF',
+    O: '#FFB84D',
+    E: '#1A1A1A'
+  };
+
+  return (
+    <>
+      <style>{`
+        @keyframes petWalk {
+          0%   { transform: translateX(0) scaleX(1); }
+          45%  { transform: translateX(50px) scaleX(1); }
+          50%  { transform: translateX(50px) scaleX(-1); }
+          95%  { transform: translateX(0) scaleX(-1); }
+          100% { transform: translateX(0) scaleX(1); }
+        }
+        @keyframes petWaddle {
+          0%, 50%, 100% { transform: translateY(0) rotate(0deg); }
+          25% { transform: translateY(-4px) rotate(4deg); }
+          75% { transform: translateY(-4px) rotate(-4deg); }
+        }
+      `}</style>
+      <div style={{ animation: 'petWalk 6s infinite linear', width: 'fit-content' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(20, 1fr)',
+          width: size,
+          height: size,
+          marginTop: 12,
+          marginBottom: -4,
+          animation: 'petWaddle 1s infinite linear'
+        }}>
+          {layout.join('').split('').map((char, i) => (
+            <div key={i} style={{
+              backgroundColor: char === '.' ? 'transparent' : colors[char],
+              width: '100%',
+              height: '100%'
+            }} />
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+Object.assign(window, { Icon, Btn, AlphaBtn, Logo, Marquee, TestiMarquee, Eyebrow, PixelPenguin });

@@ -1,5 +1,5 @@
 /* global React, ReactDOM, useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, TweakRadio, TweakText,
-          Nav, UrgencyBar, Hero, Results, BigProof, HowItWorks, WhyNotGrowing, Features, Creator, Testimonials,
+          Nav, UrgencyBar, Hero, Results, Journey, BigProof, HowItWorks, WhyNotGrowing, Features, Creator, Testimonials,
           Comparison, Pricing, Guarantee, FAQ, FinalCTA, Footer, Marquee */
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -30,6 +30,7 @@ function App() {
     <>
       {tweaks.showUrgencyBar && <UrgencyBar />}
       <Hero videoUrl={tweaks.videoUrl} />
+      <Journey />
       <Marquee />
       <Results />
       <BigProof />

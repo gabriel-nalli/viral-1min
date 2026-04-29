@@ -401,19 +401,20 @@ function ResultsCarousel({ children }) {
     const setSide = (side) => {
       if (!el) return;
       const maxScroll = el.scrollWidth - el.clientWidth;
+      if (maxScroll <= 0) return; // nada para rolar
       el.scrollTo({ left: side === 'left' ? 0 : maxScroll, behavior: 'smooth' });
     };
 
-    // Gate: entra na rotação compartilhada quando o carrossel fica visível
+    // Gate: threshold baixo (0.15) para funcionar em telas pequenas
     const visObs = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !started) {
         started = true;
         _rcSubs.add(setSide);
-        setSide(_rcSide); // sincroniza imediatamente com os outros
+        setSide(_rcSide);
         _rcStart();
         visObs.disconnect();
       }
-    }, { threshold: 0.5 });
+    }, { threshold: 0.15 });
     visObs.observe(el);
 
     const pause = () => _rcUnsub(setSide);
@@ -436,15 +437,13 @@ function ResultsCarousel({ children }) {
         display: 'flex', 
         gap: 24, 
         overflowX: 'auto', 
-        padding: '32px 24px 32px 24px', 
+        padding: '32px 24px', 
         scrollSnapType: 'x mandatory',
         WebkitOverflowScrolling: 'touch',
         scrollbarWidth: 'none',
         msOverflowStyle: 'none'
       }}>
-      <div style={{ display: 'flex', gap: 24, margin: '0 auto' }}>
-        {children}
-      </div>
+      {children}
     </div>
   );
 }

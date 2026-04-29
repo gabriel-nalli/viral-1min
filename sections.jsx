@@ -374,45 +374,60 @@ function WhyNotGrowing() {
 }
 
 /* ===== Resultados Reais (Depoimentos) ===== */
-function ResultsCarousel({ children, delay = 0 }) {
+/* Sync compartilhado dos ResultsCarousel — todos flipam juntos no mesmo tick.
+ * Toque manual remove só aquele carrossel da rotação. */
+const _rcSubs = new Set();
+let _rcSide = 'left';
+let _rcInterval = null;
+const _rcTick = () => {
+  _rcSide = _rcSide === 'left' ? 'right' : 'left';
+  _rcSubs.forEach((fn) => fn(_rcSide));
+};
+const _rcStart = () => { if (!_rcInterval) _rcInterval = setInterval(_rcTick, 5000); };
+const _rcUnsub = (fn) => {
+  _rcSubs.delete(fn);
+  if (_rcSubs.size === 0 && _rcInterval) { clearInterval(_rcInterval); _rcInterval = null; }
+};
+
+function ResultsCarousel({ children }) {
   const scrollRef = React.useRef(null);
 
   React.useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    
-    let direction = 1;
-    let interval;
 
-    const startAutoScroll = () => {
-      interval = setInterval(() => {
-        if (!el) return;
-        const maxScroll = el.scrollWidth - el.clientWidth;
-        
-        if (el.scrollLeft >= maxScroll - 10) {
-          direction = -1;
-        } else if (el.scrollLeft <= 10) {
-          direction = 1;
-        }
-        
-        el.scrollBy({ left: direction * (el.clientWidth * 0.85), behavior: 'smooth' });
-      }, 5000);
+    let started = false;
+
+    const setSide = (side) => {
+      if (!el) return;
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      el.scrollTo({ left: side === 'left' ? 0 : maxScroll, behavior: 'smooth' });
     };
 
-    const initialTimeout = setTimeout(startAutoScroll, delay);
+    // Gate: entra na rotação compartilhada quando o carrossel fica visível
+    const visObs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !started) {
+        started = true;
+        _rcSubs.add(setSide);
+        setSide(_rcSide); // sincroniza imediatamente com os outros
+        _rcStart();
+        visObs.disconnect();
+      }
+    }, { threshold: 0.5 });
+    visObs.observe(el);
 
-    const pause = () => clearInterval(interval);
-    
+    const pause = () => _rcUnsub(setSide);
+
     el.addEventListener('touchstart', pause, { passive: true });
     el.addEventListener('mousedown', pause, { passive: true });
 
     return () => {
-      clearTimeout(initialTimeout);
-      clearInterval(interval);
+      visObs.disconnect();
+      _rcUnsub(setSide);
       el.removeEventListener('touchstart', pause);
       el.removeEventListener('mousedown', pause);
     };
-  }, [delay]);
+  }, []);
 
   return (
     <div 

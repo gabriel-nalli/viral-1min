@@ -3242,7 +3242,7 @@ footer a:hover {
   position: relative;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 800;
-  font-size: 13px;
+  font-size: clamp(15px, 2.4vw, 24px);
   letter-spacing: .12em;
   color: #1a1a1a;
   z-index: 2;

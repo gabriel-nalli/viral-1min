@@ -3,3 +3,16 @@ node_modules/
 dist/
 .env
 *.log
+
+# Arquivos de desenvolvimento pesados (não necessários no deploy)
+pixel_arts.json
+optimize-images.mjs
+append_journey.js
+append_journey_css.js
+generate_svgs.js
+convert.py
+
+# Imagens originais pesadas (substituídas pelas .webp)
+assets/*.jpeg
+assets/*.PNG
+assets/*.png

@@ -458,7 +458,7 @@ function Results() {
         <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 20px 40px rgba(0,0,0,0.05)', position: 'relative', border: '1px solid rgba(0,0,0,0.05)' }}>
           <div style={{ position: 'absolute', top: -16, left: 24, background: '#1a1a1a', color: '#fff', padding: '6px 16px', borderRadius: 999, fontWeight: 800, fontSize: 13, letterSpacing: 1 }}>ANTES</div>
           <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.05)', backgroundColor: '#f0f0f0' }}>
-            <img src="assets/antes-cilios.png" alt="Perfil Antes" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
+            <img src="assets/antes-cilios.webp" alt="Perfil Antes" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--ink)' }}>6.285 Seguidores</h4>
@@ -468,7 +468,7 @@ function Results() {
         <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 32px 64px rgba(255,45,122,0.15)', position: 'relative', border: '2px solid var(--accent)' }}>
           <div style={{ position: 'absolute', top: -16, left: 24, background: 'var(--accent)', color: '#fff', padding: '6px 16px', borderRadius: 999, fontWeight: 800, fontSize: 13, letterSpacing: 1, boxShadow: '0 8px 16px rgba(255,45,122,0.3)' }}>DEPOIS (COM O MÉTODO)</div>
           <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.05)', backgroundColor: '#f0f0f0' }}>
-            <img src="assets/depois-cilios.png" alt="Perfil Depois Josi" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
+            <img src="assets/depois-cilios.webp" alt="Perfil Depois Josi" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 26, fontWeight: 900, color: 'var(--accent)' }}>12,9 mil Seguidores</h4>
@@ -482,7 +482,7 @@ function Results() {
         <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 20px 40px rgba(0,0,0,0.05)', position: 'relative', border: '1px solid rgba(0,0,0,0.05)' }}>
           <div style={{ position: 'absolute', top: -16, left: 24, background: '#1a1a1a', color: '#fff', padding: '6px 16px', borderRadius: 999, fontWeight: 800, fontSize: 13, letterSpacing: 1 }}>ANTES</div>
           <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.05)', backgroundColor: '#f0f0f0' }}>
-            <img src="assets/antes-dayane.png" alt="Perfil Antes Dayane" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
+            <img src="assets/antes-dayane.webp" alt="Perfil Antes Dayane" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--ink)' }}>3.816 Seguidores</h4>
@@ -492,7 +492,7 @@ function Results() {
         <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 32px 64px rgba(255,45,122,0.15)', position: 'relative', border: '2px solid var(--accent)' }}>
           <div style={{ position: 'absolute', top: -16, left: 24, background: 'var(--accent)', color: '#fff', padding: '6px 16px', borderRadius: 999, fontWeight: 800, fontSize: 13, letterSpacing: 1, boxShadow: '0 8px 16px rgba(255,45,122,0.3)' }}>DEPOIS (COM O MÉTODO)</div>
           <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.05)', backgroundColor: '#f0f0f0' }}>
-            <img src="assets/depois-dayane.png" alt="Perfil Depois Dayane" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
+            <img src="assets/depois-dayane.webp" alt="Perfil Depois Dayane" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 26, fontWeight: 900, color: 'var(--accent)' }}>26,8 mil Seguidores</h4>
@@ -506,7 +506,7 @@ function Results() {
         <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 20px 40px rgba(0,0,0,0.05)', position: 'relative', border: '1px solid rgba(0,0,0,0.05)' }}>
           <div style={{ position: 'absolute', top: -16, left: 24, background: '#1a1a1a', color: '#fff', padding: '6px 16px', borderRadius: 999, fontWeight: 800, fontSize: 13, letterSpacing: 1 }}>ANTES</div>
           <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.05)', backgroundColor: '#f0f0f0' }}>
-            <img src="assets/karolin-antes.jpeg" alt="Perfil Antes Karolin" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
+            <img src="assets/karolin-antes.webp" alt="Perfil Antes Karolin" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--ink)' }}>1.002 Seguidores</h4>
@@ -516,7 +516,7 @@ function Results() {
         <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 32px 64px rgba(255,45,122,0.15)', position: 'relative', border: '2px solid var(--accent)' }}>
           <div style={{ position: 'absolute', top: -16, left: 24, background: 'var(--accent)', color: '#fff', padding: '6px 16px', borderRadius: 999, fontWeight: 800, fontSize: 13, letterSpacing: 1, boxShadow: '0 8px 16px rgba(255,45,122,0.3)' }}>DEPOIS (COM O MÉTODO)</div>
           <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.05)', backgroundColor: '#f0f0f0' }}>
-            <img src="assets/karollin-depois.jpeg" alt="Perfil Depois Karolin" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
+            <img src="assets/karollin-depois.webp" alt="Perfil Depois Karolin" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 26, fontWeight: 900, color: 'var(--accent)' }}>14,8 mil Seguidores</h4>
@@ -530,7 +530,7 @@ function Results() {
         <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 20px 40px rgba(0,0,0,0.05)', position: 'relative', border: '1px solid rgba(0,0,0,0.05)' }}>
           <div style={{ position: 'absolute', top: -16, left: 24, background: '#1a1a1a', color: '#fff', padding: '6px 16px', borderRadius: 999, fontWeight: 800, fontSize: 13, letterSpacing: 1 }}>ANTES</div>
           <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.05)', backgroundColor: '#f0f0f0' }}>
-            <img src="assets/carolina-antes.PNG" alt="Perfil Antes Carolina" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
+            <img src="assets/carolina-antes.webp" alt="Perfil Antes Carolina" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--ink)' }}>2.340 Seguidores</h4>
@@ -540,7 +540,7 @@ function Results() {
         <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 32px 64px rgba(255,45,122,0.15)', position: 'relative', border: '2px solid var(--accent)' }}>
           <div style={{ position: 'absolute', top: -16, left: 24, background: 'var(--accent)', color: '#fff', padding: '6px 16px', borderRadius: 999, fontWeight: 800, fontSize: 13, letterSpacing: 1, boxShadow: '0 8px 16px rgba(255,45,122,0.3)' }}>DEPOIS (COM O MÉTODO)</div>
           <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.05)', backgroundColor: '#f0f0f0' }}>
-            <img src="assets/carolina-depois.PNG" alt="Perfil Depois Carolina" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
+            <img src="assets/carolina-depois.webp" alt="Perfil Depois Carolina" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 26, fontWeight: 900, color: 'var(--accent)' }}>21,5 mil Seguidores</h4>
@@ -3130,18 +3130,18 @@ const Masonry = ({
  */
 function MasonryApp() {
   const items = [
-    { id: "1", img: "assets/prova-social-1.jpeg", url: "#", height: 900 },
-    { id: "2", img: "assets/prova-social-2.jpeg", url: "#", height: 750 },
-    { id: "3", img: "assets/prova-social-3.jpeg", url: "#", height: 800 },
-    { id: "4", img: "assets/prova-social-4.jpeg", url: "#", height: 600 },
-    { id: "5", img: "assets/prova-social-5.jpeg", url: "#", height: 1000 },
-    { id: "6", img: "assets/prova-social-6.jpeg", url: "#", height: 700 },
-    { id: "7", img: "assets/prova-social-7.jpeg", url: "#", height: 900 },
-    { id: "8", img: "assets/prova-social-8.jpeg", url: "#", height: 560 },
-    { id: "9", img: "assets/prova-social-9.jpeg", url: "#", height: 1100 },
-    { id: "10", img: "assets/prova-social-10.jpeg", url: "#", height: 800 },
-    { id: "11", img: "assets/prova-social-11.jpeg", url: "#", height: 640 },
-    { id: "12", img: "assets/prova-social-12.jpeg", url: "#", height: 960 },
+    { id: "1", img: "assets/prova-social-1.webp", url: "#", height: 900 },
+    { id: "2", img: "assets/prova-social-2.webp", url: "#", height: 750 },
+    { id: "3", img: "assets/prova-social-3.webp", url: "#", height: 800 },
+    { id: "4", img: "assets/prova-social-4.webp", url: "#", height: 600 },
+    { id: "5", img: "assets/prova-social-5.webp", url: "#", height: 1000 },
+    { id: "6", img: "assets/prova-social-6.webp", url: "#", height: 700 },
+    { id: "7", img: "assets/prova-social-7.webp", url: "#", height: 900 },
+    { id: "8", img: "assets/prova-social-8.webp", url: "#", height: 560 },
+    { id: "9", img: "assets/prova-social-9.webp", url: "#", height: 1100 },
+    { id: "10", img: "assets/prova-social-10.webp", url: "#", height: 800 },
+    { id: "11", img: "assets/prova-social-11.webp", url: "#", height: 640 },
+    { id: "12", img: "assets/prova-social-12.webp", url: "#", height: 960 },
   ];
 
   return (

@@ -2592,6 +2592,7 @@ function Journey() {
     let petY = 0;
     let targetProgress = 0;
     let rafId = null;
+    let lastUpdateProgress = -1;
     const lerp = (a, b, t) => a + (b - a) * t;
 
     const animatePet = () => {
@@ -2636,7 +2637,16 @@ function Journey() {
       // progress = 1 when rect.bottom == windowHeight / 2
       let progress = (windowHeight / 2 - rect.top) / rect.height;
       
-      progress = Math.max(0, Math.min(1, progress)); 
+      progress = Math.max(0, Math.min(1, progress));
+
+      // Lerp do pet sempre atualiza (movimento contínuo)
+      targetProgress = progress;
+      if (!rafId) rafId = requestAnimationFrame(animatePet);
+
+      // Skip do trabalho pesado se o progresso quase não mudou.
+      // Evita 70+ DOM ops + repaint do SVG mask quando o usuário está parado.
+      if (Math.abs(progress - lastUpdateProgress) < 0.0008) return;
+      lastUpdateProgress = progress;
 
       if (progress < 0.005) {
         petScaleWrapper.classList.add('inside-house');
@@ -2645,10 +2655,6 @@ function Journey() {
       }
 
       drawMaskPath.style.strokeDashoffset = pathLength - (progress * pathLength);
-
-      // Atualiza target e inicia loop lerp se parado
-      targetProgress = progress;
-      if (!rafId) rafId = requestAnimationFrame(animatePet);
 
       cards.forEach((card, index) => {
         if (!card) return;

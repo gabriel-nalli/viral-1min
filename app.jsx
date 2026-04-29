@@ -1,5 +1,11 @@
+/* app.jsx — Bundle DEFERIDO
+ * Este arquivo é compilado em dist/bundle-deferred.js.
+ * É carregado pelo app-critical.jsx após o evento 'load',
+ * então NÃO bloqueia o FCP/LCP.
+ * Renderiza tudo abaixo do fold no #deferred-root.
+ */
 /* global React, ReactDOM, useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, TweakRadio, TweakText,
-          Nav, UrgencyBar, Hero, Results, Journey, BigProof, HowItWorks, WhyNotGrowing, Features, Creator, Testimonials,
+          Results, Journey, BigProof, MasonryApp, HowItWorks, WhyNotGrowing, Features, Creator, Testimonials,
           Comparison, Pricing, Guarantee, FAQ, FinalCTA, Footer, Marquee */
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -10,26 +16,17 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showUrgencyBar": true
 }/*EDITMODE-END*/;
 
-function App() {
+function AppDeferred() {
   const [tweaks, setTweaks] = useTweaks(TWEAK_DEFAULTS);
 
-  // apply CSS vars from tweaks
   React.useEffect(() => {
     document.documentElement.style.setProperty('--playful', tweaks.playful);
-
-    const accentMap = {
-      pink: '#FF2D7A',
-      orange: '#FF6A2D',
-      purple: '#8A2ABF',
-      blue: '#2D7AFF'
-    };
+    const accentMap = { pink: '#FF2D7A', orange: '#FF6A2D', purple: '#8A2ABF', blue: '#2D7AFF' };
     document.documentElement.style.setProperty('--accent', accentMap[tweaks.accentHue] || '#FF2D7A');
   }, [tweaks.playful, tweaks.accentHue]);
 
   return (
     <>
-      {tweaks.showUrgencyBar && <UrgencyBar />}
-      <Hero videoUrl={tweaks.videoUrl} />
       <Journey />
       <Marquee />
       <Results />
@@ -79,4 +76,8 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+/* Monta no #deferred-root criado pelo bundle crítico */
+const deferredEl = document.getElementById('deferred-root');
+if (deferredEl) {
+  ReactDOM.createRoot(deferredEl).render(<AppDeferred />);
+}

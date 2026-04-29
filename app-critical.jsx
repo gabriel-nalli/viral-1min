@@ -48,7 +48,7 @@ criticalRoot.render(<AppCritical />);
 /* Carrega o bundle completo após o evento 'load' (não bloqueia a pintura inicial) */
 function loadDeferred() {
   const script = document.createElement('script');
-  script.src = 'dist/bundle-deferred.js?v=19';
+  script.src = 'dist/bundle-deferred.js?v=22';
   script.async = true;
   document.head.appendChild(script);
 }

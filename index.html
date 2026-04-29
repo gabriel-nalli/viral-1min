@@ -81,11 +81,11 @@ p{line-height:1.5;margin:0}
 <!-- React + ReactDOM via jsDelivr: preload para download paralelo -->
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="dist/bundle-critical.js?v=19" as="script">
+<link rel="preload" href="dist/bundle-critical.js?v=22" as="script">
 
 <!-- CSS completo: carregado de forma não-bloqueante (não bloqueia FCP) -->
-<link rel="preload" href="dist/styles.css?v=17" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="dist/styles.css?v=17"></noscript>
+<link rel="preload" href="dist/styles.css?v=20" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="dist/styles.css?v=20"></noscript>
 
 <!-- Fonte: não-bloqueante -->
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -100,7 +100,7 @@ p{line-height:1.5;margin:0}
 <!-- Carregamento ordenado no final do body: React → ReactDOM → bundle-critical -->
 <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
-<script src="dist/bundle-critical.js?v=19"></script>
+<script src="dist/bundle-critical.js?v=22"></script>
 
 </body>
 </html>

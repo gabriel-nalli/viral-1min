@@ -2433,7 +2433,6 @@ function DigitalTyper({ words = ["60 segundos.", "1 minuto."], initialIndex = 1 
 /* ===== Jornada Viral 10 Passos ===== */
 function Journey() {
   const dashedPathRef = React.useRef(null);
-  const drawMaskPathRef = React.useRef(null);
   const petContainerRef = React.useRef(null);
   const petScaleWrapperRef = React.useRef(null);
   const petFlipperRef = React.useRef(null);
@@ -2453,7 +2452,6 @@ function Journey() {
     const trackContainer = trackContainerRef.current;
     const svgContainer = svgContainerRef.current;
     const dashedPath = dashedPathRef.current;
-    const drawMaskPath = drawMaskPathRef.current;
     const petContainer = petContainerRef.current;
     const petScaleWrapper = petScaleWrapperRef.current;
     const petFlipper = petFlipperRef.current;
@@ -2461,7 +2459,7 @@ function Journey() {
     const collContainer = collContainerRef.current;
     const cards = cardsRef.current;
 
-    if (!trackContainer || !svgContainer || !dashedPath || !drawMaskPath || !petContainer) return;
+    if (!trackContainer || !svgContainer || !dashedPath || !petContainer) return;
 
     // Collectibles Setup
     const collectiblesData = [
@@ -2483,6 +2481,7 @@ function Journey() {
 
     let pathLength = 0;
     let pawElements = [];
+    let cachedDashCycles = -1;
 
     const renderPathLayout = () => {
       const w = trackContainer.offsetWidth;
@@ -2512,10 +2511,11 @@ function Journey() {
       }
       
       dashedPath.setAttribute('d', d);
-      drawMaskPath.setAttribute('d', d);
-      pathLength = drawMaskPath.getTotalLength();
-      drawMaskPath.style.strokeDasharray = pathLength;
-      drawMaskPath.style.strokeDashoffset = pathLength; 
+      pathLength = dashedPath.getTotalLength();
+      // Reset cache do dasharray dinâmico (recomputa na próxima updateJourney)
+      cachedDashCycles = -1;
+      // Estado inicial: invisível (será sobrescrito pela updateJourney)
+      dashedPath.style.strokeDasharray = '0 ' + pathLength;
 
       let currentApex = 0;
       const resolution = 1500;
@@ -2593,6 +2593,7 @@ function Journey() {
     let targetProgress = 0;
     let rafId = null;
     let lastUpdateProgress = -1;
+    let isVisible = true;
     const lerp = (a, b, t) => a + (b - a) * t;
 
     const animatePet = () => {
@@ -2643,8 +2644,7 @@ function Journey() {
       targetProgress = progress;
       if (!rafId) rafId = requestAnimationFrame(animatePet);
 
-      // Skip do trabalho pesado se o progresso quase não mudou.
-      // Evita 70+ DOM ops + repaint do SVG mask quando o usuário está parado.
+      // Skip do trabalho pesado se progresso quase não mudou
       if (Math.abs(progress - lastUpdateProgress) < 0.0008) return;
       lastUpdateProgress = progress;
 
@@ -2654,7 +2654,13 @@ function Journey() {
         petScaleWrapper.classList.remove('inside-house');
       }
 
-      drawMaskPath.style.strokeDashoffset = pathLength - (progress * pathLength);
+      // Dasharray dinâmico: tracejado revelado progressivamente, sem mask SVG
+      const visibleLen = progress * pathLength;
+      const cycles = Math.floor(visibleLen / 18);
+      if (cycles !== cachedDashCycles) {
+        cachedDashCycles = cycles;
+        dashedPath.style.strokeDasharray = '8 10 '.repeat(cycles) + '0 ' + (pathLength - cycles * 18);
+      }
 
       cards.forEach((card, index) => {
         if (!card) return;
@@ -2695,6 +2701,7 @@ function Journey() {
     let ticking = false;
     let walkTimeout;
     const handleScroll = () => {
+      if (!isVisible) return;
       if (!ticking) {
         window.requestAnimationFrame(() => {
           updateJourney();
@@ -2702,7 +2709,7 @@ function Journey() {
         });
         ticking = true;
       }
-      
+
       petContainer.classList.add('is-walking');
       clearTimeout(walkTimeout);
       walkTimeout = setTimeout(() => {
@@ -2710,12 +2717,20 @@ function Journey() {
       }, 120);
     };
 
+    // Gate: só roda quando a seção está perto da viewport
+    const visObs = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible) updateJourney();
+    }, { rootMargin: '300px 0px' });
+    visObs.observe(trackContainer);
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     updateJourney();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       ro.disconnect();
+      visObs.disconnect();
       clearTimeout(walkTimeout);
       if (rafId) cancelAnimationFrame(rafId);
     };
@@ -2805,12 +2820,7 @@ function Journey() {
         
         <div className="svg-track-container">
           <svg id="journey-svg" style={{width: '100%', height: '100%'}} ref={svgContainerRef}>
-            <defs>
-              <mask id="draw-mask">
-                <path id="draw-mask-path" ref={drawMaskPathRef} stroke="white" strokeWidth="16" fill="none" />
-              </mask>
-            </defs>
-            <path id="dashed-path" ref={dashedPathRef} stroke="#FF2D7A" strokeWidth="2.5" strokeDasharray="8 10" strokeLinecap="round" fill="none" mask="url(#draw-mask)" />
+            <path id="dashed-path" ref={dashedPathRef} stroke="#FF2D7A" strokeWidth="2.5" strokeLinecap="round" fill="none" strokeDasharray="0 99999" />
           </svg>
         </div>
 

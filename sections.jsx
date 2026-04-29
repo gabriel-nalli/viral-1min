@@ -3219,3 +3219,4 @@ Object.assign(window, {
   Features, Creator, Testimonials, Comparison, Pricing, Guarantee, FAQ, FinalCTA, Footer,
   MasonryApp
 });
+ 

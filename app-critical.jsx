@@ -37,8 +37,6 @@ function AppCritical() {
     <>
       {tweaks.showUrgencyBar && <UrgencyBar />}
       <Hero videoUrl={tweaks.videoUrl} />
-      {/* Placeholder para o conteúdo deferido */}
-      <div id="deferred-root" />
     </>
   );
 }

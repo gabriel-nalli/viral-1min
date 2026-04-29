@@ -2482,7 +2482,6 @@ function Journey() {
     });
 
     let pathLength = 0;
-    let lastX = 0; 
     let pawElements = [];
 
     const renderPathLayout = () => {
@@ -2567,6 +2566,58 @@ function Journey() {
         pawsContainer.appendChild(paw);
         pawElements.push({ el: paw, p: p });
       }
+
+      // GPU layer no pet desde o início
+      petContainer.style.willChange = 'transform';
+      petContainer.style.transform = 'translate(0px, 0px) translateZ(0)';
+
+      // ── LOOKUP TABLE: pré-calcula 400 pontos → zero getPointAtLength no scroll ──
+      const LUT_SIZE = 400;
+      pathLUT = new Array(LUT_SIZE + 1);
+      for (let i = 0; i <= LUT_SIZE; i++) {
+        const pt = dashedPath.getPointAtLength((i / LUT_SIZE) * pathLength);
+        pathLUT[i] = { x: pt.x, y: pt.y };
+      }
+    };
+
+    // ── LOOKUP: lê posição do array sem cálculo geométrico ──
+    const lutLookup = (progress) => {
+      if (!pathLUT) return { x: 0, y: 0 };
+      const idx = Math.round(progress * (pathLUT.length - 1));
+      return pathLUT[Math.max(0, Math.min(pathLUT.length - 1, idx))];
+    };
+
+    // ── LERP: posição atual interpolada do pet ──
+    let petX = 0;
+    let petY = 0;
+    let targetProgress = 0;
+    let rafId = null;
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    const animatePet = () => {
+      if (!pathLUT) { rafId = null; return; }
+      const target = lutLookup(targetProgress);
+      const dx = target.x - petX;
+      const dy = target.y - petY;
+
+      if (Math.abs(dx) < 0.3 && Math.abs(dy) < 0.3) {
+        petX = target.x; petY = target.y;
+        petContainer.style.transform = `translate(${petX - 30}px, ${petY - 30}px) translateZ(0)`;
+        rafId = null;
+        return;
+      }
+
+      petX = lerp(petX, target.x, 0.18);
+      petY = lerp(petY, target.y, 0.18);
+      petContainer.style.transform = `translate(${petX - 30}px, ${petY - 30}px) translateZ(0)`;
+
+      if (target.x > petX + 1) {
+        petFlipper.style.transform = 'scaleX(1)';
+      } else if (target.x < petX - 1) {
+        petFlipper.style.transform = 'scaleX(-1)';
+      }
+
+      rafId = requestAnimationFrame(animatePet);
     };
 
     const updateJourney = () => {
@@ -2595,15 +2646,9 @@ function Journey() {
 
       drawMaskPath.style.strokeDashoffset = pathLength - (progress * pathLength);
 
-      const point = dashedPath.getPointAtLength(progress * pathLength);
-      petContainer.style.transform = `translate(${point.x - 30}px, ${point.y - 30}px)`;
-
-      if (point.x > lastX + 0.5) {
-        petFlipper.style.transform = 'scaleX(1)';
-      } else if (point.x < lastX - 0.5) {
-        petFlipper.style.transform = 'scaleX(-1)';
-      }
-      lastX = point.x;
+      // Atualiza target e inicia loop lerp se parado
+      targetProgress = progress;
+      if (!rafId) rafId = requestAnimationFrame(animatePet);
 
       cards.forEach((card, index) => {
         if (!card) return;
@@ -2666,6 +2711,7 @@ function Journey() {
       window.removeEventListener('scroll', handleScroll);
       ro.disconnect();
       clearTimeout(walkTimeout);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 

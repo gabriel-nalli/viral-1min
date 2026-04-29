@@ -1740,6 +1740,7 @@ function ModulosCarousel() {
 
     let rafId;
     let lastTs = 0;
+    let resumeTimer = null;
     const SPEED = 40;
 
     const tick = (ts) => {
@@ -1762,24 +1763,42 @@ function ModulosCarousel() {
 
     rafId = requestAnimationFrame(tick);
 
-    const pause = () => { pausedRef.current = true; };
-    const resume = () => { pausedRef.current = false; };
+    // Pausa com auto-resume após 800ms (iOS Safari pode engolir touchend/pointerleave)
+    const pause = () => {
+      pausedRef.current = true;
+      if (resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        pausedRef.current = false;
+        resumeTimer = null;
+      }, 800);
+    };
+    const resume = () => {
+      if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = null; }
+      pausedRef.current = false;
+    };
 
     el.addEventListener('pointerenter', pause);
     el.addEventListener('pointerleave', resume);
     el.addEventListener('pointerdown', pause);
+    el.addEventListener('pointerup', resume);
+    el.addEventListener('pointercancel', resume);
     el.addEventListener('touchstart', pause, { passive: true });
     el.addEventListener('touchend', resume);
+    el.addEventListener('touchcancel', resume);
     el.addEventListener('focusin', pause);
     el.addEventListener('focusout', resume);
 
     return () => {
       cancelAnimationFrame(rafId);
+      if (resumeTimer) clearTimeout(resumeTimer);
       el.removeEventListener('pointerenter', pause);
       el.removeEventListener('pointerleave', resume);
       el.removeEventListener('pointerdown', pause);
+      el.removeEventListener('pointerup', resume);
+      el.removeEventListener('pointercancel', resume);
       el.removeEventListener('touchstart', pause);
       el.removeEventListener('touchend', resume);
+      el.removeEventListener('touchcancel', resume);
       el.removeEventListener('focusin', pause);
       el.removeEventListener('focusout', resume);
     };
@@ -1854,6 +1873,7 @@ function Creator() {
     if (!el) return;
     let rafId;
     let lastTs = 0;
+    let resumeTimer = null;
     const SPEED = 35;
     const tick = (ts) => {
       if (!lastTs) lastTs = ts;
@@ -1869,20 +1889,38 @@ function Creator() {
       rafId = requestAnimationFrame(tick);
     };
     rafId = requestAnimationFrame(tick);
-    const pause = () => { expertsPausedRef.current = true; };
-    const resume = () => { expertsPausedRef.current = false; };
+    // Pausa com auto-resume (iOS Safari pode engolir touchend/pointerleave)
+    const pause = () => {
+      expertsPausedRef.current = true;
+      if (resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        expertsPausedRef.current = false;
+        resumeTimer = null;
+      }, 800);
+    };
+    const resume = () => {
+      if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = null; }
+      expertsPausedRef.current = false;
+    };
     el.addEventListener('pointerenter', pause);
     el.addEventListener('pointerleave', resume);
     el.addEventListener('pointerdown', pause);
+    el.addEventListener('pointerup', resume);
+    el.addEventListener('pointercancel', resume);
     el.addEventListener('touchstart', pause, { passive: true });
     el.addEventListener('touchend', resume);
+    el.addEventListener('touchcancel', resume);
     return () => {
       cancelAnimationFrame(rafId);
+      if (resumeTimer) clearTimeout(resumeTimer);
       el.removeEventListener('pointerenter', pause);
       el.removeEventListener('pointerleave', resume);
       el.removeEventListener('pointerdown', pause);
+      el.removeEventListener('pointerup', resume);
+      el.removeEventListener('pointercancel', resume);
       el.removeEventListener('touchstart', pause);
       el.removeEventListener('touchend', resume);
+      el.removeEventListener('touchcancel', resume);
     };
   }, []);
 
@@ -2003,19 +2041,25 @@ function Testimonials() {
 /* ===== Comparison ===== */
 function Comparison() {
   const rows = [
-    ["Roteiros virais prontos diariamente", true, false, false],
-    ["IA especializada no seu nicho", true, false, false],
-    ["Formatos testados e validados", true, "Parcial", false],
-    ["Mentorias ao vivo", true, false, false],
-    ["Curso completo incluído", true, false, "Pago à parte"],
-    ["Desafio gamificado 0→10K", true, false, false],
-    ["Atualização constante do método", true, false, false],
-    ["Preço mensal", "R$37", "R$97+", "R$120+"]];
+    ["Social Media", "R$ 1.500 a R$ 3.000/mês", "12x de R$ 39,90"],
+    ["Gestor de Tráfego Pago", "R$ 3.000+/mês", { check: "Incluso" }],
+    ["Mentoria de Conteúdo", "R$ 5.000+", { check: "Incluso" }],
+    ["Roteiros prontos", { x: "Não tem" }, { check: "Todos os dias prontos" }],
+    ["IA criando conteúdo pra você", { x: "Não tem" }, { check: "Incluso no app" }],
+    ["Desafio 0 aos 10K em 30 dias", { x: "Não tem" }, { check: "Incluso" }],
+    ["Cancela quando quiser", false, true],
+    ["Mais barato que o ChatGPT", "ChatGPT custa R$ 99/mês", { check: "Menos que R$ 40/mês" }],
+    ["Garantia de resultado", false, { check: "30 dias" }],
+  ];
 
   const cell = (v) => {
-    if (v === true) return <span className="check"><Icon name="check" /></span>;
-    if (v === false) return <span className="xmark"><Icon name="x" /></span>;
-    return <span style={{ fontWeight: 700 }}>{v}</span>;
+    if (v === true) return <span className="cmp-pill cmp-yes"><Icon name="check" size={18} /></span>;
+    if (v === false) return <span className="cmp-pill cmp-no"><Icon name="x" size={18} /></span>;
+    if (v && typeof v === 'object') {
+      if (v.check) return <span className="cmp-pill cmp-yes"><Icon name="check" size={18} /><span>{v.check}</span></span>;
+      if (v.x) return <span className="cmp-pill cmp-no"><Icon name="x" size={18} /><span>{v.x}</span></span>;
+    }
+    return <span style={{ fontWeight: 600 }}>{v}</span>;
   };
 
   return (
@@ -2023,29 +2067,30 @@ function Comparison() {
       <div className="container">
         <div className="sec-head">
           <Eyebrow icon="target">Comparativo</Eyebrow>
-          <h2>R$37 é <span className="highlight-lime">óbvio.</span> É menos que o ChatGPT e entrega <span className="highlight-pink">10x mais.</span></h2>
-          <p>Compare e decida você mesma.</p>
+          <h2>Compare e decida <span className="highlight-pink">você mesma.</span></h2>
+          <p>O que você gastaria em ferramentas separadas vs. tudo no Viral em 1 Minuto.</p>
         </div>
 
         <div className="cmp">
-          <div className="cmp-row">
-            <div className="feat-name"></div>
-            <div className="head-us">Viral em 1 Min</div>
-            <div className="head-oth">ChatGPT</div>
-            <div className="head-oth">Curso tradicional</div>
+          <div className="cmp-row cmp-head-row">
+            <div className="head-feat">O que você ganha</div>
+            <div className="head-oth">Alternativas</div>
+            <div className="head-us">
+              Viral em 1 Minuto
+              <span className="head-us-badge">MELHOR</span>
+            </div>
           </div>
           {rows.map((r, i) =>
             <div key={i} className="cmp-row">
               <div className="feat-name">{r[0]}</div>
-              <div className="us">{cell(r[1])}</div>
-              <div className="oth">{cell(r[2])}</div>
-              <div className="oth">{cell(r[3])}</div>
+              <div className="oth">{cell(r[1])}</div>
+              <div className="us">{cell(r[2])}</div>
             </div>
           )}
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 40 }}>
-          <Btn variant="primary" size="lg" icon="rocket" href="#investimento">Quero o App Viral por 12x de R$37</Btn>
+          <Btn variant="primary" size="lg" icon="rocket" href="#investimento">Quero o App Viral por 12x de R$ 39,90</Btn>
           <div style={{ marginTop: 14, fontSize: 14, color: 'var(--ink-soft)' }}>
             <em>Sem contrato · Cancela quando quiser · Acesso imediato</em>
           </div>
@@ -2058,8 +2103,8 @@ function Comparison() {
 /* ===== Pricing ===== */
 function Pricing() {
   const [yearly, setYearly] = useStateS(true);
-  const mensal = { price: 47, cents: "00", per: "/mês", old: null, badge: null };
-  const anual = { price: 37, cents: "00", per: "/mês · 12x", old: "R$ 47,00", badge: "-21% anual" };
+  const mensal = { price: 79, cents: "90", per: "/mês", old: null, badge: null };
+  const anual = { price: 39, cents: "90", per: "/mês · 12x", old: "R$ 79,90", badge: "-50% anual" };
   const data = yearly ? anual : mensal;
 
   return (
@@ -2067,14 +2112,14 @@ function Pricing() {
       <div className="container">
         <div className="sec-head">
           <Eyebrow icon="rocket">Investimento</Eyebrow>
-          <h2>Ative o <span className="highlight-pink">App Viral em 1 Minuto.</span></h2>
+          <h2>Ative o <span className="highlight-pink">Viral em 1 Minuto.</span></h2>
           <p>Escolha o plano que combina com você. Sem letra miúda.</p>
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div className="pricing-toggle">
             <button className={!yearly ? 'active' : ''} onClick={() => setYearly(false)}>Mensal</button>
-            <button className={yearly ? 'active' : ''} onClick={() => setYearly(true)}>Anual <span className="save">-21%</span></button>
+            <button className={yearly ? 'active' : ''} onClick={() => setYearly(true)}>Anual <span className="save">-50%</span></button>
           </div>
         </div>
 
@@ -2083,10 +2128,11 @@ function Pricing() {
             <span className="tier">Starter · Mensal</span>
             <div className="price">
               <span className="cur">R$</span>
-              <span className="num">47</span>
+              <span className="num">79,90</span>
               <span className="per">/mês</span>
             </div>
             <p style={{ marginTop: 4, fontSize: 14, color: 'var(--ink-soft)' }}>Para testar tudo sem compromisso.</p>
+            <p style={{ marginTop: 8, fontSize: 13, fontWeight: 700, color: 'var(--accent)' }}>No anual sai R$ 39,90/mês — economia de 50%</p>
             <ul>
               <li><span className="ck">✓</span><span>App completo com roteiros diários</span></li>
               <li><span className="ck">✓</span><span>IA Viral para modelar conteúdos</span></li>
@@ -2102,10 +2148,10 @@ function Pricing() {
             <span className="tier" style={{ color: '#ffe6ef' }}>Pro · Anual</span>
             <div className="price">
               <span className="cur">12x R$</span>
-              <span className="num">37</span>
+              <span className="num">39,90</span>
               <span className="per">/mês</span>
             </div>
-            <div className="old" style={{ color: '#ffd9e6' }}>de R$47 por R$37 · à vista R$397</div>
+            <div className="old" style={{ color: '#ffd9e6' }}>de R$ 79,90 por R$ 39,90/mês · você economiza R$ 480/ano</div>
             <ul>
               <li><span className="ck">✓</span><span>Tudo do mensal</span></li>
               <li><span className="ck">✓</span><span><strong>2 meses grátis</strong> no anual</span></li>
@@ -2205,7 +2251,7 @@ function FinalCTA() {
           <p>Você pode continuar tentando adivinhar o que funciona. Ou usar um sistema pronto.
             A diferença entre essas duas decisões cabe em um clique.</p>
           <div className="btns">
-            <Btn variant="primary" size="lg" icon="rocket">Ativar App Viral por 12x de R$37</Btn>
+            <Btn variant="primary" size="lg" icon="rocket">Ativar App Viral por 12x de R$ 39,90</Btn>
             <Btn variant="ghost" size="lg" icon="play" href="#vsl">Ver VSL de novo</Btn>
           </div>
           <div style={{ marginTop: 20, fontSize: 14, opacity: .9 }}>

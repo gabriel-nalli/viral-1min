@@ -1407,70 +1407,156 @@ p {
 
 .cmp-row {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1.3fr;
   align-items: center;
 }
 
-.cmp-row>* {
-  padding: 18px 20px;
-  border-top: 1.5px solid rgba(26, 26, 26, .12);
+.cmp-row > * {
+  padding: 18px 22px;
+  border-top: 1.5px solid rgba(26, 26, 26, 0.08);
 }
 
-.cmp-row:first-child>* {
+.cmp-row:first-child > * {
   border-top: 0;
 }
 
-.cmp-row .head-us {
-  background: var(--accent);
-  color: #fff;
+.cmp-row.cmp-head-row > * {
+  padding: 22px 22px;
+}
+
+/* Headers */
+.cmp-row .head-feat {
+  background: var(--ink);
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-head);
   font-weight: 800;
-  text-align: center;
-  border-left: 1px solid rgba(26, 26, 26, 0.08);
-  border-right: 1px solid rgba(26, 26, 26, 0.08);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .cmp-row .head-oth {
-  background: rgba(255, 244, 230, 0.6);
-  backdrop-filter: blur(16px);
+  background: var(--ink);
+  color: rgba(255, 255, 255, 0.85);
   font-weight: 800;
+  font-size: 15px;
   text-align: center;
+  letter-spacing: 0.02em;
 }
 
+.cmp-row .head-us {
+  background: linear-gradient(135deg, #FF5B94 0%, var(--accent) 100%);
+  color: #fff;
+  font-weight: 900;
+  font-size: 16px;
+  text-align: center;
+  position: relative;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.head-us-badge {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: var(--secondary);
+  color: var(--ink);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  font-weight: 900;
+  padding: 3px 8px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(200, 240, 0, 0.4);
+}
+
+/* Cells */
 .cmp-row .feat-name {
   font-weight: 700;
-}
-
-.cmp-row .us {
-  text-align: center;
-  font-weight: 700;
-  background: #fff8f2;
-  border-left: 1px solid rgba(26, 26, 26, 0.08);
-  border-right: 1px solid rgba(26, 26, 26, 0.08);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.3;
 }
 
 .cmp-row .oth {
   text-align: center;
   color: var(--ink-soft);
+  font-weight: 600;
+  font-size: 14px;
+  background: rgba(26, 26, 26, 0.025);
 }
 
-.cmp-row .check {
+.cmp-row .us {
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  background: linear-gradient(135deg, rgba(255, 45, 122, 0.05), rgba(255, 91, 148, 0.03));
+  border-left: 1.5px solid rgba(255, 45, 122, 0.18);
+}
+
+/* Pill (icon + text) */
+.cmp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.cmp-pill.cmp-yes {
   color: var(--accent);
-  font-size: 20px;
 }
 
-.cmp-row .xmark {
-  color: var(--ink-soft);
-  font-size: 20px;
+.cmp-pill.cmp-yes svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.cmp-pill.cmp-no {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.cmp-pill.cmp-no svg {
+  color: rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
 }
 
 @media (max-width: 800px) {
   .cmp-row {
-    grid-template-columns: 1.2fr .6fr .6fr .6fr;
+    grid-template-columns: 1.3fr 0.9fr 1.1fr;
   }
 
-  .cmp-row>* {
-    padding: 12px 8px;
+  .cmp-row > * {
+    padding: 14px 10px;
+    font-size: 12px;
+  }
+
+  .cmp-row .feat-name {
     font-size: 13px;
+  }
+
+  .cmp-row .head-feat,
+  .cmp-row .head-oth,
+  .cmp-row .head-us {
+    font-size: 12px;
+    padding: 14px 10px;
+  }
+
+  .head-us-badge {
+    font-size: 8px;
+    padding: 2px 6px;
+    top: 4px;
+    right: 4px;
+    letter-spacing: 0.1em;
+  }
+
+  .cmp-pill {
+    gap: 5px;
+    font-size: 12px;
+  }
+
+  .cmp-pill svg {
+    width: 14px !important;
+    height: 14px !important;
   }
 }
 
@@ -2470,19 +2556,19 @@ footer a:hover {
     font-size: 12px;
   }
 
-  /* Comparison — virar cartão horizontal scroll-safe */
+  /* Comparison — mobile pequeno */
   .cmp {
     border-radius: 18px;
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .cmp-row {
-    grid-template-columns: 1.3fr .55fr .55fr .55fr;
+    grid-template-columns: 1.2fr 0.85fr 1fr;
   }
 
-  .cmp-row>* {
+  .cmp-row > * {
     padding: 12px 8px;
-    font-size: 12px;
+    font-size: 11.5px;
   }
 
   .cmp-row .feat-name {
@@ -2491,21 +2577,29 @@ footer a:hover {
     line-height: 1.25;
   }
 
-  .cmp-row .head-us,
-  .cmp-row .head-oth {
+  .cmp-row .head-feat,
+  .cmp-row .head-oth,
+  .cmp-row .head-us {
     font-size: 11px;
-    padding: 10px 4px;
+    padding: 12px 6px;
+    letter-spacing: 0.05em;
   }
 
-  .cmp-row .check,
-  .cmp-row .xmark {
-    font-size: 16px;
+  .head-us-badge {
+    font-size: 7px;
+    padding: 2px 5px;
+    top: 3px;
+    right: 3px;
   }
 
-  .cmp-row .check svg,
-  .cmp-row .xmark svg {
-    width: 16px;
-    height: 16px;
+  .cmp-pill {
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .cmp-pill svg {
+    width: 12px !important;
+    height: 12px !important;
   }
 
   /* Pricing */

@@ -1408,12 +1408,19 @@ p {
 .cmp-row {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1.3fr;
-  align-items: center;
+  align-items: stretch;
 }
 
 .cmp-row > * {
   padding: 18px 22px;
   border-top: 1.5px solid rgba(26, 26, 26, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cmp-row > .feat-name {
+  justify-content: flex-start;
 }
 
 .cmp-row:first-child > * {
@@ -1518,6 +1525,12 @@ p {
 .cmp-pill.cmp-no svg {
   color: rgba(0, 0, 0, 0.35);
   flex-shrink: 0;
+}
+
+/* Texto plano (sem ícone) — match com o tamanho dos pills no mobile */
+.cmp-plain {
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 @media (max-width: 800px) {
@@ -1751,42 +1764,57 @@ p {
 /* ============ Pricing ============ */
 .pricing-toggle {
   display: inline-flex;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(26, 26, 26, 0.08);
   border-radius: 50px;
   padding: 5px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.7);
   margin: 0 auto 40px;
   gap: 4px;
+  position: relative;
 }
 
 .pricing-toggle button {
   font-family: var(--font-head);
   font-weight: 700;
-  padding: 10px 22px;
+  padding: 11px 26px;
   border-radius: 40px;
   border: 0;
   background: transparent;
   cursor: pointer;
   font-size: 15px;
   color: var(--ink);
-  transition: all .2s;
+  transition: color 0.25s ease, transform 0.18s ease;
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1;
+}
+
+.pricing-toggle button:hover:not(.active) {
+  color: var(--accent);
 }
 
 .pricing-toggle button.active {
-  background: var(--ink);
+  background: linear-gradient(135deg, #2a2a2a 0%, var(--ink) 100%);
   color: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .pricing-toggle .save {
   background: var(--secondary);
   color: var(--ink);
-  border: 1px solid rgba(26, 26, 26, 0.08);
-  padding: 2px 8px;
+  border: 1px solid rgba(26, 26, 26, 0.12);
+  padding: 3px 10px;
   border-radius: 20px;
   font-size: 11px;
-  margin-left: 6px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin-left: 4px;
+  box-shadow: 0 4px 10px rgba(200, 240, 0, 0.35);
 }
 
 .pricing-grid {
@@ -1797,10 +1825,417 @@ p {
   margin: 0 auto;
 }
 
+/* Single mode — só um plano visível por vez (controlado pelo toggle) */
+.pricing-grid--single {
+  grid-template-columns: 1fr;
+  max-width: 480px;
+}
+
 @media (max-width: 780px) {
   .pricing-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Animação de entrada do plano quando o toggle muda */
+@keyframes planEnter {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.plan--enter {
+  animation: planEnter 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ============ AURA CARD (Pricing) ============ */
+.aura-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  padding: 28px;
+  border-radius: 22px;
+  color: #fff;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: hsla(0, 0%, 8%, 1);
+  background-image:
+    radial-gradient(at 88% 40%, hsla(0, 0%, 8%, 1) 0px, transparent 85%),
+    radial-gradient(at 49% 30%, hsla(0, 0%, 8%, 1) 0px, transparent 85%),
+    radial-gradient(at 14% 26%, hsla(0, 0%, 8%, 1) 0px, transparent 85%),
+    radial-gradient(at 0% 64%, hsla(335, 100%, 55%, 0.95) 0px, transparent 70%),
+    radial-gradient(at 41% 94%, hsla(75, 100%, 55%, 0.55) 0px, transparent 65%),
+    radial-gradient(at 100% 99%, hsla(335, 100%, 60%, 1) 0px, transparent 65%);
+  box-shadow: 0 -16px 24px 0 rgba(255, 45, 122, 0.18) inset, 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.aura-card--popular {
+  background-image:
+    radial-gradient(at 88% 40%, hsla(0, 0%, 8%, 1) 0px, transparent 85%),
+    radial-gradient(at 49% 30%, hsla(0, 0%, 8%, 1) 0px, transparent 85%),
+    radial-gradient(at 14% 26%, hsla(0, 0%, 8%, 1) 0px, transparent 85%),
+    radial-gradient(at 0% 64%, hsla(335, 100%, 60%, 1) 0px, transparent 70%),
+    radial-gradient(at 41% 94%, hsla(75, 100%, 50%, 0.7) 0px, transparent 65%),
+    radial-gradient(at 100% 99%, hsla(75, 100%, 55%, 0.85) 0px, transparent 65%);
+}
+
+/* Rotating border beam — gradient pink → lime */
+.aura-card__border-wrap {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  border-radius: 22px;
+  overflow: hidden;
+  pointer-events: none;
+  background-image: linear-gradient(0deg, hsl(335, 100%, 80%) -50%, hsl(0, 0%, 18%) 100%);
+}
+
+.aura-card__border-beam {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: left;
+  transform: translate(-50%, -50%) rotate(0deg);
+  width: 200%;
+  height: 10rem;
+  pointer-events: none;
+  background-image: linear-gradient(0deg, transparent 0%, var(--accent) 35%, #ff8fb8 50%, var(--secondary) 65%, transparent 100%);
+  animation: auraBorderRotate 8s linear infinite;
+}
+
+@keyframes auraBorderRotate {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Badge "Mais escolhido" */
+.aura-card__badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--secondary);
+  color: var(--ink);
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  z-index: 5;
+  box-shadow: 0 6px 14px rgba(200, 240, 0, 0.4);
+}
+
+/* Header */
+.aura-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.aura-card__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(135deg, rgba(255, 45, 122, 0.25) 0%, rgba(200, 240, 0, 0.15) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.aura-card__title {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 22px;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.aura-card__eyebrow {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 800;
+  margin: 2px 0 0;
+}
+
+.aura-card--popular .aura-card__eyebrow {
+  color: var(--secondary);
+}
+
+/* Price */
+.aura-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.aura-card__cur {
+  font-family: var(--font-head);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 700;
+  margin-right: 2px;
+}
+
+.aura-card__num {
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: 44px;
+  color: #fff;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.aura-card__per {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 2px;
+}
+
+.aura-card__pdesc {
+  font-size: 12px;
+  color: rgba(255, 220, 230, 0.75);
+  margin: 0 0 24px;
+  line-height: 1.4;
+}
+
+/* Features */
+.aura-card__features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.aura-card__features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.4;
+}
+
+.aura-card__features li strong {
+  color: var(--secondary);
+  font-weight: 800;
+}
+
+.aura-card__check {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF5B94, var(--accent));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  box-shadow: 0 4px 10px rgba(255, 45, 122, 0.35);
+}
+
+.aura-card--popular .aura-card__check {
+  background: linear-gradient(135deg, #d4ff33, var(--secondary));
+  box-shadow: 0 4px 10px rgba(200, 240, 0, 0.4);
+}
+
+.aura-card--popular .aura-card__check svg {
+  stroke: var(--ink);
+}
+
+/* ============ AURA BUTTON (CTA do card) ============ */
+.aura-btn {
+  --speed: 4s;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #FF5B94 0%, var(--accent) 50%, #DC2867 100%);
+  cursor: pointer;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s, --speed 0.6s;
+  isolation: isolate;
+  clip-path: inset(0 round 18px);
+  box-shadow: 0 8px 24px rgba(255, 45, 122, 0.3);
+}
+
+.aura-btn--lime {
+  background: linear-gradient(180deg, #d4ff33 0%, var(--secondary) 50%, #a8cc00 100%);
+  box-shadow: 0 8px 24px rgba(200, 240, 0, 0.4);
+}
+
+.aura-btn:hover {
+  --speed: 2.2s;
+  transform: scale(1.02);
+  box-shadow: 0 12px 32px rgba(255, 45, 122, 0.5);
+}
+
+.aura-btn--lime:hover {
+  box-shadow: 0 12px 32px rgba(200, 240, 0, 0.55);
+}
+
+/* Conic shimmer rotativo */
+.aura-btn__shimmer-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.aura-btn__shimmer {
+  position: absolute;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  background: conic-gradient(from 225deg, transparent 0%, rgba(255, 255, 255, 0.85) 10%, transparent 20%);
+  animation: auraRotate var(--speed) linear infinite;
+}
+
+@keyframes auraRotate {
+  to { transform: rotate(360deg); }
+}
+
+/* Onda diagonal */
+.aura-btn__sweep {
+  position: absolute;
+  top: -25%;
+  width: 90px;
+  height: 150%;
+  background: linear-gradient(10deg, rgba(255, 255, 255, 0.5) 12%, transparent 66%);
+  mix-blend-mode: overlay;
+  transform: translateX(-50%) skew(-25deg);
+  pointer-events: none;
+  animation: auraSweep 6s infinite ease-in-out;
+  z-index: 3;
+}
+
+@keyframes auraSweep {
+  0%, 100% { left: -20%; opacity: 0; }
+  20% { opacity: 1; }
+  48% { left: 140%; opacity: 1; }
+  51% { opacity: 0; }
+}
+
+/* Fundo branco que cresce no hover */
+.aura-btn__hover-fill {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 0;
+  height: calc(100% - 10px);
+  background: #fff;
+  border-radius: 14px;
+  transition: width 0.7s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s;
+  z-index: 4;
+  opacity: 0;
+}
+
+.aura-btn:hover .aura-btn__hover-fill {
+  width: calc(100% - 10px);
+  opacity: 1;
+}
+
+/* Ícone deslizante */
+.aura-btn__icon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, var(--ink), #2a2a2a);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+  transition: left 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.aura-btn:hover .aura-btn__icon {
+  left: calc(100% - 46px);
+}
+
+.aura-btn__dot {
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.aura-btn__arrow {
+  display: none;
+}
+
+.aura-btn:hover .aura-btn__dot { display: none; }
+.aura-btn:hover .aura-btn__arrow { display: block; }
+
+/* Textos do botão */
+.aura-btn__text,
+.aura-btn__text-hover {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 15px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  transition: opacity 0.6s, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Texto principal: branco no pink, escuro no lime */
+.aura-btn__text { color: #fff; }
+.aura-btn--lime .aura-btn__text { color: var(--ink); }
+
+/* Texto hover: SEMPRE escuro (fundo do hover é branco) */
+.aura-btn__text-hover { color: var(--ink); }
+
+.aura-btn__text-hover {
+  opacity: 0;
+  transform: translate(-50%, -50%) translateX(20px);
+}
+
+.aura-btn:hover .aura-btn__text {
+  opacity: 0;
+  transform: translate(-50%, -50%) translateX(-30px);
+}
+
+.aura-btn:hover .aura-btn__text-hover {
+  opacity: 1;
+  transform: translate(-50%, -50%) translateX(-10px);
+}
+
+/* Mobile tweaks */
+@media (max-width: 540px) {
+  .aura-card {
+    padding: 22px;
+    max-width: 100%;
+  }
+  .aura-card__num { font-size: 38px; }
+  .aura-card__features li { font-size: 13px; }
+  .aura-btn { height: 52px; }
+  .aura-btn__text,
+  .aura-btn__text-hover { font-size: 14px; }
 }
 
 .plan {
@@ -1932,57 +2367,110 @@ p {
 }
 
 .faq-item {
-  border: 1px solid rgba(26, 26, 26, 0.08);
-  border-radius: 18px;
+  border: 1.5px solid rgba(26, 26, 26, 0.08);
+  border-radius: 22px;
   margin-bottom: 14px;
   background: #fff;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease, background 0.3s ease;
+}
+
+.faq-item:hover {
+  border-color: rgba(255, 45, 122, 0.22);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(255, 45, 122, 0.08);
+}
+
+.faq-item.open {
+  border-color: rgba(255, 45, 122, 0.45);
+  background: linear-gradient(180deg, #fff 0%, rgba(255, 244, 230, 0.45) 100%);
+  box-shadow: 0 18px 40px rgba(255, 45, 122, 0.13);
 }
 
 .faq-q {
-  padding: 20px 24px;
+  width: 100%;
+  padding: 22px 24px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   font-weight: 700;
-  font-size: 17px;
+  font-size: 16px;
   cursor: pointer;
   gap: 16px;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  line-height: 1.4;
+}
+
+.faq-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+  min-width: 26px;
+  opacity: 0.55;
+  transition: opacity 0.25s ease;
+}
+
+.faq-item:hover .faq-num,
+.faq-item.open .faq-num {
+  opacity: 1;
+}
+
+.faq-text {
+  flex: 1;
 }
 
 .faq-toggle {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: rgba(255, 244, 230, 0.6);
-  backdrop-filter: blur(16px);
+  background: rgba(26, 26, 26, 0.04);
   border: 1px solid rgba(26, 26, 26, 0.08);
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  transition: transform .25s ease, background .2s;
-  font-size: 18px;
-  font-weight: 800;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s, color 0.25s, border-color 0.25s;
+  color: var(--ink);
+}
+
+.faq-item:hover .faq-toggle {
+  background: rgba(255, 45, 122, 0.1);
+  color: var(--accent);
+  border-color: rgba(255, 45, 122, 0.18);
 }
 
 .faq-item.open .faq-toggle {
-  background: var(--accent);
+  background: linear-gradient(135deg, #FF5B94, var(--accent));
   color: #fff;
-  transform: rotate(45deg);
+  border-color: transparent;
+  transform: rotate(180deg);
+  box-shadow: 0 6px 14px rgba(255, 45, 122, 0.35);
 }
 
 .faq-a {
   max-height: 0;
   overflow: hidden;
-  transition: max-height .35s ease;
+  transition: max-height 0.4s ease;
   padding: 0 24px;
+}
+
+.faq-a p {
   color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.65;
+  font-weight: 500;
+  padding: 0 0 4px 42px;
 }
 
 .faq-item.open .faq-a {
-  max-height: 300px;
-  padding: 0 24px 22px;
+  max-height: 400px;
+  padding-bottom: 22px;
 }
 
 /* ============ Final CTA ============ */
@@ -2799,13 +3287,66 @@ footer a:hover {
   .plan .price .num {
     font-size: 46px;
   }
+}
 
-  .cmp-row {
-    grid-template-columns: 1.2fr .5fr .5fr .5fr;
+/* ============ Comparison — 3 colunas mais compactas em telas pequenas ============
+   Mantém Feature | Alternativas | App Viral lado a lado.
+   Pill empilha ícone + texto em coluna pra caber na célula estreita. */
+@media (max-width: 540px) {
+  .cmp {
+    border-radius: 14px;
+    font-size: 11px;
   }
 
-  .cmp-row>* {
+  .cmp-row {
+    grid-template-columns: 1.4fr 0.9fr 1fr;
+  }
+
+  .cmp-row > * {
+    padding: 10px 6px;
+    font-size: 11px;
+  }
+
+  .cmp-row .feat-name {
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .cmp-row .head-feat,
+  .cmp-row .head-oth,
+  .cmp-row .head-us {
+    font-size: 10px;
     padding: 10px 5px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Pill: ícone em cima, texto embaixo (encaixa em coluna estreita) */
+  .cmp-pill {
+    flex-direction: column;
+    gap: 3px;
+    text-align: center;
+    font-size: 10.5px;
+    line-height: 1.2;
+  }
+
+  .cmp-pill svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  /* Texto plano: mesmo tamanho dos pills pra alinhar visualmente */
+  .cmp-plain {
+    font-size: 10.5px;
+    line-height: 1.3;
+  }
+
+  .head-us-badge {
+    font-size: 6px;
+    padding: 2px 4px;
+    top: 3px;
+    right: 3px;
+    letter-spacing: 0.08em;
   }
 }
 
@@ -3085,6 +3626,30 @@ footer a:hover {
 
 .alpha-btn:active {
   transform: translateY(1px) scale(0.97);
+}
+
+/* Variante lime — mesma anatomia/efeitos, gradient verde + texto escuro */
+.alpha-btn--lime {
+  background: linear-gradient(135deg,
+      rgba(220, 255, 60, 0.95) 0%,
+      rgba(190, 240, 20, 0.85) 40%,
+      rgba(160, 210, 0, 0.95) 70%,
+      rgba(220, 255, 60, 1) 100%);
+  border-color: rgba(220, 255, 100, 0.6);
+  color: var(--ink);
+  box-shadow: 0 16px 40px rgba(200, 240, 0, 0.45);
+}
+
+.alpha-btn--lime::before {
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.05) 100%);
+}
+
+.alpha-btn--lime::after {
+  background: linear-gradient(0deg,
+      rgba(120, 150, 0, 0.4) 0%,
+      transparent 100%);
 }
 
 /* Primary light beam */

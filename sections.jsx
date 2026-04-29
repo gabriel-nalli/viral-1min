@@ -1512,9 +1512,9 @@ function BigProof() {
           {/* Número grande abaixo do card */}
           <div className={`proof-number-wrap ${started ? 'on' : ''}`} style={{ position: 'relative' }}>
             <FloatingPlays started={started} />
-            <div className="proof-number" style={{ fontSize: 'clamp(28px, 10vw, 130px)', lineHeight: 1, position: 'relative', zIndex: 2, display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '12px' }}>
+            <div className="proof-number" style={{ fontSize: 'clamp(22px, 8.5vw, 130px)', lineHeight: 1, position: 'relative', zIndex: 2, display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', padding: '0 12px' }}>
               <span>+{formatted}</span>
-              <span style={{ fontSize: 'clamp(18px, 4vw, 48px)', fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.03em', alignSelf: 'flex-end', paddingBottom: '0.15em' }}>Bilhões</span>
+              <span style={{ fontSize: 'clamp(14px, 3.4vw, 48px)', fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.03em' }}>Bilhões</span>
             </div>
           </div>
 
@@ -1763,26 +1763,24 @@ function ModulosCarousel() {
 
     rafId = requestAnimationFrame(tick);
 
-    // Pausa com auto-resume após 800ms (iOS Safari pode engolir touchend/pointerleave)
+    // Pausa apenas em interação direta (pointerdown/touchstart) com auto-resume curto
+    // pointerenter foi removido — disparava em todo touch durante scroll vertical no iOS
     const pause = () => {
       pausedRef.current = true;
       if (resumeTimer) clearTimeout(resumeTimer);
       resumeTimer = setTimeout(() => {
         pausedRef.current = false;
         resumeTimer = null;
-      }, 800);
+      }, 350);
     };
     const resume = () => {
       if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = null; }
       pausedRef.current = false;
     };
 
-    el.addEventListener('pointerenter', pause);
-    el.addEventListener('pointerleave', resume);
     el.addEventListener('pointerdown', pause);
     el.addEventListener('pointerup', resume);
     el.addEventListener('pointercancel', resume);
-    el.addEventListener('touchstart', pause, { passive: true });
     el.addEventListener('touchend', resume);
     el.addEventListener('touchcancel', resume);
     el.addEventListener('focusin', pause);
@@ -1791,12 +1789,9 @@ function ModulosCarousel() {
     return () => {
       cancelAnimationFrame(rafId);
       if (resumeTimer) clearTimeout(resumeTimer);
-      el.removeEventListener('pointerenter', pause);
-      el.removeEventListener('pointerleave', resume);
       el.removeEventListener('pointerdown', pause);
       el.removeEventListener('pointerup', resume);
       el.removeEventListener('pointercancel', resume);
-      el.removeEventListener('touchstart', pause);
       el.removeEventListener('touchend', resume);
       el.removeEventListener('touchcancel', resume);
       el.removeEventListener('focusin', pause);
@@ -1889,36 +1884,30 @@ function Creator() {
       rafId = requestAnimationFrame(tick);
     };
     rafId = requestAnimationFrame(tick);
-    // Pausa com auto-resume (iOS Safari pode engolir touchend/pointerleave)
+    // Pausa apenas em interação direta (sem pointerenter)
     const pause = () => {
       expertsPausedRef.current = true;
       if (resumeTimer) clearTimeout(resumeTimer);
       resumeTimer = setTimeout(() => {
         expertsPausedRef.current = false;
         resumeTimer = null;
-      }, 800);
+      }, 350);
     };
     const resume = () => {
       if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = null; }
       expertsPausedRef.current = false;
     };
-    el.addEventListener('pointerenter', pause);
-    el.addEventListener('pointerleave', resume);
     el.addEventListener('pointerdown', pause);
     el.addEventListener('pointerup', resume);
     el.addEventListener('pointercancel', resume);
-    el.addEventListener('touchstart', pause, { passive: true });
     el.addEventListener('touchend', resume);
     el.addEventListener('touchcancel', resume);
     return () => {
       cancelAnimationFrame(rafId);
       if (resumeTimer) clearTimeout(resumeTimer);
-      el.removeEventListener('pointerenter', pause);
-      el.removeEventListener('pointerleave', resume);
       el.removeEventListener('pointerdown', pause);
       el.removeEventListener('pointerup', resume);
       el.removeEventListener('pointercancel', resume);
-      el.removeEventListener('touchstart', pause);
       el.removeEventListener('touchend', resume);
       el.removeEventListener('touchcancel', resume);
     };
@@ -2041,14 +2030,13 @@ function Testimonials() {
 /* ===== Comparison ===== */
 function Comparison() {
   const rows = [
-    ["Social Media", "R$ 1.500 a R$ 3.000/mês", "12x de R$ 39,90"],
-    ["Gestor de Tráfego Pago", "R$ 3.000+/mês", { check: "Incluso" }],
-    ["Mentoria de Conteúdo", "R$ 5.000+", { check: "Incluso" }],
+    ["Social Media", "R$ 1.500 a R$ 3.000/mês", "R$ 39,90/mês"],
+    ["Mentoria de Conteúdo", "R$ 5.000+", { check: "Incluso" }],
     ["Roteiros prontos", { x: "Não tem" }, { check: "Todos os dias prontos" }],
     ["IA criando conteúdo pra você", { x: "Não tem" }, { check: "Incluso no app" }],
     ["Desafio 0 aos 10K em 30 dias", { x: "Não tem" }, { check: "Incluso" }],
     ["Cancela quando quiser", false, true],
-    ["Mais barato que o ChatGPT", "ChatGPT custa R$ 99/mês", { check: "Menos que R$ 40/mês" }],
+    ["Mais barato que o ChatGPT", "ChatGPT custa R$ 99/mês", { check: "Menos que R$ 40/mês" }],
     ["Garantia de resultado", false, { check: "30 dias" }],
   ];
 
@@ -2059,7 +2047,7 @@ function Comparison() {
       if (v.check) return <span className="cmp-pill cmp-yes"><Icon name="check" size={18} /><span>{v.check}</span></span>;
       if (v.x) return <span className="cmp-pill cmp-no"><Icon name="x" size={18} /><span>{v.x}</span></span>;
     }
-    return <span style={{ fontWeight: 600 }}>{v}</span>;
+    return <span className="cmp-plain">{v}</span>;
   };
 
   return (
@@ -2073,12 +2061,9 @@ function Comparison() {
 
         <div className="cmp">
           <div className="cmp-row cmp-head-row">
-            <div className="head-feat">O que você ganha</div>
+            <div className="head-feat">Recursos</div>
             <div className="head-oth">Alternativas</div>
-            <div className="head-us">
-              Viral em 1 Minuto
-              <span className="head-us-badge">MELHOR</span>
-            </div>
+            <div className="head-us">Viral em 1 Minuto</div>
           </div>
           {rows.map((r, i) =>
             <div key={i} className="cmp-row">
@@ -2090,7 +2075,7 @@ function Comparison() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 40 }}>
-          <Btn variant="primary" size="lg" icon="rocket" href="#investimento">Quero o App Viral por 12x de R$ 39,90</Btn>
+          <AlphaBtn href="#investimento">Quero o App Viral em 1 Minuto</AlphaBtn>
           <div style={{ marginTop: 14, fontSize: 14, color: 'var(--ink-soft)' }}>
             <em>Sem contrato · Cancela quando quiser · Acesso imediato</em>
           </div>
@@ -2111,57 +2096,123 @@ function Pricing() {
     <section className="sec" id="investimento">
       <div className="container">
         <div className="sec-head">
-          <Eyebrow icon="rocket">Investimento</Eyebrow>
           <h2>Ative o <span className="highlight-pink">Viral em 1 Minuto.</span></h2>
-          <p>Escolha o plano que combina com você. Sem letra miúda.</p>
+          <p>Escolha o plano que mais combina com você.</p>
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div className="pricing-toggle">
-            <button className={!yearly ? 'active' : ''} onClick={() => setYearly(false)}>Mensal</button>
-            <button className={yearly ? 'active' : ''} onClick={() => setYearly(true)}>Anual <span className="save">-50%</span></button>
+          <div className="pricing-toggle" role="tablist" aria-label="Plano">
+            <button
+              role="tab"
+              aria-selected={!yearly}
+              className={!yearly ? 'active' : ''}
+              onClick={() => setYearly(false)}
+            >
+              Mensal
+            </button>
+            <button
+              role="tab"
+              aria-selected={yearly}
+              className={yearly ? 'active' : ''}
+              onClick={() => setYearly(true)}
+            >
+              Anual <span className="save">-50%</span>
+            </button>
           </div>
         </div>
 
-        <div className="pricing-grid">
-                      <div className="plan">
-            <span className="tier">Starter · Mensal</span>
-            <div className="price">
-              <span className="cur">R$</span>
-              <span className="num">79,90</span>
-              <span className="per">/mês</span>
-            </div>
-            <p style={{ marginTop: 4, fontSize: 14, color: 'var(--ink-soft)' }}>Para testar tudo sem compromisso.</p>
-            <p style={{ marginTop: 8, fontSize: 13, fontWeight: 700, color: 'var(--accent)' }}>No anual sai R$ 39,90/mês — economia de 50%</p>
-            <ul>
-              <li><span className="ck">✓</span><span>App completo com roteiros diários</span></li>
-              <li><span className="ck">✓</span><span>IA Viral para modelar conteúdos</span></li>
-              <li><span className="ck">✓</span><span>Curso + área de membros</span></li>
-              <li><span className="ck">✓</span><span>Mentorias ao vivo</span></li>
-              <li><span className="ck">✓</span><span>Desafio 0→10K em 30 dias</span></li>
-              <li><span className="ck">✓</span><span>Cancela quando quiser</span></li>
-            </ul>
-          </div>
+        <div className="pricing-grid pricing-grid--single">
+          {!yearly ? (
+            <article className="aura-card plan--enter" key="mensal">
+              <div className="aura-card__border-wrap" aria-hidden="true">
+                <div className="aura-card__border-beam"></div>
+              </div>
 
-          <div className="plan popular">
-            <span className="badge">⚡ Mais escolhido</span>
-            <span className="tier" style={{ color: '#ffe6ef' }}>Pro · Anual</span>
-            <div className="price">
-              <span className="cur">12x R$</span>
-              <span className="num">39,90</span>
-              <span className="per">/mês</span>
-            </div>
-            <div className="old" style={{ color: '#ffd9e6' }}>de R$ 79,90 por R$ 39,90/mês · você economiza R$ 480/ano</div>
-            <ul>
-              <li><span className="ck">✓</span><span>Tudo do mensal</span></li>
-              <li><span className="ck">✓</span><span><strong>2 meses grátis</strong> no anual</span></li>
-              <li><span className="ck">✓</span><span>Acesso prioritário a novos formatos</span></li>
-              <li><span className="ck">✓</span><span>Grupo VIP de alunas anuais</span></li>
-              <li><span className="ck">✓</span><span>Bônus: Pack de 30 stories que vendem</span></li>
-              <li><span className="ck">✓</span><span>Garantia incondicional de 30 dias</span></li>
-            </ul>
-            <Btn variant="primary" size="lg" icon="rocket">Ativar App Viral agora</Btn>
-          </div>
+              <header className="aura-card__header">
+                <div className="aura-card__icon">
+                  <Icon name="bolt" size={22} color="var(--accent)" />
+                </div>
+                <div>
+                  <h3 className="aura-card__title">Starter</h3>
+                  <p className="aura-card__eyebrow">Plano Mensal</p>
+                </div>
+              </header>
+
+              <div className="aura-card__price">
+                <span className="aura-card__cur">R$</span>
+                <span className="aura-card__num">79,90</span>
+                <span className="aura-card__per">/mês</span>
+              </div>
+              <p className="aura-card__pdesc">Para testar sem compromisso · No anual sai R$ 39,90/mês</p>
+
+              <ul className="aura-card__features">
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>App completo com roteiros diários</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>IA Viral para modelar conteúdos</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Curso + área de membros</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Mentorias ao vivo</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Desafio 0→10K em 30 dias</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Cancela quando quiser</li>
+              </ul>
+
+              <a href="#investimento" className="aura-btn">
+                <div className="aura-btn__shimmer-wrap"><div className="aura-btn__shimmer"></div></div>
+                <div className="aura-btn__sweep"></div>
+                <div className="aura-btn__hover-fill"></div>
+                <div className="aura-btn__icon">
+                  <span className="aura-btn__dot"></span>
+                  <svg className="aura-btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+                </div>
+                <span className="aura-btn__text">Começar plano Mensal</span>
+                <span className="aura-btn__text-hover">Vamos viralizar?</span>
+              </a>
+            </article>
+          ) : (
+            <article className="aura-card aura-card--popular plan--enter" key="anual">
+              <div className="aura-card__border-wrap" aria-hidden="true">
+                <div className="aura-card__border-beam"></div>
+              </div>
+
+              <span className="aura-card__badge">Mais escolhido</span>
+
+              <header className="aura-card__header">
+                <div className="aura-card__icon">
+                  <Icon name="bolt" size={22} color="var(--secondary)" />
+                </div>
+                <div>
+                  <h3 className="aura-card__title">Pro</h3>
+                  <p className="aura-card__eyebrow">Plano Anual</p>
+                </div>
+              </header>
+
+              <div className="aura-card__price">
+                <span className="aura-card__cur">12x R$</span>
+                <span className="aura-card__num">39,90</span>
+                <span className="aura-card__per">/mês</span>
+              </div>
+              <p className="aura-card__pdesc">de R$ 79,90 por R$ 39,90/mês · você economiza <strong style={{ color: 'var(--secondary)' }}>R$ 480/ano</strong></p>
+
+              <ul className="aura-card__features">
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Tudo do mensal incluso</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><strong>2 meses grátis</strong> no anual</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Acesso prioritário a novos formatos</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Grupo VIP de alunas anuais</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Bônus: Pack de 30 stories que vendem</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Garantia incondicional de 30 dias</li>
+              </ul>
+
+              <a href="#investimento" className="aura-btn aura-btn--lime">
+                <div className="aura-btn__shimmer-wrap"><div className="aura-btn__shimmer"></div></div>
+                <div className="aura-btn__sweep"></div>
+                <div className="aura-btn__hover-fill"></div>
+                <div className="aura-btn__icon">
+                  <span className="aura-btn__dot"></span>
+                  <svg className="aura-btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+                </div>
+                <span className="aura-btn__text">Ativar plano Anual</span>
+                <span className="aura-btn__text-hover">Vamos viralizar?</span>
+              </a>
+            </article>
+          )}
         </div>
       </div>
     </section>);
@@ -2187,7 +2238,7 @@ function Guarantee() {
               Se você seguir o protocolo e não ver resultado, basta enviar um e-mail com os prints e devolvemos tudo.
               <strong style={{ color: '#fff' }}> Sem burocracia. Sem pergunta. Sem enrolação.</strong></p>
           </div>
-          <Btn variant="lime" size="lg" icon="rocket" href="#investimento">Ativar sem risco</Btn>
+          <AlphaBtn variant="lime" href="#investimento">Ativar sem risco</AlphaBtn>
         </div>
       </div>
     </section>);
@@ -2215,11 +2266,21 @@ function FAQ() {
         <div className="faq-list">
           {items.map(([q, a], i) =>
             <div key={i} className={`faq-item ${open === i ? 'open' : ''}`}>
-              <div className="faq-q" onClick={() => setOpen(open === i ? -1 : i)}>
-                <span>{q}</span>
-                <span className="faq-toggle">+</span>
-              </div>
-              <div className="faq-a"><p style={{ padding: '4px 0' }}>{a}</p></div>
+              <button
+                type="button"
+                className="faq-q"
+                onClick={() => setOpen(open === i ? -1 : i)}
+                aria-expanded={open === i}
+              >
+                <span className="faq-num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="faq-text">{q}</span>
+                <span className="faq-toggle" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </span>
+              </button>
+              <div className="faq-a"><p>{a}</p></div>
             </div>
           )}
         </div>
@@ -2251,8 +2312,7 @@ function FinalCTA() {
           <p>Você pode continuar tentando adivinhar o que funciona. Ou usar um sistema pronto.
             A diferença entre essas duas decisões cabe em um clique.</p>
           <div className="btns">
-            <Btn variant="primary" size="lg" icon="rocket">Ativar App Viral por 12x de R$ 39,90</Btn>
-            <Btn variant="ghost" size="lg" icon="play" href="#vsl">Ver VSL de novo</Btn>
+            <AlphaBtn variant="lime" href="#investimento">Ativar App Viral em 1 Minuto por R$ 39,90/mês</AlphaBtn>
           </div>
           <div style={{ marginTop: 20, fontSize: 14, opacity: .9 }}>
             <em>Sem contrato · Sem fidelidade · Cancela quando quiser</em>
@@ -2648,38 +2708,69 @@ function Journey() {
       return pathLUT[Math.max(0, Math.min(pathLUT.length - 1, idx))];
     };
 
-    // ── LERP: posição atual interpolada do pet ──
+    // ── LERP: progresso real do pet (lerpado) — trail/paws/colls seguem ele ──
     let petX = 0;
     let petY = 0;
+    let petProgress = 0;
     let targetProgress = 0;
     let rafId = null;
     let lastUpdateProgress = -1;
     let isVisible = true;
     const lerp = (a, b, t) => a + (b - a) * t;
 
+    const updateTrail = () => {
+      const visibleLen = petProgress * pathLength;
+      const cycles = Math.floor(visibleLen / 18);
+      if (cycles !== cachedDashCycles) {
+        cachedDashCycles = cycles;
+        dashedPath.style.strokeDasharray = '8 10 '.repeat(cycles) + '0 ' + (pathLength - cycles * 18);
+      }
+    };
+
+    const updatePetTiedElements = () => {
+      // Collectibles e patinhas seguem a posição REAL do pet (não o scroll)
+      collElements.forEach((item) => {
+        if (petProgress >= item.p - 0.01) item.el.classList.add('collected');
+        else item.el.classList.remove('collected');
+      });
+      pawElements.forEach((paw) => {
+        if (petProgress >= paw.p - 0.005) paw.el.classList.add('visible');
+        else paw.el.classList.remove('visible');
+      });
+    };
+
     const animatePet = () => {
       if (!pathLUT) { rafId = null; return; }
-      const target = lutLookup(targetProgress);
-      const dx = target.x - petX;
-      const dy = target.y - petY;
 
-      if (Math.abs(dx) < 0.3 && Math.abs(dy) < 0.3) {
-        petX = target.x; petY = target.y;
-        petContainer.style.transform = `translate(${petX - 30}px, ${petY - 30}px) translateZ(0)`;
-        rafId = null;
-        return;
+      const dp = targetProgress - petProgress;
+      const settled = Math.abs(dp) < 0.0005;
+
+      if (settled) {
+        petProgress = targetProgress;
+      } else {
+        petProgress = lerp(petProgress, targetProgress, 0.18);
       }
 
-      petX = lerp(petX, target.x, 0.18);
-      petY = lerp(petY, target.y, 0.18);
+      const target = lutLookup(petProgress);
+      const prevX = petX;
+      petX = target.x;
+      petY = target.y;
+
       petContainer.style.transform = `translate(${petX - 30}px, ${petY - 30}px) translateZ(0)`;
 
-      if (target.x > petX + 1) {
+      if (petX > prevX + 0.5) {
         petFlipper.style.transform = 'scaleX(1)';
-      } else if (target.x < petX - 1) {
+      } else if (petX < prevX - 0.5) {
         petFlipper.style.transform = 'scaleX(-1)';
       }
 
+      updateTrail();
+      updatePetTiedElements();
+
+      if (settled) {
+        rafId = null;
+        return;
+      }
       rafId = requestAnimationFrame(animatePet);
     };
 
@@ -2715,39 +2806,18 @@ function Journey() {
         petScaleWrapper.classList.remove('inside-house');
       }
 
-      // Dasharray dinâmico: tracejado revelado progressivamente, sem mask SVG
-      const visibleLen = progress * pathLength;
-      const cycles = Math.floor(visibleLen / 18);
-      if (cycles !== cachedDashCycles) {
-        cachedDashCycles = cycles;
-        dashedPath.style.strokeDasharray = '8 10 '.repeat(cycles) + '0 ' + (pathLength - cycles * 18);
-      }
-
+      // Cards aparecem antecipadamente (antecipação visual baseada no scroll)
       cards.forEach((card, index) => {
         if (!card) return;
-        const triggerPoint = collElements[index].p - 0.06; 
+        const triggerPoint = collElements[index].p - 0.06;
         if (progress >= triggerPoint) {
           card.classList.add('is-visible');
         } else {
           card.classList.remove('is-visible');
         }
       });
-
-      collElements.forEach(item => {
-        if (progress >= item.p - 0.01) {
-          item.el.classList.add('collected');
-        } else {
-          item.el.classList.remove('collected');
-        }
-      });
-
-      pawElements.forEach(paw => {
-        if (progress >= paw.p - 0.005) { 
-          paw.el.classList.add('visible');
-        } else {
-          paw.el.classList.remove('visible');
-        }
-      });
+      // Trail, collectibles e patinhas são atualizados dentro de animatePet
+      // (em sincronia com a posição REAL do pet, não com o scroll)
     };
 
     // Use ResizeObserver for more robust dimensions

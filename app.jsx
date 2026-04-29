@@ -42,7 +42,6 @@ function AppDeferred() {
       <Guarantee />
       <FAQ />
       <FinalCTA />
-      <Footer />
 
       <TweaksPanel title="Tweaks">
         <TweakSection label="Intensidade lúdica" />

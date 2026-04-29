@@ -155,9 +155,10 @@ function Eyebrow({ children, icon }) {
 }
 
 /* ===== Alpha Premium Button ===== */
-function AlphaBtn({href="#", children}) {
+function AlphaBtn({href="#", variant, children}) {
+  const cls = variant ? `alpha-btn alpha-btn--${variant}` : 'alpha-btn';
   return (
-    <a href={href} className="alpha-btn">
+    <a href={href} className={cls}>
       <div className="shimmer-effect"></div>
       <div className="hover-overlay"></div>
       <span className="btn-content">

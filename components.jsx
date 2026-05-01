@@ -59,7 +59,7 @@ function Marquee() {
   const silverItems = [
     "VIRE REFERÊNCIA", "VIRALIZE AINDA HOJE", "ROTEIROS VIRAIS DIÁRIOS", "DO ZERO AOS 10K", "SEM DANCINHA"
   ];
-  
+
   const darkItems = [
     "CRESCIMENTO ACELERADO", "ENGAJAMENTO MASSIVO", "RESULTADOS REAIS", "ALGORITMO A SEU FAVOR", "MÉTODO COMPROVADO"
   ];
@@ -96,35 +96,51 @@ function Marquee() {
 /* ===== Testimonial Marquee (duas linhas, rolando) ===== */
 function TestiMarquee() {
   const row1 = [
-    { name: "Camila R.", handle: "@camilarbeauty", nicho: "Extensão de cílios", text: "Tô em choque. Segui o roteiro do app, gravei em 40s e o Reels bateu 1.2M de views em 3 dias. Fechou 14 clientes novas só com isso.", metric: "+38.400 seg. em 21 dias", style: "" },
-    { name: "Paula V.", handle: "@paulinhanails", nicho: "Nail designer", text: "Eu achava que precisava de equipamento, iluminação, cenário… Nada disso. Só celular + roteiro do app + postar. Simples.", metric: "de 900 p/ 27K", style: "lime" },
-    { name: "Juliana M.", handle: "@jumakeup", nicho: "Maquiadora", text: "O que mais pegou foi a IA modelando conteúdo viral do nicho. Copiei a estrutura dos vídeos que já bombaram e adaptei pra mim. Fila de noivas lotada.", metric: "Agenda fechada 2 meses", style: "" },
-    { name: "Rafa C.", handle: "@rafaestudiosbb", nicho: "Sobrancelhas", text: "Testei por birra. Em 10 dias já tinha 3 vídeos acima de 100K. Mudou meu CEP, juro.", metric: "+52K seguidores", style: "pink" },
-    { name: "Bruna L.", handle: "@bru.hair", nicho: "Cabeleireira", text: "O desafio de 30 dias me deu uma estrutura que eu nunca tive. Hoje posto todo dia sem me desgastar.", metric: "De 1.2K → 18K", style: "" },
-    { name: "Thaís O.", handle: "@thais.estetica", nicho: "Estética facial", text: "Investi R$37 e recuperei no primeiro cliente que veio do vídeo. Virou minha principal fonte de leads.", metric: "ROI no 1º dia", style: "lime" },
+    { name: "Camila R.", handle: "@camilarbeauty", nicho: "Extensão de cílios", img: "assets/IMG_0488.webp", metric: "+38.400 seg. em 21 dias", style: "" },
+    { name: "Paula V.", handle: "@paulinhanails", nicho: "Nail designer", img: "assets/IMG_0489.webp", metric: "de 900 p/ 27K", style: "lime" },
+    { name: "Juliana M.", handle: "@jumakeup", nicho: "Maquiadora", img: "assets/IMG_0490.webp", metric: "Agenda fechada 2 meses", style: "" },
+    { name: "Rafa C.", handle: "@rafaestudiosbb", nicho: "Sobrancelhas", img: "assets/IMG_0491.webp", metric: "+52K seguidores", style: "pink" },
+    { name: "Bruna L.", handle: "@bru.hair", nicho: "Cabeleireira", img: "assets/IMG_0492.webp", metric: "De 1.2K → 18K", style: "" },
+    { name: "Thaís O.", handle: "@thais.estetica", nicho: "Estética facial", img: "assets/IMG_0493.webp", metric: "ROI no 1º dia", style: "lime" },
   ];
   const row2 = [
-    { name: "Larissa F.", handle: "@laridepilacao", nicho: "Depilação", text: "Eu travava pra gravar porque não sabia o que falar. O roteiro diário resolve isso. Abro, leio, gravo, posto.", metric: "+11K em 2 semanas", style: "" },
-    { name: "Monique A.", handle: "@moni.mua", nicho: "Auto maquiagem", text: "A parte da IA é o pulo do gato. Pego vídeo viral, ela transcreve, adapta pro meu nicho. Surreal.", metric: "1 vídeo c/ 2.4M views", style: "pink" },
-    { name: "Gabi S.", handle: "@gabisobrancelhas", nicho: "Designer de sobrancelha", text: "Não tenho cara pra câmera. Vários modelos no app viralizam sem mostrar rosto, só as mãos. Salvou minha vida.", metric: "+22K sem aparecer", style: "" },
-    { name: "Dani P.", handle: "@danicilios", nicho: "Cílios fio a fio", text: "Antes postava 1x por semana e ninguém via. Agora posto todo dia e virei referência na minha cidade.", metric: "Ranking local top 1", style: "lime" },
-    { name: "Amanda T.", handle: "@amandahair", nicho: "Mega hair", text: "O curso + app + mentoria ao vivo é diferente de tudo que já comprei. E eu comprei MUITA coisa antes.", metric: "+41K em 45 dias", style: "" },
-    { name: "Carol B.", handle: "@carolspa", nicho: "SPA", text: "Meu feed era morto. Hoje é uma máquina de atrair clientes. Sem me estressar criando.", metric: "Agenda +3x", style: "pink" },
+    { name: "Larissa F.", handle: "@laridepilacao", nicho: "Depilação", img: "assets/IMG_0494.webp", metric: "+11K em 2 semanas", style: "" },
+    { name: "Monique A.", handle: "@moni.mua", nicho: "Auto maquiagem", img: "assets/IMG_0495.webp", metric: "1 vídeo c/ 2.4M views", style: "pink" },
+    { name: "Gabi S.", handle: "@gabisobrancelhas", nicho: "Designer de sobrancelha", img: "assets/IMG_0496.webp", metric: "+22K sem aparecer", style: "" },
+    { name: "Dani P.", handle: "@danicilios", nicho: "Cílios fio a fio", img: "assets/IMG_0498.webp", metric: "Ranking local top 1", style: "lime" },
+    { name: "Amanda T.", handle: "@amandahair", nicho: "Mega hair", img: "assets/IMG_0499.webp", metric: "+41K em 45 dias", style: "" },
+    { name: "Carol B.", handle: "@carolspa", nicho: "SPA", img: "assets/IMG_0500.webp", metric: "Agenda +3x", style: "pink" },
   ];
 
-  const Card = ({ t }) => (
-    <div className={`testi-card ${t.style}`}>
-      <div className="who">
-        <div className="av" />
-        <div>
-          <div className="name">{t.name} <span style={{ opacity: .6, fontWeight: 500 }}>· {t.nicho}</span></div>
-          <div className="handle">{t.handle}</div>
-        </div>
+  const Card = ({ t }) => {
+    let bgColor = 'var(--glass-bg)';
+    let borderColor = 'var(--glass-border)';
+    
+    if (t.style === 'lime') {
+      bgColor = 'rgba(200, 240, 0, 0.15)'; // Lime transparente
+      borderColor = 'rgba(200, 240, 0, 0.4)';
+    } else if (t.style === 'pink') {
+      bgColor = 'rgba(255, 45, 122, 0.15)'; // Pink transparente
+      borderColor = 'rgba(255, 45, 122, 0.4)';
+    }
+
+    return (
+      <div className="testi-card" style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        aspectRatio: '3 / 4', 
+        padding: '16px',
+        background: bgColor,
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: `1.5px solid ${borderColor}`,
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)'
+      }}>
+        <img src={t.img} alt="Prova social" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }} loading="lazy" />
       </div>
-      <div className="text">"{t.text}"</div>
-      <div className="metric"><Icon name="trend" size={12} /> {t.metric}</div>
-    </div>
-  );
+    );
+  };
   const dup = arr => [...arr, ...arr];
   return (
     <div style={{ padding: "10px 0" }}>
@@ -155,7 +171,7 @@ function Eyebrow({ children, icon }) {
 }
 
 /* ===== Alpha Premium Button ===== */
-function AlphaBtn({href="#", variant, children}) {
+function AlphaBtn({ href = "#", variant, children }) {
   const cls = variant ? `alpha-btn alpha-btn--${variant}` : 'alpha-btn';
   return (
     <a href={href} className={cls}>

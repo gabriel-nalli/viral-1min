@@ -137,7 +137,23 @@ function TestiMarquee() {
         border: `1.5px solid ${borderColor}`,
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)'
       }}>
-        <img src={t.img} alt="Prova social" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }} loading="lazy" />
+        {t.video ? (
+          <video 
+            src={t.video} 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }} 
+          />
+        ) : (
+          <img 
+            src={t.img} 
+            alt="Prova social" 
+            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }} 
+            loading="lazy" 
+          />
+        )}
       </div>
     );
   };

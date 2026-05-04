@@ -1846,18 +1846,20 @@ function Creator() {
   const expertsPausedRef = React.useRef(false);
 
   const experts = [
-    { name: 'Ana Paula', role: 'Especialista em Reels', img: null },
-    { name: 'Camila Torres', role: 'Growth & Viral Strategy', img: null },
-    { name: 'Fernanda Lima', role: 'Copywriting & Roteiros', img: null },
-    { name: 'Júlia Moraes', role: 'Branding Visual', img: null },
-    { name: 'Beatriz Alves', role: 'Edição & Produção', img: null },
-    { name: 'Larissa Costa', role: 'IA & Automação', img: null },
-    { name: 'Patrícia Nunes', role: 'Nicho Beleza', img: null },
-    { name: 'Renata Souza', role: 'Nicho Fitness', img: null },
-    { name: 'Mariana Gomes', role: 'Nicho Saúde', img: null },
-    { name: 'Isabela Rocha', role: 'Nicho Moda', img: null },
-    { name: 'Viviane Santos', role: 'Nicho Gastronomia', img: null },
-    { name: 'Daniela Pires', role: 'Nicho Educação', img: null },
+    { name: 'Expert 01', role: 'Especialista Viral', img: '06E3A099-25C1-4561-9643-D75F4D50BCEB.webp' },
+    { name: 'Expert 02', role: 'Especialista Viral', img: '15053FB1-E0A9-4834-9205-6B23DB8A84A9.webp' },
+    { name: 'Expert 03', role: 'Especialista Viral', img: '1D79E04A-7FDA-40D3-B8AF-40688547608F.webp' },
+    { name: 'Expert 04', role: 'Especialista Viral', img: '3CCDFD5C-2A17-4747-BBE6-02D7DE5FB030.webp' },
+    { name: 'Expert 05', role: 'Especialista Viral', img: '52CF278C-1E46-4613-90F9-08FF0632B386.webp' },
+    { name: 'Expert 06', role: 'Especialista Viral', img: '6CDE2092-9BEA-490B-9650-6869B2C1E169.webp' },
+    { name: 'Expert 07', role: 'Especialista Viral', img: '6EEE65FB-DF6A-41C1-9C43-64782C496C29.webp' },
+    { name: 'Expert 08', role: 'Especialista Viral', img: '7C0A610E-5ABB-43E6-993B-0541E11B010F.webp' },
+    { name: 'Expert 09', role: 'Especialista Viral', img: 'A825AF3A-9A66-477E-A1DA-4549FCFD159E.webp' },
+    { name: 'Expert 10', role: 'Especialista Viral', img: 'A91E5792-08C0-42D2-B0A1-44A10201EF79.webp' },
+    { name: 'Expert 11', role: 'Especialista Viral', img: 'DCBB1B8A-5E90-4938-82B7-B7FDAD1BAA02.webp' },
+    { name: 'Expert 12', role: 'Especialista Viral', img: 'DCF1A743-96E0-4636-B95B-5C6084A52174.webp' },
+    { name: 'Expert 13', role: 'Especialista Viral', img: 'DF9E6B5D-38AD-4497-990D-4AA9673E6E41.webp' },
+    { name: 'Expert 14', role: 'Especialista Viral', img: 'IMG_9522.webp' },
   ];
 
   const loopExperts = [...experts, ...experts];
@@ -1984,7 +1986,7 @@ function Creator() {
       <div className="modulos-block" style={{ marginTop: 80 }}>
         <div className="container">
           <div className="modulos-head">
-            <div className="tag" style={{ display: 'inline-block', background: 'var(--secondary)', color: 'var(--ink)' }}>12 experts do ecossistema</div>
+            <div className="tag" style={{ display: 'inline-block', background: 'var(--secondary)', color: 'var(--ink)' }}>14 experts do ecossistema</div>
             <h3 style={{ marginTop: 14, fontSize: 'clamp(22px, 2.6vw, 30px)', color: 'var(--ink)' }}>
               Especialistas reais, resultados <span className="highlight-pink">comprovados</span>.
             </h3>
@@ -1993,14 +1995,18 @@ function Creator() {
         <div className="modulos-carousel">
           <div className="modulos-track experts-track" ref={expertsTrackRef}>
             {loopExperts.map((expert, i) => (
-              <article key={i} className="mod-card mod-no-img expert-card" aria-hidden={i >= experts.length ? 'true' : undefined}>
-                <div className="mod-fallback" style={{ display: 'flex' }}>
-                  <div className="expert-avatar">
-                    <Icon name="user" size={36} color="#fff" />
+              <article key={i} className={`mod-card expert-card ${expert.img ? 'expert-card--full' : 'mod-no-img'}`} aria-hidden={i >= experts.length ? 'true' : undefined}>
+                {expert.img ? (
+                  <img src={`uploads/experts/${expert.img}`} alt={expert.name} className="expert-card-img" loading="lazy" />
+                ) : (
+                  <div className="mod-fallback" style={{ display: 'flex' }}>
+                    <div className="expert-avatar">
+                      <Icon name="user" size={36} color="#fff" />
+                    </div>
+                    <span className="mod-fb-title" style={{ fontSize: 'clamp(16px, 1.8vw, 20px)' }}>{expert.name}</span>
+                    <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: 500, marginTop: -8, textAlign: 'center', lineHeight: 1.3 }}>{expert.role}</span>
                   </div>
-                  <span className="mod-fb-title" style={{ fontSize: 'clamp(16px, 1.8vw, 20px)' }}>{expert.name}</span>
-                  <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: 500, marginTop: -8, textAlign: 'center', lineHeight: 1.3 }}>{expert.role}</span>
-                </div>
+                )}
               </article>
             ))}
           </div>
@@ -2029,7 +2035,7 @@ function Testimonials() {
 /* ===== Comparison ===== */
 function Comparison() {
   const rows = [
-    ["Social Media", "R$ 1.500 a R$ 3.000/mês", "R$ 39,90/mês"],
+    ["Social Media", "R$ 1.500 a R$ 3.000/mês", { check: "Incluso" }],
     ["Mentoria de Conteúdo", "R$ 5.000+", { check: "Incluso" }],
     ["Roteiros prontos", { x: "Não tem" }, { check: "Todos os dias prontos" }],
     ["IA criando conteúdo pra você", { x: "Não tem" }, { check: "Incluso no app" }],
@@ -2256,32 +2262,40 @@ function FAQ() {
     ["Posso cancelar quando quiser?", "Sim. Sem fidelidade. Sem contrato. Cancela com 1 clique dentro da plataforma e pronto. Seu acesso fica até o fim do ciclo já pago."]];
 
   return (
-    <section className="sec" id="faq">
+    <section className="sec" id="faq" style={{ position: 'relative', overflow: 'hidden' }}>
       <div className="container">
         <div className="sec-head">
-          <Eyebrow icon="chat">Dúvidas</Eyebrow>
-          <h2>Respostas <span className="highlight-pink">diretas.</span></h2>
+          <Eyebrow icon="chat">Dúvidas frequentes</Eyebrow>
+          <h2 style={{ fontSize: 'clamp(32px, 5vw, 64px)' }}>Respostas <span className="highlight-pink">diretas.</span></h2>
+          <p style={{ marginTop: 12 }}>Tudo o que você precisa saber para começar hoje mesmo.</p>
         </div>
-        <div className="faq-list">
-          {items.map(([q, a], i) =>
-            <div key={i} className={`faq-item ${open === i ? 'open' : ''}`}>
+
+        <div className="faq-grid">
+          {items.map(([q, a], i) => (
+            <div key={i} className={`faq-glass-card ${open === i ? 'is-open' : ''}`}>
               <button
-                type="button"
-                className="faq-q"
+                className="faq-glass-q"
                 onClick={() => setOpen(open === i ? -1 : i)}
                 aria-expanded={open === i}
               >
-                <span className="faq-num">{String(i + 1).padStart(2, '0')}</span>
-                <span className="faq-text">{q}</span>
-                <span className="faq-toggle" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
-                </span>
+                <div className="faq-glass-num">
+                  <span className="n-bg">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="n-fg">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <span className="faq-glass-text">{q}</span>
+                <div className="faq-glass-plus">
+                  <div className="plus-h" />
+                  <div className="plus-v" />
+                </div>
               </button>
-              <div className="faq-a"><p>{a}</p></div>
+              <div className="faq-glass-a-wrap">
+                <div className="faq-glass-a">
+                  <div className="a-line" />
+                  <p>{a}</p>
+                </div>
+              </div>
             </div>
-          )}
+          ))}
         </div>
       </div>
     </section>);

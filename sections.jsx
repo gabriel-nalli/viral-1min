@@ -390,54 +390,13 @@ const _rcUnsub = (fn) => {
 };
 
 function ResultsCarousel({ children }) {
-  const scrollRef = React.useRef(null);
-
-  React.useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    let started = false;
-
-    const setSide = (side) => {
-      if (!el) return;
-      const maxScroll = el.scrollWidth - el.clientWidth;
-      if (maxScroll <= 0) return; // nada para rolar
-      el.scrollTo({ left: side === 'left' ? 0 : maxScroll, behavior: 'smooth' });
-    };
-
-    // Gate: threshold baixo (0.15) para funcionar em telas pequenas
-    const visObs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !started) {
-        started = true;
-        _rcSubs.add(setSide);
-        setSide(_rcSide);
-        _rcStart();
-        visObs.disconnect();
-      }
-    }, { threshold: 0.15 });
-    visObs.observe(el);
-
-    const pause = () => _rcUnsub(setSide);
-
-    el.addEventListener('touchstart', pause, { passive: true });
-    el.addEventListener('mousedown', pause, { passive: true });
-
-    return () => {
-      visObs.disconnect();
-      _rcUnsub(setSide);
-      el.removeEventListener('touchstart', pause);
-      el.removeEventListener('mousedown', pause);
-    };
-  }, []);
-
   return (
-    <div 
-      ref={scrollRef}
-      style={{ 
-        display: 'flex', 
-        gap: 24, 
-        overflowX: 'auto', 
-        padding: '32px 24px', 
+    <div
+      style={{
+        display: 'flex',
+        gap: 24,
+        overflowX: 'auto',
+        padding: '32px 24px',
         scrollSnapType: 'x mandatory',
         WebkitOverflowScrolling: 'touch',
         scrollbarWidth: 'none',
@@ -462,8 +421,26 @@ function Results() {
           <p>Usaram o Viral em 1 minuto. Sem equipe de filmagem. Sem pagar anúncio. Sem virar blogueira de trend.</p>
         </div>
 
-        <div className="sec-head" style={{ marginTop: 60, marginBottom: 40 }}>
+        <div className="sec-head" style={{ marginTop: 60, marginBottom: 16 }}>
           <Eyebrow icon="users">DEPOIMENTOS MOSTRANDO O PERFIL DE ALUNAS ANTES E DEPOIS</Eyebrow>
+        </div>
+        <div className="swipe-hint" aria-hidden="true">
+          <span className="swipe-hint__hand-wrap" aria-hidden="true">
+            <span className="swipe-hint__minicards">
+              <span className="swipe-hint__minicard swipe-hint__minicard--3"></span>
+              <span className="swipe-hint__minicard swipe-hint__minicard--2"></span>
+              <span className="swipe-hint__minicard swipe-hint__minicard--1"></span>
+            </span>
+            <span className="swipe-hint__trail swipe-hint__trail--l"></span>
+            <span className="swipe-hint__trail swipe-hint__trail--r"></span>
+            <svg className="swipe-hint__hand" width="26" height="26" viewBox="0 0 32 32" fill="var(--accent-light)" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="14.5,18.5 18,14.8 21.5,16.5 21.5,19 14.5,19" stroke="none" />
+              <path d="M14 18V8.5a2 2 0 1 1 4 0V16"/>
+              <path d="M18 14.5a2 2 0 1 1 4 0V18"/>
+              <path d="M22 16a2 2 0 1 1 4 0v6a7 7 0 0 1-7 7h-2.5a7 7 0 0 1-6.06-3.5l-3.5-6a2.4 2.4 0 0 1 4.16-2.4l1.9 3.3"/>
+            </svg>
+          </span>
+          <span>Arraste para o lado</span>
         </div>
       </div>
 
@@ -476,7 +453,7 @@ function Results() {
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--ink)' }}>6.285 Seguidores</h4>
-            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Josi Andrade | Cílios & Cursos</p>
+            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Josi Andrade</p>
           </div>
         </div>
         <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 32px 64px rgba(255,45,122,0.15)', position: 'relative', border: '2px solid var(--accent)' }}>
@@ -486,7 +463,7 @@ function Results() {
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 26, fontWeight: 900, color: 'var(--accent)' }}>12,9 mil Seguidores</h4>
-            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Josiana Academy</p>
+            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Josi Andrade</p>
           </div>
         </div>
       </ResultsCarousel>
@@ -510,7 +487,7 @@ function Results() {
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 26, fontWeight: 900, color: 'var(--accent)' }}>26,8 mil Seguidores</h4>
-            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Cílios & Cursos | Jardim Ângela</p>
+            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Dayane Oliveira</p>
           </div>
         </div>
       </ResultsCarousel>
@@ -524,17 +501,17 @@ function Results() {
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
             <h4 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--ink)' }}>1.002 Seguidores</h4>
-            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Karollin Farias | Instrutora Nail</p>
+            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Karollin Farias</p>
           </div>
         </div>
         <div style={{ flexShrink: 0, width: '85vw', maxWidth: 400, scrollSnapAlign: 'center', background: '#fff', borderRadius: 24, padding: 24, boxShadow: '0 32px 64px rgba(255,45,122,0.15)', position: 'relative', border: '2px solid var(--accent)' }}>
           <div style={{ position: 'absolute', top: -16, left: 24, background: 'var(--accent)', color: '#fff', padding: '6px 16px', borderRadius: 999, fontWeight: 800, fontSize: 13, letterSpacing: 1, boxShadow: '0 8px 16px rgba(255,45,122,0.3)' }}>DEPOIS (COM O MÉTODO)</div>
           <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(0,0,0,0.05)', backgroundColor: '#f0f0f0' }}>
-            <img src="assets/karollin-depois.webp" alt="Perfil Depois Karolin" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
+            <img src="assets/karollin-depois.webp?v=2" alt="Perfil Depois Karolin" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
-            <h4 style={{ margin: 0, fontSize: 26, fontWeight: 900, color: 'var(--accent)' }}>14,8 mil Seguidores</h4>
-            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Karollin Farias | Instrutora Nail</p>
+            <h4 style={{ margin: 0, fontSize: 26, fontWeight: 900, color: 'var(--accent)' }}>11,5 mil Seguidores</h4>
+            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Karollin Farias</p>
           </div>
         </div>
       </ResultsCarousel>
@@ -547,7 +524,7 @@ function Results() {
             <img src="assets/carolina-antes.webp" alt="Perfil Antes Carolina" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
-            <h4 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--ink)' }}>2.340 Seguidores</h4>
+            <h4 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--ink)' }}>2.645 Seguidores</h4>
             <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Carolina</p>
           </div>
         </div>
@@ -557,7 +534,7 @@ function Results() {
             <img src="assets/carolina-depois.webp" alt="Perfil Depois Carolina" loading="lazy" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
           </div>
           <div style={{ marginTop: 24, textAlign: 'center' }}>
-            <h4 style={{ margin: 0, fontSize: 26, fontWeight: 900, color: 'var(--accent)' }}>21,5 mil Seguidores</h4>
+            <h4 style={{ margin: 0, fontSize: 26, fontWeight: 900, color: 'var(--accent)' }}>27,3 mil Seguidores</h4>
             <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14, marginTop: 4 }}>Carolina</p>
           </div>
         </div>
@@ -1536,8 +1513,54 @@ function Features() {
       <div className="container">
         <div className="sec-head">
           <Eyebrow icon="grid">O que você recebe</Eyebrow>
-          <h2>Viral em 1 Minuto — <span className="highlight-pink">curso + app + mentoria</span> no mesmo lugar.</h2>
+          <h2>Viral em 1 Minuto <span className="highlight-pink">curso + app + mentoria</span> no mesmo lugar.</h2>
           <p>Pela primeira vez na área da beleza, tudo isso junto em um único acesso. Não é só curso. Não é só app.</p>
+        </div>
+
+        {/* iPhone 17 — demonstração do app em uso */}
+        <div className="iphone17-showcase">
+          <div className="iphone17-showcase__copy">
+            <div className="tag" style={{ display: 'inline-block', background: 'var(--secondary)', color: 'var(--ink)' }}>App em uso · ao vivo</div>
+            <h3 style={{ marginTop: 14, fontSize: 'clamp(24px, 3.4vw, 34px)', lineHeight: 1.1 }}>
+              Veja o app rodando <span className="highlight-pink">no celular real</span>.
+            </h3>
+            <p style={{ marginTop: 12, color: 'var(--ink-soft)', maxWidth: 460 }}>
+              Roteiro do dia, IA Viral, modelos validados — tudo na palma da mão. É só abrir, copiar e gravar em 1 minuto.
+            </p>
+          </div>
+
+          <div className="iphone17" aria-label="Demonstração do app no iPhone">
+            <div className="iphone17__side iphone17__side--left">
+              <span className="iphone17__btn iphone17__btn--action" />
+              <span className="iphone17__btn iphone17__btn--volup" />
+              <span className="iphone17__btn iphone17__btn--voldown" />
+            </div>
+            <div className="iphone17__side iphone17__side--right">
+              <span className="iphone17__btn iphone17__btn--power" />
+            </div>
+
+            <div className="iphone17__frame">
+              <div className="iphone17__bezel">
+                <div className="iphone17__screen">
+                  <div className="iphone17__island" aria-hidden="true">
+                    <span className="iphone17__camera" />
+                  </div>
+
+                  <video
+                    className="iphone17__video"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                  >
+                    <source src="assets/video-app.mp4" type="video/mp4" />
+                  </video>
+                </div>
+              </div>
+              <div className="iphone17__glow" aria-hidden="true" />
+            </div>
+          </div>
         </div>
 
         <div className="feats">
@@ -1545,35 +1568,32 @@ function Features() {
             <div>
               <div className="tag">Modo recomendação</div>
               <h3>Modelos que ativam o algoritmo</h3>
-              <p>Formatos validados que o Instagram prioriza e entrega para desconhecidos. Nós criamos, você grava e posta.</p>
+              <p>Formatos validados que o Instagram prioriza e entrega para desconhecidos. Nossa IA cria, você grava e posta.</p>
             </div>
-            <div className="app-mock" style={{ background: '#fff', color: 'var(--ink)' }}>
-              <div className="head">
-                <span style={{ fontWeight: 800, fontSize: 13 }}>Formato #47 · Viral</span>
-                <span className="pill">TOP 1%</span>
-              </div>
-              <div className="line md" /><div className="line sh" />
-            </div>
+            <img
+              src="assets/modelos-virais-app.webp"
+              alt="App mostrando modelos virais"
+              width="698"
+              height="824"
+              loading="lazy"
+              style={{ display: 'block', width: '100%', maxWidth: 698, height: 'auto', marginTop: 18, borderRadius: 14 }}
+            />
           </div>
 
           <div className="feat b">
             <div>
-              <div className="tag">90 dias de roteiros</div>
+              <div className="tag">30 dias de roteiros</div>
               <h3>Todos os dias, novos roteiros virais prontos</h3>
               <p>Um roteiro por dia, já no app. Você não pensa no que postar. Só abre, copia e grava em 1 minuto.</p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7,1fr)', gap: 6, marginTop: 18 }}>
-              {Array.from({ length: 28 }).map((_, i) =>
-                <div key={i} style={{
-                  aspectRatio: '1', borderRadius: 6,
-                  border: '2px solid var(--ink)',
-                  background: i < 15 ? 'var(--accent)' : i === 15 ? 'var(--secondary)' : '#fff',
-                  display: 'grid', placeItems: 'center',
-                  fontSize: 10, fontWeight: 700, color: i < 15 ? '#fff' : 'var(--ink)',
-                  fontFamily: 'JetBrains Mono, monospace'
-                }}>{i < 15 ? '✓' : i === 15 ? '●' : ''}</div>
-              )}
-            </div>
+            <img
+              src="assets/roteiro-diario.webp"
+              alt="App mostrando roteiros diários"
+              width="1041"
+              height="1830"
+              loading="lazy"
+              style={{ display: 'block', width: '100%', maxWidth: 1041, height: 'auto', marginTop: 18, borderRadius: 14 }}
+            />
           </div>
 
           <div className="feat c">
@@ -1582,10 +1602,14 @@ function Features() {
               <h3>IA criando conteúdo por você</h3>
               <p>Gera roteiros, transcreve modelos virais, cria ideias infinitas. 10x mais focada no seu nicho.</p>
             </div>
-            <div className="app-mock">
-              <div className="head"><span style={{ fontWeight: 800, fontSize: 13 }}>✨ IA Viral</span><span className="pill" style={{ background: 'var(--accent)', color: '#fff' }}>GERANDO</span></div>
-              <div className="line md" /><div className="line md" />
-            </div>
+            <img
+              src="assets/referencia-video.webp"
+              alt="App mostrando IA gerando conteúdo"
+              width="1179"
+              height="1082"
+              loading="lazy"
+              style={{ display: 'block', width: '100%', maxWidth: 1179, height: 'auto', marginTop: 18, borderRadius: 14 }}
+            />
           </div>
 
           <div className="feat d">
@@ -1613,12 +1637,19 @@ function Features() {
               <h3>Aulas gravadas + mentorias ao vivo</h3>
               <p>Área de membros completa. Primeira vez que curso e app se juntam no mesmo lugar.</p>
             </div>
-            <div className="app-mock" style={{ background: 'rgba(255,255,255,.08)', borderColor: 'var(--secondary)', color: '#fff' }}>
-              <div className="head" style={{ borderColor: 'rgba(255,255,255,.15)' }}>
-                <span style={{ fontWeight: 800, fontSize: 13, color: 'var(--secondary)' }}>● AO VIVO · QUI 20H</span>
-              </div>
-              <div className="line md" style={{ background: 'rgba(255,255,255,.18)' }} />
-              <div className="line sh" style={{ background: 'rgba(255,255,255,.18)' }} />
+            <div className="feat-fade-carousel" style={{ marginTop: 18 }}>
+              <img
+                src="assets/ao-vivo-app.webp"
+                alt="App mostrando mentoria ao vivo"
+                loading="lazy"
+                className="feat-fade-carousel__img"
+              />
+              <img
+                src="assets/area-de-membros.webp"
+                alt="App mostrando área de membros"
+                loading="lazy"
+                className="feat-fade-carousel__img feat-fade-carousel__img--2"
+              />
             </div>
           </div>
         </div>
@@ -1701,7 +1732,17 @@ function Features() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 60 }}>
-          <Btn variant="primary" size="lg" icon="rocket" href="#investimento">Ativar App Viral agora</Btn>
+          <a href="#investimento" className="aura-btn aura-btn--lg">
+            <div className="aura-btn__shimmer-wrap"><div className="aura-btn__shimmer"></div></div>
+            <div className="aura-btn__sweep"></div>
+            <div className="aura-btn__hover-fill"></div>
+            <div className="aura-btn__icon">
+              <span className="aura-btn__dot"></span>
+              <svg className="aura-btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+            </div>
+            <span className="aura-btn__text">Ativar Viral em 1 minuto agora</span>
+            <span className="aura-btn__text-hover">Vamos viralizar?</span>
+          </a>
         </div>
       </div>
     </section>);
@@ -1730,74 +1771,6 @@ function ModulosCarousel() {
     e.currentTarget.parentElement.classList.add('mod-no-img');
   };
 
-  const trackRef = React.useRef(null);
-  const pausedRef = React.useRef(false);
-
-  React.useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-
-    let rafId;
-    let lastTs = 0;
-    let resumeTimer = null;
-    const SPEED = 40;
-
-    const tick = (ts) => {
-      if (!lastTs) lastTs = ts;
-      const dt = ts - lastTs;
-      lastTs = ts;
-
-      if (!pausedRef.current) {
-        el.scrollLeft += (SPEED * dt) / 1000;
-        const half = el.scrollWidth / 2;
-        if (el.scrollLeft >= half) {
-          el.scrollLeft -= half;
-        }
-      } else {
-        lastTs = ts;
-      }
-
-      rafId = requestAnimationFrame(tick);
-    };
-
-    rafId = requestAnimationFrame(tick);
-
-    // Pausa apenas em interação direta (pointerdown/touchstart) com auto-resume curto
-    // pointerenter foi removido — disparava em todo touch durante scroll vertical no iOS
-    const pause = () => {
-      pausedRef.current = true;
-      if (resumeTimer) clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(() => {
-        pausedRef.current = false;
-        resumeTimer = null;
-      }, 350);
-    };
-    const resume = () => {
-      if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = null; }
-      pausedRef.current = false;
-    };
-
-    el.addEventListener('pointerdown', pause);
-    el.addEventListener('pointerup', resume);
-    el.addEventListener('pointercancel', resume);
-    el.addEventListener('touchend', resume);
-    el.addEventListener('touchcancel', resume);
-    el.addEventListener('focusin', pause);
-    el.addEventListener('focusout', resume);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      if (resumeTimer) clearTimeout(resumeTimer);
-      el.removeEventListener('pointerdown', pause);
-      el.removeEventListener('pointerup', resume);
-      el.removeEventListener('pointercancel', resume);
-      el.removeEventListener('touchend', resume);
-      el.removeEventListener('touchcancel', resume);
-      el.removeEventListener('focusin', pause);
-      el.removeEventListener('focusout', resume);
-    };
-  }, []);
-
   const loopList = [...modulos, ...modulos];
 
   return (
@@ -1812,7 +1785,7 @@ function ModulosCarousel() {
       </div>
 
       <div className="modulos-carousel">
-        <div className="modulos-track" ref={trackRef}>
+        <div className="modulos-track">
           {loopList.map((m, i) => (
             <article
               key={`${m.slug}-${i}`}
@@ -1918,15 +1891,29 @@ function Creator() {
     <section className="sec">
       <div className="container">
         <div className="sec-head">
-          <Eyebrow icon="star">Quem criou</Eyebrow>
-          <h2>A mente por trás do <span className="highlight-pink">Viral em 1 Minuto</span></h2>
+          <span className="eyebrow eyebrow--glass eyebrow--avatars">
+            <span className="eyebrow__sheen" aria-hidden="true" />
+            <span className="eyebrow__avatars" aria-hidden="true">
+              <span className="eyebrow__avatar eyebrow__avatar--1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+              </span>
+              <span className="eyebrow__avatar eyebrow__avatar--2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+              </span>
+              <span className="eyebrow__avatar eyebrow__avatar--3">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+              </span>
+            </span>
+            <span className="eyebrow__label">Quem criou</span>
+          </span>
+          <h2>As mentes por trás do <span className="highlight-pink">Viral em 1 Minuto</span></h2>
         </div>
 
         {/* Criador 1 — Thaylor Jobs */}
         <div className="creator" style={{ marginBottom: 56 }}>
           <div className="creator-photo">
-            <span className="ph-text">// foto do criador</span>
-            <div className="tag">Thaylor Jobs · Criador</div>
+            <img src="assets/criador-thaylor.JPG" alt="Thaylor Jobs" className="creator-photo-img" />
+            <div className="tag">Criador</div>
           </div>
           <div>
             <h2 style={{ fontSize: 'clamp(32px, 4vw, 52px)' }}>Thaylor Jobs</h2>
@@ -1955,13 +1942,13 @@ function Creator() {
         {/* Criador 2 */}
         <div className="creator creator-reverse">
           <div className="creator-photo">
-            <span className="ph-text">// foto do criador 2</span>
+            <img src="assets/gabriel-capa.webp" alt="Gabriel Nalli" className="creator-photo-img" />
             <div className="tag">Criador</div>
           </div>
           <div>
             <h2 style={{ fontSize: 'clamp(32px, 4vw, 52px)' }}>Gabriel Nalli</h2>
             <p style={{ marginTop: 16, fontSize: 19, color: 'var(--ink-soft)', textWrap: 'pretty' }}>
-              Breve descrição do segundo criador — seu papel, experiência e o que ele traz de diferencial para o ecossistema do <strong>Viral em 1 Minuto</strong>.
+              Especialista em <strong>IA e desenvolvimento de apps</strong>. Já desenvolveu apps que ultrapassaram <strong>6 dígitos de faturamento</strong>, soma <strong>+10 mil seguidores</strong> e <strong>+1 milhão de views</strong> nos próprios canais. É a mente técnica que transforma o método do <strong>Viral em 1 Minuto</strong> em produto real, escalável e na palma da sua mão.
             </p>
             <div style={{
               marginTop: 22, padding: '20px 24px',
@@ -1971,12 +1958,12 @@ function Creator() {
               fontStyle: 'italic', position: 'relative'
             }}>
               <span style={{ fontSize: 60, lineHeight: 0, position: 'absolute', top: 28, left: 12, color: 'var(--accent)', opacity: .5 }}>"</span>
-              <span style={{ display: 'block', paddingLeft: 24 }}>Frase de impacto do segundo criador.</span>
+              <span style={{ display: 'block', paddingLeft: 24 }}>Eu não vendo promessa, eu construo a tecnologia que entrega o resultado.</span>
             </div>
             <div className="creator-stats">
               <div className="creator-stat"><div className="n">+10K</div><div className="l">seguidores</div></div>
-              <div className="creator-stat"><div className="n">+500M</div><div className="l">views</div></div>
-              <div className="creator-stat"><div className="n">5 anos</div><div className="l">de expertise</div></div>
+              <div className="creator-stat"><div className="n">+1M</div><div className="l">views</div></div>
+              <div className="creator-stat"><div className="n">2 anos</div><div className="l">de expertise</div></div>
             </div>
           </div>
         </div>
@@ -2079,9 +2066,9 @@ function Comparison() {
           )}
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: 40 }}>
-          <AlphaBtn href="#investimento">Quero o App Viral em 1 Minuto</AlphaBtn>
-          <div style={{ marginTop: 14, fontSize: 14, color: 'var(--ink-soft)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 40 }}>
+          <AlphaBtn href="#investimento">Ativar Viral em 1 minuto agora</AlphaBtn>
+          <div style={{ marginTop: 14, fontSize: 14, color: 'var(--ink-soft)', textAlign: 'center' }}>
             <em>Sem contrato · Cancela quando quiser · Acesso imediato</em>
           </div>
         </div>
@@ -2197,12 +2184,12 @@ function Pricing() {
               <p className="aura-card__pdesc">de R$ 79,90 por R$ 39,90/mês · você economiza <strong style={{ color: 'var(--secondary)' }}>R$ 480/ano</strong></p>
 
               <ul className="aura-card__features">
-                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Tudo do mensal incluso</li>
-                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><strong>2 meses grátis</strong> no anual</li>
-                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Acesso prioritário a novos formatos</li>
-                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Grupo VIP de alunas anuais</li>
-                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Bônus: Pack de 30 stories que vendem</li>
-                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Garantia incondicional de 30 dias</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><strong style={{ whiteSpace: 'nowrap' }}>50% de desconto</strong> incluso</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>App completo com roteiros diários</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>IA Viral para modelar conteúdos</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Curso + área de membros</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Mentorias ao vivo</li>
+                <li><span className="aura-card__check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Desafio 0→10K em 30 dias</li>
               </ul>
 
               <a href="#investimento" className="aura-btn aura-btn--lime">
@@ -2237,7 +2224,7 @@ function Guarantee() {
             </div>
           </div>
           <div>
-            <Eyebrow icon="shield">Risco reverso</Eyebrow>
+            <Eyebrow icon="shield">Sem riscos</Eyebrow>
             <h2 style={{ marginTop: 14 }}>Ou você viraliza. Ou devolvemos 100%.</h2>
             <p>Teste o sistema por 30 dias completos. Use os roteiros. Grave os vídeos. Aplique o Método Viral em 1 Minuto.
               Se você seguir o protocolo e não ver resultado, basta enviar um e-mail com os prints e devolvemos tudo.
@@ -2325,7 +2312,7 @@ function FinalCTA() {
           <p>Você pode continuar tentando adivinhar o que funciona. Ou usar um sistema pronto.
             A diferença entre essas duas decisões cabe em um clique.</p>
           <div className="btns">
-            <AlphaBtn variant="lime" href="#investimento">Ativar App Viral em 1 Minuto por R$ 39,90/mês</AlphaBtn>
+            <AlphaBtn variant="lime" href="#investimento">Ativar o Viral em 1 minuto por R$ 39,90/mês</AlphaBtn>
           </div>
           <div style={{ marginTop: 20, fontSize: 14, opacity: .9 }}>
             <em>Sem contrato · Sem fidelidade · Cancela quando quiser</em>
@@ -2884,7 +2871,7 @@ function Journey() {
     <section className="journey-container" id="journey">
       <div className="container" style={{ position: 'relative', zIndex: 10, paddingTop: '60px', paddingBottom: '20px', textAlign: 'center' }}>
         <div className="sec-head" style={{ marginBottom: 0 }}>
-          <Eyebrow icon="zap">O PASSO A PASSO</Eyebrow>
+          <Eyebrow icon="paw-trail">O PASSO A PASSO</Eyebrow>
           <h2 style={{ color: 'var(--dark)' }}>Veja o diferencial do nosso <span className="chameleon-neon">ecossistema</span></h2>
           <p style={{ color: 'var(--text-sec)' }}>Alguns passos para alcançar a viralização</p>
         </div>

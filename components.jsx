@@ -18,13 +18,23 @@ function Icon({ name, size = 22, color = "currentColor" }) {
     case "grid": return <svg {...p}><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></svg>;
     case "shield": return <svg {...p}><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6z" /><path d="m9 12 2 2 4-4" /></svg>;
     case "trend": return <svg {...p}><path d="M3 17 9 11l4 4 8-8" /><path d="M17 7h4v4" /></svg>;
-    case "heart": return <svg {...p}><path d="M20.8 7.6a5.5 5.5 0 0 0-9.3-3A5.5 5.5 0 0 0 3.2 12l8.8 8.8 8.8-8.8a5.5 5.5 0 0 0 0-4.4Z" /></svg>;
+    case "heart": return <svg {...p}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>;
     case "eye": return <svg {...p}><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" /><circle cx="12" cy="12" r="3" /></svg>;
     case "infinity": return <svg {...p}><path d="M6 16c-2.2 0-4-1.8-4-4s1.8-4 4-4c3 0 5 8 8 8s4-1.8 4-4-1.8-4-4-4c-3 0-5 8-8 8z" /></svg>;
     case "clock": return <svg {...p}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>;
     case "star": return <svg {...p} fill={color}><path d="m12 2 3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1z" stroke="none" /></svg>;
     case "ig": return <svg {...p}><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill={color} /></svg>;
     case "tiktok": return <svg {...p}><path d="M16 3v3a4 4 0 0 0 4 4v3a7 7 0 0 1-4-1.3V15a6 6 0 1 1-6-6v3a3 3 0 1 0 3 3V3z" /></svg>;
+    case "map": return <svg {...p}><path d="M3 6 9 4l6 2 6-2v14l-6 2-6-2-6 2z" /><path d="M9 4v16M15 6v16" /></svg>;
+    case "paw": return (
+      <svg width={s} height={s} viewBox="0 0 24 24" fill={color} stroke="none">
+        <ellipse cx="6"  cy="9"   rx="2.1" ry="2.8" />
+        <ellipse cx="10" cy="5.5" rx="2.1" ry="2.8" />
+        <ellipse cx="14" cy="5.5" rx="2.1" ry="2.8" />
+        <ellipse cx="18" cy="9"   rx="2.1" ry="2.8" />
+        <path d="M12 10c-3.3 0-6 2.6-6 5.6 0 1.8 1 3.3 2.4 4 .9.4 1.7-.2 2.5-.6.4-.2.8-.4 1.1-.4s.7.2 1.1.4c.8.4 1.6 1 2.5.6 1.4-.7 2.4-2.2 2.4-4 0-3-2.7-5.6-6-5.6Z" />
+      </svg>
+    );
     default: return null;
   }
 }
@@ -93,95 +103,151 @@ function Marquee() {
   );
 }
 
-/* ===== Testimonial Marquee (duas linhas, rolando) ===== */
+/* ===== Testimonials Deck — efeito baralho que se desempilha em scroll =====
+   Estado inicial: cards empilhados no centro (z-index decrescente, pequenos offsets)
+   Durante scroll: cada card "voa" para uma das duas colunas (par→esquerda, ímpar→direita)
+   Estado final: layout 2 colunas com cards em tamanho natural
+*/
 function TestiMarquee() {
-  const row1 = [
-    { name: "Camila R.", handle: "@camilarbeauty", nicho: "Extensão de cílios", img: "assets/IMG_0488.webp", metric: "+38.400 seg. em 21 dias", style: "" },
-    { name: "Paula V.", handle: "@paulinhanails", nicho: "Nail designer", img: "assets/IMG_0489.webp", metric: "de 900 p/ 27K", style: "lime" },
-    { name: "Juliana M.", handle: "@jumakeup", nicho: "Maquiadora", img: "assets/IMG_0490.webp", metric: "Agenda fechada 2 meses", style: "" },
-    { name: "Rafa C.", handle: "@rafaestudiosbb", nicho: "Sobrancelhas", img: "assets/IMG_0491.webp", metric: "+52K seguidores", style: "pink" },
-    { name: "Bruna L.", handle: "@bru.hair", nicho: "Cabeleireira", img: "assets/IMG_0492.webp", metric: "De 1.2K → 18K", style: "" },
-    { name: "Thaís O.", handle: "@thais.estetica", nicho: "Estética facial", img: "assets/IMG_0493.webp", metric: "ROI no 1º dia", style: "lime" },
-  ];
-  const row2 = [
-    { name: "Larissa F.", handle: "@laridepilacao", nicho: "Depilação", img: "assets/IMG_0494.webp", metric: "+11K em 2 semanas", style: "" },
-    { name: "Monique A.", handle: "@moni.mua", nicho: "Auto maquiagem", img: "assets/IMG_0495.webp", metric: "1 vídeo c/ 2.4M views", style: "pink" },
-    { name: "Gabi S.", handle: "@gabisobrancelhas", nicho: "Designer de sobrancelha", img: "assets/IMG_0496.webp", metric: "+22K sem aparecer", style: "" },
-    { name: "Dani P.", handle: "@danicilios", nicho: "Cílios fio a fio", img: "assets/IMG_0498.webp", metric: "Ranking local top 1", style: "lime" },
-    { name: "Amanda T.", handle: "@amandahair", nicho: "Mega hair", img: "assets/IMG_0499.webp", metric: "+41K em 45 dias", style: "" },
-    { name: "Carol B.", handle: "@carolspa", nicho: "SPA", img: "assets/IMG_0500.webp", metric: "Agenda +3x", style: "pink" },
+  const cards = [
+    { img: "assets/IMG_0488.webp", style: "" },
+    { img: "assets/IMG_0489.webp", style: "lime" },
+    { img: "assets/IMG_0490.webp", style: "" },
+    { img: "assets/IMG_0491.webp", style: "pink" },
+    { img: "assets/IMG_0492.webp", style: "" },
+    { img: "assets/IMG_0493.webp", style: "lime" },
+    { img: "assets/IMG_0494.webp", style: "" },
+    { img: "assets/IMG_0495.webp", style: "pink" },
+    { img: "assets/IMG_0496.webp", style: "" },
+    { img: "assets/IMG_0499.webp", style: "" },
+    { img: "assets/IMG_0500.webp", style: "pink" },
+    { img: "assets/IMG_0498.webp", style: "" },
   ];
 
   const Card = ({ t }) => {
     let bgColor = 'var(--glass-bg)';
     let borderColor = 'var(--glass-border)';
-    
     if (t.style === 'lime') {
-      bgColor = 'rgba(200, 240, 0, 0.15)'; // Lime transparente
+      bgColor = 'rgba(200, 240, 0, 0.15)';
       borderColor = 'rgba(200, 240, 0, 0.4)';
     } else if (t.style === 'pink') {
-      bgColor = 'rgba(255, 45, 122, 0.15)'; // Pink transparente
+      bgColor = 'rgba(255, 45, 122, 0.15)';
       borderColor = 'rgba(255, 45, 122, 0.4)';
     }
-
     return (
-      <div className="testi-card" style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        aspectRatio: '3 / 4', 
-        padding: '16px',
+      <div className="deck-card-inner" style={{
         background: bgColor,
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
         border: `1.5px solid ${borderColor}`,
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)'
       }}>
-        {t.video ? (
-          <video 
-            src={t.video} 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }} 
-          />
-        ) : (
-          <img 
-            src={t.img} 
-            alt="Prova social" 
-            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }} 
-            loading="lazy" 
-          />
-        )}
+        <img src={t.img} alt="Prova social" decoding="async" />
       </div>
     );
   };
-  const dup = arr => [...arr, ...arr];
+
+  const sectionRef = React.useRef(null);
+  const [progress, setProgress] = React.useState(0);
+  const [vh, setVh] = React.useState(typeof window !== 'undefined' ? window.innerHeight : 800);
+  const [isMobile, setIsMobile] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 820);
+
+  const total = cards.length;
+  const cardsPerCol = Math.ceil(total / 2);
+  const colOffset = isMobile ? 95 : 180;
+  const cardGap = isMobile ? 280 : 340;
+  const initialTopPx = isMobile ? 40 : 60;
+  const animDistance = vh;
+  const spreadHeightPx = cardsPerCol * cardGap + 60;
+  const sectionHeightPx = animDistance + spreadHeightPx;
+
+  React.useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const scrolled = -rect.top;
+      const p = Math.max(0, Math.min(1, scrolled / Math.max(1, window.innerHeight)));
+      setProgress(p);
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    };
+    const onResize = () => {
+      setIsMobile(window.innerWidth <= 820);
+      setVh(window.innerHeight);
+      update();
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
+
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+
   return (
-    <div style={{ padding: "10px 0" }}>
-      <div className="testi-marquee">
-        <div className="testi-track">
-          {dup(row1).map((t, i) => <Card key={i} t={t} />)}
-        </div>
-      </div>
-      <div style={{ height: 18 }} />
-      <div className="testi-marquee">
-        <div className="testi-track reverse">
-          {dup(row2).map((t, i) => <Card key={i} t={t} />)}
-        </div>
-      </div>
-    </div>
+    <section ref={sectionRef} className="deck-section" style={{ height: sectionHeightPx + 'px' }}>
+      {cards.map((card, i) => {
+        const start = (i / total) * 0.85;
+        const end = Math.min(1, start + 0.25);
+        const raw = (progress - start) / (end - start);
+        const t = easeOut(Math.max(0, Math.min(1, raw)));
+
+        const isLeft = i % 2 === 0;
+        const stackIdx = Math.floor(i / 2);
+        const dirSign = isLeft ? -1 : 1;
+
+        const initX = 0;
+        const initY = initialTopPx + i * 4;
+        const initScale = 1 - i * 0.018;
+
+        const finalX = dirSign * colOffset;
+        const finalY = animDistance + stackIdx * cardGap;
+        const finalScale = 1;
+
+        const x = initX + (finalX - initX) * t;
+        const y = initY + (finalY - initY) * t;
+        const scale = initScale + (finalScale - initScale) * t;
+
+        return (
+          <div
+            key={i}
+            className="deck-card"
+            style={{
+              transform: `translate3d(calc(-50% + ${x}px), ${y}px, 0) scale(${scale})`,
+              zIndex: total - i + Math.round(t * 100),
+            }}
+          >
+            <Card t={card} />
+          </div>
+        );
+      })}
+    </section>
   );
 }
 
 /* ===== Eyebrow chip ===== */
 function Eyebrow({ children, icon }) {
+  const isPawTrail = icon === 'paw-trail';
   return (
-    <span className="eyebrow">
-      <span className="dot" />
-      {icon && <Icon name={icon} size={14} />}
-      {children}
+    <span className="eyebrow eyebrow--glass">
+      <span className="eyebrow__sheen" aria-hidden="true" />
+      {isPawTrail ? (
+        <span className="paw-trail" aria-hidden="true">
+          {[0, 1, 2, 3].map((i) => (
+            <span key={i} className={`paw-trail__step paw-trail__step--${i} ${i % 2 ? 'paw-trail__step--up' : 'paw-trail__step--down'}`}>
+              <Icon name="paw" size={14} />
+            </span>
+          ))}
+        </span>
+      ) : (
+        icon && <span className="eyebrow__icon"><Icon name={icon} size={16} /></span>
+      )}
+      <span className="eyebrow__label">{children}</span>
     </span>
   );
 }

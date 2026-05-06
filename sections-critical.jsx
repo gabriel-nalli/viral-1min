@@ -82,7 +82,7 @@ function DigitalTyperC({ words = [], initialIndex = 0 }) {
     }
   }, [displayed, phase, index, words]);
 
-  return <span>{displayed}<span style={{ opacity: phase === 'typing' ? 1 : 0.4 }}>|</span></span>;
+  return <span>{displayed}</span>;
 }
 
 /* ===== GlassCard (Hero bullet points) ===== */
